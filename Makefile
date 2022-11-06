@@ -6,28 +6,28 @@
 #    By: ytouate <touateyoussef2003@gmail.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/03 12:47:40 by ytouate           #+#    #+#              #
-#    Updated: 2022/11/03 13:48:25 by ytouate          ###   ########.fr        #
+#    Updated: 2022/11/06 17:01:56 by ytouate          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FILE = ./file.cpp
 
-NAME = main
+NAME = main.exe
 
-CPPFLAGS = #-Wall -Wextra -Werror
+CPPFLAGS = -std=c++11 #-Wall -Wextra -Werror
 
 O_FILE = $(FILE:.cpp=.o)
 
 all: $(NAME)
 
 $(NAME) : $(O_FILE)
-	@c++ -Wall -Wextra -Werror -std=c++98 $(O_FILE) -o $(NAME)
+	@c++ -Wall -Wextra -Werror -std=c++11 -fsanitize=address -g $(O_FILE) -o $(NAME)
 
 clean:
 	@rm -rf *.o
 
 fclean: clean
-	@rm -rf megaphone
+	@rm -rf $(NAME)
 
 re: fclean all
 

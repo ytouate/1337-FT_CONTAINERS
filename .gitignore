@@ -2,3 +2,5 @@
 *.txt
 *.out
 *.vscode
+*.exe
+file.cpp
