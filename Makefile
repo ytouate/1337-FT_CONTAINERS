@@ -6,7 +6,7 @@
 #    By: ytouate <touateyoussef2003@gmail.com>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/03 12:47:40 by ytouate           #+#    #+#              #
-#    Updated: 2022/11/06 20:43:55 by ytouate          ###   ########.fr        #
+#    Updated: 2022/11/09 10:45:20 by ytouate          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,5 @@ fclean: clean
 
 re: fclean all
 
-run: re
-	@echo "\n"
+run:
 	@./$(NAME)
