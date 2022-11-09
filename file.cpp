@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ytouate <touateyoussef2003@gmail.com>      +#+  +:+       +#+        */
+/*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/09 10:53:47 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/09 18:31:52 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ public:
     iterator<Integers >  begin() { return iterator <Integers >( this ); }
     iterator<Integers >  end() { return iterator <Integers > (this + 1); }
     void f () { std::cout << "hello world\n"; }
-    int operator * (void) { return 43; }
     Integers()
     {
         this->name = "Youssef";
@@ -50,12 +49,26 @@ public:
     }
 };
 
-int main(int ac, char **av, char **envp)
+int main( void )
 {
     Integers ints;
-    iterator<Integers > it = ints.begin();
-    iterator<Integers > ite = ints.end();
-    ++it;
-    --it;
-    std::cout << (*it).name << std::endl;
+    iterator<Integers> it = ints.begin();
+    iterator<Integers> ite = ints.end();
+    (void)ints, (void)it, (void)ite;
+    (*it).name = "Something else";
+    it->name = "Hello world";
+    
+
+    std::vector<int> vec;
+    vec.push_back(10);
+    vec.push_back(20);
+    std::vector<int>::iterator it2 = vec.begin();
+    std::vector<int>::iterator ite2 = vec.end();
+
+    while (it2 < ite2)
+    {
+        std::cout << *it2 << std::endl;
+        it2++;
+    }
+    return (0);
 }

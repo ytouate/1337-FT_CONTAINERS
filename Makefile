@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ytouate <touateyoussef2003@gmail.com>      +#+  +:+       +#+         #
+#    By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/03 12:47:40 by ytouate           #+#    #+#              #
-#    Updated: 2022/11/09 10:45:20 by ytouate          ###   ########.fr        #
+#    Updated: 2022/11/09 18:04:11 by ytouate          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ FILE = ./file.cpp
 
 NAME = main.exe
 
-CPPFLAGS = -std=c++98 #-Wall -Wextra -Werror
+CPPFLAGS = -std=c++98 -fsanitize=address -Wall -Wextra -Werror
 
 O_FILE = $(FILE:.cpp=.o)
 
@@ -31,5 +31,5 @@ fclean: clean
 
 re: fclean all
 
-run:
+run: re
 	@./$(NAME)
