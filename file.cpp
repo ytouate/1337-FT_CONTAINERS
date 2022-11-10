@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/09 18:31:52 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/09 19:56:41 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,15 @@ int main( void )
     std::vector<int> vec;
     vec.push_back(10);
     vec.push_back(20);
-    std::vector<int>::iterator it2 = vec.begin();
-    std::vector<int>::iterator ite2 = vec.end();
-
-    while (it2 < ite2)
+    // std::vector<int>::iterator it2 = vec.begin();
+    // std::vector<int>::iterator ite2 = vec.end();
+    std::vector<int>::reverse_iterator rit = vec.rbegin();
+    std::vector<int>::reverse_iterator rite = vec.rend();
+    std::vector<int>::reverse_iterator::
+    while (rit < rite)
     {
-        std::cout << *it2 << std::endl;
-        it2++;
+        std::cout << *rit << std::endl;
+        rit++;
     }
     return (0);
 }
