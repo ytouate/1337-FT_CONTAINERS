@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 16:08:00 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/09 18:06:18 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/10 12:42:14 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,21 @@ public:
         this->_ptr--;
         return *this;
     }
-    bool operator==(iterator const &left) { return this->_ptr == left._ptr; }
-    bool operator!=(iterator const &left) { return this->_ptr != left._ptr; }
-    bool operator<(iterator const &left) { return this->_ptr < left._ptr; }
-    bool operator>(iterator const &left) { return this->_ptr > left._ptr; }
-    bool operator<=(iterator const &left) { return this->_ptr <= left._ptr; }
-    bool operator>=(iterator const &left) { return this->_ptr >= left._ptr; }
+    ptrdiff_t operator - (iterator const &right) {return this->_ptr - right._ptr; }
+    ptrdiff_t operator + (iterator const &right) {return this->_ptr + right._ptr; }
+    bool operator==(iterator const &right) { return this->_ptr == right._ptr; }
+    bool operator!=(iterator const &right) { return this->_ptr != right._ptr; }
+    bool operator<(iterator const &right) { return this->_ptr < right._ptr; }
+    bool operator>(iterator const &right) { return this->_ptr > right._ptr; }
+    bool operator<=(iterator const &right) { return this->_ptr <= right._ptr; }
+    bool operator>=(iterator const &right) { return this->_ptr >= right._ptr; }
+    reference operator[](const int n) { return _ptr[n]; }
+    iterator &operator=(iterator const &rhs)
+    {
+        rhs._ptr = this->_ptr;
+        return *this;
+    }
+    iterator(iterator const &obj) { this->_ptr = obj._ptr; }
     ~iterator() {}
 
 private:

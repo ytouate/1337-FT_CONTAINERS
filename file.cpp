@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/09 19:56:41 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/10 12:41:55 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,18 @@ int main( void )
     std::vector<int> vec;
     vec.push_back(10);
     vec.push_back(20);
+
+    // std::random_access_iterator_tag something;
+    
     // std::vector<int>::iterator it2 = vec.begin();
     // std::vector<int>::iterator ite2 = vec.end();
-    std::vector<int>::reverse_iterator rit = vec.rbegin();
-    std::vector<int>::reverse_iterator rite = vec.rend();
-    std::vector<int>::reverse_iterator::
+    std::vector<int>::iterator rit = vec.begin();
+    std::vector<int>::iterator rite = vec.end();
+
+    ptrdiff_t random = rit - rite;
+    ptrdiff_t something = it - ite;
+    std::cout << something << std::endl;
+    std::cout << random << std::endl;
     while (rit < rite)
     {
         std::cout << *rit << std::endl;
