@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 16:08:00 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/10 12:47:47 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/10 12:55:25 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,60 +26,63 @@ public:
     typedef T value_type;
     typedef T *pointer;
     typedef T &reference;
-    iterator(pointer ptr) : _ptr(ptr) {}
-    reference operator*(void) { return *_ptr; }
-    pointer operator->(void) { return _ptr; }
-    iterator operator+=(difference_type n)
+
+    inline iterator(pointer ptr) : _ptr(ptr) {}
+    inline reference operator*(void) { return *_ptr; }
+    inline pointer operator->(void) { return _ptr; }
+    inline ptrdiff_t operator - (iterator const &right) {return this->_ptr - right._ptr; }
+    inline ptrdiff_t operator + (iterator const &right) {return this->_ptr + right._ptr; }
+    inline iterator operator - (const int n) {return this->_ptr - n; }
+    inline iterator operator + (const int n) {return this->_ptr + n; }
+    inline bool operator==(iterator const &right) { return this->_ptr == right._ptr; }
+    inline bool operator!=(iterator const &right) { return this->_ptr != right._ptr; }
+    inline bool operator<(iterator const &right) { return this->_ptr < right._ptr; }
+    inline bool operator>(iterator const &right) { return this->_ptr > right._ptr; }
+    inline bool operator<=(iterator const &right) { return this->_ptr <= right._ptr; }
+    inline bool operator>=(iterator const &right) { return this->_ptr >= right._ptr; }
+    inline reference operator[](const int n) { return _ptr[n]; }
+    inline iterator(iterator const &obj) { this->_ptr = obj._ptr; }
+
+    inline iterator operator+=(difference_type n)
     {
         this->_ptr += n;
         return this->_ptr;
     }
-    iterator operator-=(difference_type n)
+    inline iterator operator-=(difference_type n)
     {
         this->_ptr -= n;
         return this;
     }
-    iterator operator--(void)
+    inline iterator operator--(void)
     {
         iterator temp = *this;
         this->_ptr--;
         return temp;
     }
-    iterator operator++(void)
+    inline iterator operator++(void)
     {
         iterator temp = *this;
         this->_ptr++;
         return temp;
     }
-    iterator operator++(int notUsed)
+    inline iterator operator++(int notUsed)
     {
         (void)notUsed;
         this->_ptr++;
         return *this;
     }
-    iterator operator--(int notUsed)
+    inline iterator operator--(int notUsed)
     {
         (void)notUsed;
         this->_ptr--;
         return *this;
     }
-    ptrdiff_t operator - (iterator const &right) {return this->_ptr - right._ptr; }
-    ptrdiff_t operator + (iterator const &right) {return this->_ptr + right._ptr; }
-    iterator operator - (const int n) {return this->_ptr - n; }
-    iterator operator + (const int n) {return this->_ptr + n; }
-    bool operator==(iterator const &right) { return this->_ptr == right._ptr; }
-    bool operator!=(iterator const &right) { return this->_ptr != right._ptr; }
-    bool operator<(iterator const &right) { return this->_ptr < right._ptr; }
-    bool operator>(iterator const &right) { return this->_ptr > right._ptr; }
-    bool operator<=(iterator const &right) { return this->_ptr <= right._ptr; }
-    bool operator>=(iterator const &right) { return this->_ptr >= right._ptr; }
-    reference operator[](const int n) { return _ptr[n]; }
-    iterator &operator=(iterator const &rhs)
+    inline iterator &operator=(iterator const &rhs)
     {
         rhs._ptr = this->_ptr;
         return *this;
     }
-    iterator(iterator const &obj) { this->_ptr = obj._ptr; }
+
     ~iterator() {}
 
 private:
