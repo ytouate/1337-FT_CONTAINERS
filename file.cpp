@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/10 12:41:55 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/10 12:48:38 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,6 @@ int main( void )
     std::vector<int>::iterator rit = vec.begin();
     std::vector<int>::iterator rite = vec.end();
 
-    ptrdiff_t random = rit - rite;
-    ptrdiff_t something = it - ite;
-    std::cout << something << std::endl;
-    std::cout << random << std::endl;
     while (rit < rite)
     {
         std::cout << *rit << std::endl;
