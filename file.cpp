@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/10 12:51:45 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/11 09:57:04 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <array>
 # include <memory.h>
 # include "iterator.hpp"
-
+# include "reverse_iterator.hpp"
 
 class Integers
 {
@@ -64,7 +64,7 @@ int main( void )
     vec.push_back(20);
 
     // std::random_access_iterator_tag something;
-    
+    std::vector<int>::iterator::iterator_type
     // std::vector<int>::iterator it2 = vec.begin();
     // std::vector<int>::iterator ite2 = vec.end();
     std::vector<int>::iterator rit = vec.begin();
