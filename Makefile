@@ -6,11 +6,11 @@
 #    By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/03 12:47:40 by ytouate           #+#    #+#              #
-#    Updated: 2022/11/12 11:24:02 by ytouate          ###   ########.fr        #
+#    Updated: 2022/11/12 12:21:46 by ytouate          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FILE = ./file.cpp
+FILE = ./main.cpp
 
 NAME = main.exe
 

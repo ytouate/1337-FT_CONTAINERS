@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 16:08:00 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/10 12:55:25 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/12 14:32:09 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ public:
     inline iterator(pointer ptr) : _ptr(ptr) {}
     inline reference operator*(void) { return *_ptr; }
     inline pointer operator->(void) { return _ptr; }
-    inline ptrdiff_t operator - (iterator const &right) {return this->_ptr - right._ptr; }
-    inline ptrdiff_t operator + (iterator const &right) {return this->_ptr + right._ptr; }
-    inline iterator operator - (const int n) {return this->_ptr - n; }
-    inline iterator operator + (const int n) {return this->_ptr + n; }
+    inline ptrdiff_t operator-(iterator const &right) { return this->_ptr - right._ptr; }
+    inline ptrdiff_t operator+(iterator const &right) { return this->_ptr + right._ptr; }
+    inline iterator operator-(const int n) { return this->_ptr - n; }
+    inline iterator operator+(const int n) { return this->_ptr + n; }
     inline bool operator==(iterator const &right) { return this->_ptr == right._ptr; }
     inline bool operator!=(iterator const &right) { return this->_ptr != right._ptr; }
     inline bool operator<(iterator const &right) { return this->_ptr < right._ptr; }
@@ -79,10 +79,9 @@ public:
     }
     inline iterator &operator=(iterator const &rhs)
     {
-        rhs._ptr = this->_ptr;
+        this->_ptr = rhs._ptr;
         return *this;
     }
-
     ~iterator() {}
 
 private:

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:35:09 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/12 12:11:04 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/12 14:32:04 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,22 @@ namespace ft
         typedef typename ft::iterator_traits<T>::reference reference;
 
         inline reference operator*(void) { return *_iter; }
-        reverse_iterator (T ptr): _iter(ptr) {} 
-        inline difference_type operator-(reverse_iterator const &right) { return this->_iter - right._iter; }
-        inline difference_type operator+(reverse_iterator const &right) { return this->_iter + right._iter; }
-        inline reverse_iterator operator-(const int n) { return this->_iter - n; }
-        inline reverse_iterator operator+(const int n) { return this->_iter + n; }
+        reverse_iterator(T ptr) : _iter(ptr) {}
+        inline difference_type operator-(reverse_iterator const &right) { return this->_iter + right._iter; }
+        inline difference_type operator+(reverse_iterator const &right) { return this->_iter - right._iter; }
+        inline reverse_iterator operator-(const int n) { return this->_iter + n; }
+        inline reverse_iterator operator+(const int n) { return this->_iter - n; }
         inline bool operator==(reverse_iterator const &right) { return this->_iter == right._iter; }
         inline bool operator!=(reverse_iterator const &right) { return this->_iter != right._iter; }
         inline bool operator<(reverse_iterator const &right) { return this->_iter < right._iter; }
         inline bool operator>(reverse_iterator const &right) { return this->_iter > right._iter; }
         inline bool operator<=(reverse_iterator const &right) { return this->_iter <= right._iter; }
         inline bool operator>=(reverse_iterator const &right) { return this->_iter >= right._iter; }
+
         inline reverse_iterator operator--(void)
         {
             reverse_iterator temp = *this;
-            this->_iter++ ;
+            this->_iter++;
             return temp;
         }
         inline reverse_iterator operator++(void)
@@ -61,6 +62,15 @@ namespace ft
             (void)notUsed;
             this->_iter++;
             return *this;
+        }
+        inline reverse_iterator &operator=(reverse_iterator const &rhs)
+        {
+            this->_iter = rhs._iter;
+            return *this;
+        } 
+        reverse_iterator (reverse_iterator const & obj): _iter(NULL)
+        {
+            this->_iter = obj._iter;
         }
     private:
         T _iter;
