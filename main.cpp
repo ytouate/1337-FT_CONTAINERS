@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/14 09:49:57 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/14 13:18:28 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include <memory.h>
 #include "iterator.hpp"
 #include "reverse_iterator.hpp"
+#include "vector/vector.hpp"
 
 class Integers
 {
@@ -30,10 +31,10 @@ private:
     int size;
 
 public:
-    iterator<int> begin() { return iterator<int>(&vec[0]); }
-    iterator<int> end() { return iterator<int>(&vec[200]); }
-    ft::reverse_iterator<iterator<int> > rbegin() { return ft::reverse_iterator<iterator<int> >(&vec[199]); }
-    ft::reverse_iterator<iterator<int> > rend() { return ft::reverse_iterator<iterator<int> >(&vec[size - (size + 1)]); }
+    ft::iterator<int> begin() { return ft::iterator<int>(&vec[0]); }
+    ft::iterator<int> end() { return ft::iterator<int>(&vec[200]); }
+    ft::reverse_iterator<ft::iterator<int> > rbegin() { return ft::reverse_iterator<ft::iterator<int> >(&vec[199]); }
+    ft::reverse_iterator<ft::iterator<int> > rend() { return ft::reverse_iterator<ft::iterator<int> >(&vec[size - (size + 1)]); }
     void f() { std::cout << "hello world\n"; }
     Integers() : size(200)
     {
@@ -51,11 +52,11 @@ int main(void)
 
     Integers ints;
 
-    iterator<int> it = ints.begin();
-    iterator<int> ite = ints.end();
+    ft::iterator<int> it = ints.begin();
+    ft::iterator<int> ite = ints.end();
 
-    ft::reverse_iterator<iterator<int> > rit = ints.rbegin();
-    ft::reverse_iterator<iterator<int> > rite = ints.rend();
+    ft::reverse_iterator<ft::iterator<int> > rit = ints.rbegin();
+    ft::reverse_iterator<ft::iterator<int> > rite = ints.rend();
 
     // rit++;
     // rit--;
@@ -68,7 +69,7 @@ int main(void)
 
     std::vector<int>::reverse_iterator rit2 = vec.rbegin();
     std::vector<int>::reverse_iterator rite2 = vec.rend();
-    ft::reverse_iterator<iterator<int> > another(rit);
+    ft::reverse_iterator<ft::iterator<int> > another(rit);
     rite = rit;
     // rite--;
     // std::cout << *rite2 << std::endl;
