@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 13:41:14 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/12 12:15:04 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/14 09:42:58 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,25 @@
 namespace ft
 {
     template <class T>
-    struct iterator_traits
+    class iterator_traits
     {
+    public:
         typedef typename T::value_type value_type;
         typedef typename T::difference_type difference_type;
         typedef typename T::iterator_category iterator_category;
         typedef typename T::pointer pointer;
         typedef typename T::reference reference;
+    };
+
+    template <class T>
+    class iterator_traits<T *>
+    {
+    public:
+        typedef T value_type;
+        typedef T *pointer;
+        typedef T &reference;
+        typedef std::random_access_iterator_tag iterator_category;
+        typedef ptrdiff_t difference_type;
     };
 
     // template <class T>

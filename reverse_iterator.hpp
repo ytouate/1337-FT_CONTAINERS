@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:35:09 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/12 14:32:04 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/14 09:49:49 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define REVERSE_ITERATOR_HPP
 
 #include "iterator_traits.hpp"
+
 namespace ft
 {
     template <class T>
@@ -67,11 +68,12 @@ namespace ft
         {
             this->_iter = rhs._iter;
             return *this;
-        } 
-        reverse_iterator (reverse_iterator const & obj): _iter(NULL)
+        }
+        reverse_iterator(reverse_iterator const &obj) : _iter(NULL)
         {
             this->_iter = obj._iter;
         }
+
     private:
         T _iter;
     };

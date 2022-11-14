@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/12 14:31:55 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/14 09:49:57 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ public:
     ft::reverse_iterator<iterator<int> > rbegin() { return ft::reverse_iterator<iterator<int> >(&vec[199]); }
     ft::reverse_iterator<iterator<int> > rend() { return ft::reverse_iterator<iterator<int> >(&vec[size - (size + 1)]); }
     void f() { std::cout << "hello world\n"; }
-    Integers(): size(200)
+    Integers() : size(200)
     {
         std::srand(time(NULL));
         for (int i = 0; i < 200; i++)
@@ -57,10 +57,9 @@ int main(void)
     ft::reverse_iterator<iterator<int> > rit = ints.rbegin();
     ft::reverse_iterator<iterator<int> > rite = ints.rend();
 
-
     // rit++;
     // rit--;
-    
+
     std::vector<int> vec;
     for (int i = 0; i < 200; i++)
     {
@@ -69,11 +68,11 @@ int main(void)
 
     std::vector<int>::reverse_iterator rit2 = vec.rbegin();
     std::vector<int>::reverse_iterator rite2 = vec.rend();
-    ft::reverse_iterator< iterator <int> > another(rit);
+    ft::reverse_iterator<iterator<int> > another(rit);
     rite = rit;
     // rite--;
     // std::cout << *rite2 << std::endl;
-    std::cout << *(rite - 1)<< std::endl;
+    std::cout << *(rite - 1) << std::endl;
     // Integers ints;
     // iterator<Integers> it = ints.begin();
     // iterator<Integers> ite = ints.end();

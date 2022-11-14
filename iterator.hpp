@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 16:08:00 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/12 14:32:09 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/14 09:48:44 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,17 @@
 #include <iostream>
 #include <iterator>
 #include <set>
+#include "iterator_traits.hpp"
 
 template <class T>
 class iterator
 {
 public:
-    typedef std::random_access_iterator_tag iterator_category;
-    typedef ptrdiff_t difference_type;
-    typedef T value_type;
-    typedef T *pointer;
-    typedef T &reference;
+    typedef typename ft::iterator_traits<T *>::iterator_category iterator_category;
+    typedef typename ft::iterator_traits<T *>::difference_type difference_type;
+    typedef typename ft::iterator_traits<T *>::value_type value_type;
+    typedef typename ft::iterator_traits<T *>::pointer pointer;
+    typedef typename ft::iterator_traits<T *>::reference reference;
 
     inline iterator(pointer ptr) : _ptr(ptr) {}
     inline reference operator*(void) { return *_ptr; }
