@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/14 14:39:20 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/14 15:16:35 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,19 @@ int main(void)
     ft::vector<int>::iterator it = myVec.begin();
     ft::vector<int>::iterator ite = myVec.end();
     
+    int n = 1;
     for (; it != ite; ++it)
+    {
+        *it = n;
+        n++;
         std::cout << *it << std::endl;
+    }
+    ft::vector<int>::reverse_iterator rit = myVec.rbegin();
+    ft::vector<int>::reverse_iterator rite = myVec.rend();
+
+    for (; rit != rite; ++rit)
+        std::cout << *rit << std::endl;
+    
     return 0;
 
     // Integers ints;
