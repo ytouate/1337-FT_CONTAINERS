@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/14 15:14:39 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/14 23:17:09 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,25 @@ namespace ft
         typedef ft::iterator<T> iterator;
         typedef typename Allocator::const_pointer const_pointer;
         typedef ft::reverse_iterator<iterator> reverse_iterator;
-
+        reference operator [] (size_type n)  { return this->vec[n]; }
+        const_reference operator [] (size_type n) const { return this->vec[n]; }
+        const_reference at(size_type n) const
+        {
+            if (n >= this->len)
+                throw std::out_of_range("Index out of Range");
+            return this->vec[n];
+        }
+        reference at(size_type n)
+        {
+            if (n >= this->len)
+                throw std::out_of_range("Index out of range");
+            return this->vec[n];
+        }
+        reference front();
+        const_reference front() const;
+        reference back();
+        const_reference back() const;
+        size_type max_size() const { return this->_alloc.max_size(); }
         iterator begin() { return ft::iterator<T>(&vec[0]); }
         iterator end() { return ft::iterator<T>(&vec[len]); }
         reverse_iterator rbegin() { return ft::reverse_iterator <ft::iterator <T> > (&vec[len - 1]); }
@@ -57,6 +75,11 @@ namespace ft
             for (int i = 0; i < n; i++)
                 this->vec[i] = n;
         }
+        
+        allocator_type get_allocator() const { return this->_alloc; }
+        size_type size() const { return this->len; }
+        
+        // unimplimented functions
         vector &operator=(vector const &rhs);
         vector(vector const &obj);
         ~vector()

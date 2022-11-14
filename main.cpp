@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/14 15:16:35 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/14 23:17:45 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int main(void)
     ft::vector<int> myVec(10, 10);
     ft::vector<int>::iterator it = myVec.begin();
     ft::vector<int>::iterator ite = myVec.end();
-    
+    std::vector<int> v;
     int n = 1;
     for (; it != ite; ++it)
     {
@@ -65,9 +65,20 @@ int main(void)
     ft::vector<int>::reverse_iterator rit = myVec.rbegin();
     ft::vector<int>::reverse_iterator rite = myVec.rend();
 
-    for (; rit != rite; ++rit)
-        std::cout << *rit << std::endl;
+    // for (; rit != rite; ++rit)
+    //     std::cout << *rit << std::endl;
+    return 0;
+    int arr[200];
     
+    ft::iterator <int> arrit (&arr[0]);
+    ft::iterator <int> arrite (&arr[200]);
+    for (int i = 0; i < 200; i++)
+        arr[i] = i;
+    for (int i = 0; i < 200; i++)
+    {
+        std::cout << *arrit << std::endl;
+        arrit++;
+    }
     return 0;
 
     // Integers ints;
