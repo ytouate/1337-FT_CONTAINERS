@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/15 11:28:21 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/15 11:29:07 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ namespace ft
         typedef const reverse_iterator const_reverse_iterator;
 
         // element access
-        reference operator [] (size_type n)  { return this->vec[n]; }
+        reference operator[](size_type n) { return this->vec[n]; }
         reference front() { return this->vec[0]; }
         const_reference front() const { return this->vec[0]; }
         reference back() { return this->vec[this->len - 1]; }
         const_reference back() const { return this->vec[this->len - 1]; }
-        const_reference operator [] (size_type n) const { return this->vec[n]; }
+        const_reference operator[](size_type n) const { return this->vec[n]; }
         const_reference at(size_type n) const
         {
             if (n >= this->len)
@@ -62,17 +62,17 @@ namespace ft
                 throw std::out_of_range("Index out of range");
             return this->vec[n];
         }
-        
+
         // iterators
-        const_iterator begin() const { return ft::iterator <T> (&this->vec[0]); }
-        const_iterator end() const { return ft::iterator<T>  (&this->vec[this->len]); }
+        const_iterator begin() const { return ft::iterator<T>(&this->vec[0]); }
+        const_iterator end() const { return ft::iterator<T>(&this->vec[this->len]); }
         iterator begin() { return ft::iterator<T>(&vec[0]); }
         iterator end() { return ft::iterator<T>(&vec[this->len]); }
-        const_reverse_iterator rbegin() const { return ft::reverse_iterator < ft::iterator <T> > (&this->vec[this->len - 1]); }
-        reverse_iterator rbegin() { return ft::reverse_iterator <ft::iterator <T> > (&vec[this->len - 1]); }
-        reverse_iterator rend() { return ft::reverse_iterator <ft::iterator <T> > (&vec[-1]); }
-        const_reverse_iterator rend() const { return ft::reverse_iterator <ft::iterator<T> > (&this->vec[-1]); }
-        
+        const_reverse_iterator rbegin() const { return ft::reverse_iterator<ft::iterator<T> >(&this->vec[this->len - 1]); }
+        reverse_iterator rbegin() { return ft::reverse_iterator<ft::iterator<T> >(&vec[this->len - 1]); }
+        reverse_iterator rend() { return ft::reverse_iterator<ft::iterator<T> >(&vec[-1]); }
+        const_reverse_iterator rend() const { return ft::reverse_iterator<ft::iterator<T> >(&this->vec[-1]); }
+
         // capacity
         size_type max_size() const { return this->_alloc.max_size(); }
         size_type size() const { return this->len; }
@@ -96,7 +96,7 @@ namespace ft
                 this->vec[i] = n;
         }
         allocator_type get_allocator() const { return this->_alloc; }
-        vector &operator=(const vector<T, Allocator> & rhs);
+        vector &operator=(const vector<T, Allocator> &rhs);
         vector(vector const &obj);
         ~vector() {}
     };

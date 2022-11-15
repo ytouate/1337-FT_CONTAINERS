@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/15 11:12:59 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/15 11:29:12 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int main(void)
 
     std::vector<int> i;
     ft::vector<int> myVec;
-    
+
     // std::cout << i.back() << std::endl;
     return 0;
     ft::vector<int>::iterator it = myVec.begin();
@@ -69,14 +69,13 @@ int main(void)
     ft::vector<int>::reverse_iterator rit = myVec.rbegin();
     ft::vector<int>::reverse_iterator rite = myVec.rend();
 
-
     // for (; rit != rite; ++rit)
     //     std::cout << *rit << std::endl;
     return 0;
     int arr[200];
-    
-    ft::iterator <int> arrit (&arr[0]);
-    ft::iterator <int> arrite (&arr[200]);
+
+    ft::iterator<int> arrit(&arr[0]);
+    ft::iterator<int> arrite(&arr[200]);
     for (int i = 0; i < 200; i++)
         arr[i] = i;
     for (int i = 0; i < 200; i++)
@@ -90,7 +89,7 @@ int main(void)
 
     // ft::iterator<int> it = ints.begin();
     // ft::iterator<int> ite = ints.end();
- 
+
     // ft::reverse_iterator<ft::iterator<int> > rit = ints.rbegin();
     // ft::reverse_iterator<ft::iterator<int> > rite = ints.rend();
 
