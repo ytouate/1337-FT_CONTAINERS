@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/15 11:29:07 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/15 12:52:50 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,34 @@ namespace ft
         size_type size() const { return this->len; }
         size_type capacity() const { return this->_capacity; }
         bool empty() const { return this->len == 0; }
-        void reserve(size_type n);
+        void reserve(size_type n)
+        {
+            if (n <= this->_capacity)
+                return;
+            this->_capacity = n;
+            this->vec = this->_alloc.allocate(n);
+        }
         void resize(size_type sz, T c = T());
 
+        // modifiers
+        void push_back(const T &x)
+        {
+            size_type n;
+            if (this->len == this->_capacity)
+            {
+                n = this->_capacity == 0 ? 1 : this->_capacity * 2;
+                this->reserve(n);
+            }
+            std::cout << "set index " << this->len << "to " << x << std::endl;
+            this->vec[this->len] = x;
+            std::cout << this->vec[this->len] << std::endl;
+            this->len++;
+        }
         // construction / destruction / assignment / copy construction
         explicit vector(const Allocator &alloc = Allocator())
         {
             this->len = 0;
+            this->_capacity = 0;
             this->vec = this->_alloc.allocate(this->len);
         }
         explicit vector(size_type n, const T &value = T(), const Allocator &alloc = Allocator())
