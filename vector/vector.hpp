@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/16 11:33:19 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/16 18:52:24 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,25 +87,37 @@ namespace ft
         // void insert(iterator position, size_type n, const T &x)
         // {
         //     size_type newSize = this->len + n;
-        //     size_type newCapacity;
-        //     std::cout << newSize << std::endl;
-        //     newCapacity = newSize == this->_capacity ? newSize : newSize * 2;
-        //     if (newCapacity == 0)
-        //         newCapacity++;
-        //     // this->reserve(newCapacity);
-        //     T *tmp = this->_alloc.allocate(newCapacity);
-        //     size_type i = 0;
-        //     iterator it = this->begin();
-        //     while (it != position)
-        //         tmp[i++] = *it++;
-        //     for (; i < n; i++)
-        //         tmp[i++] = x;
-        //     while (it != this->end())
-        //         tmp[i++] = *it++;
-        //     for (int j = 0; j < i; j++)
-        //         std::cout << tmp[i] << std::endl;
+        //     size_type newCapacity = 0;
+        //     if (this->empty())
+        //         newCapacity += n;
+        //     else if (this->_capacity < this->len + n)
+        //     {
+        //         newCapacity = this->_capacity * 2;
+        //         if (newCapacity < this->len + n)
+        //             newCapacity = this->_capacity + n;
+        //     }
+        //     this->reserve(newCapacity);
+        //     this->push_back(x);
+        //     while ()
         // }
-        void resize(size_type n, T c = T());
+        void resize(size_type n, T c = T())
+        {
+            
+            if (n > this->_capacity)
+            {
+                this->reserve(n);
+                for (int i = this->len; i < this->_capacity; i++)
+                    this->push_back(c);
+            }
+            else
+            {
+                while (this->len > n)
+                {
+                    std::cout << "am here\n";
+                    this->pop_back();
+                }
+            }
+        }
 
         
         // modifiers
@@ -129,6 +141,7 @@ namespace ft
             this->vec[this->len] = x;
             this->len++;
         }
+
         // construction / destruction / assignment / copy construction
         explicit vector(const Allocator &alloc = Allocator())
         {
@@ -140,6 +153,7 @@ namespace ft
         explicit vector(size_type n, const T &value = T(), const Allocator &alloc = Allocator())
         {
             len = n;
+            this->_capacity = n;
             this->_alloc = alloc;
             this->vec = this->_alloc.allocate(n);
             for (int i = 0; i < n; i++)
@@ -150,10 +164,10 @@ namespace ft
         vector(vector const &obj);
         ~vector() {}
     private:
-        size_type len;
-        Allocator _alloc;
-        size_type _capacity;
-        T *vec;
+		size_type len;
+		Allocator _alloc;
+		size_type _capacity;
+		T *vec;
     };
 }
 
