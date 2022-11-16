@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/16 18:52:24 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/16 20:07:25 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ namespace ft
         // }
         void resize(size_type n, T c = T())
         {
-            
+
             if (n > this->_capacity)
             {
                 this->reserve(n);
@@ -112,23 +112,19 @@ namespace ft
             else
             {
                 while (this->len > n)
-                {
-                    std::cout << "am here\n";
                     this->pop_back();
-                }
             }
         }
 
-        
         // modifiers
-        void pop_back( void )
+        void pop_back(void)
         {
             if (this->empty())
                 return;
             this->len--;
             this->reserve(this->len);
         }
-        iterator insert(iterator position, const T & x);
+        iterator insert(iterator position, const T &x);
         // void insert(iterator position, size_type n, const T & x);
         void push_back(const T &x)
         {
@@ -163,11 +159,12 @@ namespace ft
         vector &operator=(const vector<T, Allocator> &rhs);
         vector(vector const &obj);
         ~vector() {}
+
     private:
-		size_type len;
-		Allocator _alloc;
-		size_type _capacity;
-		T *vec;
+        size_type len;
+        Allocator _alloc;
+        size_type _capacity;
+        T *vec;
     };
 }
 
