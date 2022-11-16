@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/15 12:54:14 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/16 11:32:33 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,23 +55,52 @@ int main(void)
     ft::vector<int> myVec;
     ft::vector<int>::iterator myIt;
     ft::vector<int>::iterator myIte;
-    
+    // myVec.reserve(10);
+    // myVec.pop_back();
     myVec.push_back(10);
     myVec.push_back(20);
     myVec.push_back(30);
-    myVec.push_back(40);
-    myVec.push_back(50);
+    myVec.push_back(10);
+    myVec.push_back(20);
+    myVec.push_back(30);
+    myVec.push_back(10);
+    myVec.push_back(20);
+    myVec.push_back(30);
+    myVec.push_back(10);
+    myVec.push_back(20);
+    myVec.push_back(30);
+    // i.push_back(10);
+    // i.push_back(20);
+    // i.push_back(30);
+    
+    // std::vector<int>::iterator iIt = i.begin();
+    // std::vector<int>::iterator iIte = i.end();
+
+    // i.pop_back();
+    // for (; iIt != iIte; iIt++)
+    //     std::cout << *iIt << std::endl;
+    myVec.pop_back();
+    myVec.pop_back();
+    myVec.pop_back();
+    myVec.pop_back();
+    myVec.pop_back();myVec.pop_back();
+    myVec.pop_back();
+    myVec.pop_back();myVec.pop_back();myVec.pop_back();myVec.pop_back();
+    myVec.pop_back();
     myIt = myVec.begin();
     myIte = myVec.end();
     for (; myIt != myIte; myIt++)
         std::cout << *myIt << std::endl;
-    // std::cout << myVec.at(0) << std::endl;
-    // std::cout << myVec.at(1) << std::endl;
-    // std::cout << myVec.at(2) << std::endl;
-    // std::cout << myVec.at(3) << std::endl;
+    
+    // std::cout << " value in main "<< myVec.at(0) << std::endl;
+    // std::cout << " value in main "<< myVec.at(1) << std::endl;
+    // std::cout << " value in main "<< myVec.at(2) << std::endl;
+    // std::cout << " value in main "<< myVec.at(3) << std::endl;
     // std::cout << "size " << myVec.size() << std::endl;
-    std::cout << "capacity: " << myVec.capacity() << std::endl;
-    // std::cout << i.back() << std::endl;
+    // std::cout << "capacity: " << myVec.capacity() << std::endl;
+    // std::cout << myVec.back() << std::endl;
+    // std::cout << myVec.front() << std::endl;
+    system("leaks main.exe");
     return 0;
     ft::vector<int>::iterator it = myVec.begin();
     ft::vector<int>::iterator ite = myVec.end();

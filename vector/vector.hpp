@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/15 12:52:50 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/16 11:33:19 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,6 @@ namespace ft
     template <class T, class Allocator = std::allocator<T> >
     class vector
     {
-    private:
-        size_t len;
-        Allocator _alloc;
-        size_t _capacity;
-        T *vec;
 
     public:
         // types
@@ -83,11 +78,46 @@ namespace ft
             if (n <= this->_capacity)
                 return;
             this->_capacity = n;
+            T *tmp = this->vec;
             this->vec = this->_alloc.allocate(n);
+            for (size_type i = 0; i < this->len; i++)
+                this->vec[i] = tmp[i];
+            delete tmp;
         }
-        void resize(size_type sz, T c = T());
+        // void insert(iterator position, size_type n, const T &x)
+        // {
+        //     size_type newSize = this->len + n;
+        //     size_type newCapacity;
+        //     std::cout << newSize << std::endl;
+        //     newCapacity = newSize == this->_capacity ? newSize : newSize * 2;
+        //     if (newCapacity == 0)
+        //         newCapacity++;
+        //     // this->reserve(newCapacity);
+        //     T *tmp = this->_alloc.allocate(newCapacity);
+        //     size_type i = 0;
+        //     iterator it = this->begin();
+        //     while (it != position)
+        //         tmp[i++] = *it++;
+        //     for (; i < n; i++)
+        //         tmp[i++] = x;
+        //     while (it != this->end())
+        //         tmp[i++] = *it++;
+        //     for (int j = 0; j < i; j++)
+        //         std::cout << tmp[i] << std::endl;
+        // }
+        void resize(size_type n, T c = T());
 
+        
         // modifiers
+        void pop_back( void )
+        {
+            if (this->empty())
+                return;
+            this->len--;
+            this->reserve(this->len);
+        }
+        iterator insert(iterator position, const T & x);
+        // void insert(iterator position, size_type n, const T & x);
         void push_back(const T &x)
         {
             size_type n;
@@ -96,9 +126,7 @@ namespace ft
                 n = this->_capacity == 0 ? 1 : this->_capacity * 2;
                 this->reserve(n);
             }
-            std::cout << "set index " << this->len << "to " << x << std::endl;
             this->vec[this->len] = x;
-            std::cout << this->vec[this->len] << std::endl;
             this->len++;
         }
         // construction / destruction / assignment / copy construction
@@ -106,6 +134,7 @@ namespace ft
         {
             this->len = 0;
             this->_capacity = 0;
+            this->_alloc = alloc;
             this->vec = this->_alloc.allocate(this->len);
         }
         explicit vector(size_type n, const T &value = T(), const Allocator &alloc = Allocator())
@@ -120,6 +149,11 @@ namespace ft
         vector &operator=(const vector<T, Allocator> &rhs);
         vector(vector const &obj);
         ~vector() {}
+    private:
+        size_type len;
+        Allocator _alloc;
+        size_type _capacity;
+        T *vec;
     };
 }
 
