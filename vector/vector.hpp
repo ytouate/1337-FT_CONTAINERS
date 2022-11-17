@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/17 15:02:44 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/17 15:46:51 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,12 @@ namespace ft
             while (n--)
                 tmp[sz++] = x;
             while (it != this->end())
-                tmp[sz++] = *it++;
+            {
+                tmp[sz] = *it;
+                sz++;
+                it++;
+                
+            }
             this->reserve(newCapacity);
             for (int i = 0; i < sz; i++)
                 this->vec[i] = tmp[i];

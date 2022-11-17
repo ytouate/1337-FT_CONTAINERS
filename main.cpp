@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/17 14:46:22 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/17 15:47:22 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,19 @@ int main(void)
     theirVec.insert(theirVec.begin(), 1, 10);
     theirVec.insert(theirVec.begin() + 1, 1, 20);
     theirVec.insert(theirVec.begin() + 2, 1, 30);
+    theirVec.push_back(1);
+    theirVec.push_back(2);
+    theirVec.push_back(3);
+    theirVec.push_back(4);
     theirVec.insert(theirVec.begin() + 3, 1, 40);
     theirVec.insert(theirVec.begin() + 4, 1, 50);
     theirVec.insert(theirVec.end(), 1, 999);
     
     myVec.insert(myVec.begin(), 1, 10);
+    myVec.push_back(1);
+    myVec.push_back(2);
+    myVec.push_back(3);
+    myVec.push_back(4);
     myVec.insert(myVec.begin() + 1, 1, 20);
     myVec.insert(myVec.begin() + 2, 1, 30);
     myVec.insert(myVec.begin() + 3, 1, 40);
