@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/16 20:07:25 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/17 14:23:35 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,22 +84,63 @@ namespace ft
                 this->vec[i] = tmp[i];
             delete tmp;
         }
-        // void insert(iterator position, size_type n, const T &x)
-        // {
-        //     size_type newSize = this->len + n;
-        //     size_type newCapacity = 0;
-        //     if (this->empty())
-        //         newCapacity += n;
-        //     else if (this->_capacity < this->len + n)
-        //     {
-        //         newCapacity = this->_capacity * 2;
-        //         if (newCapacity < this->len + n)
-        //             newCapacity = this->_capacity + n;
-        //     }
-        //     this->reserve(newCapacity);
-        //     this->push_back(x);
-        //     while ()
-        // }
+        void insert(iterator position, size_type n, const T &x)
+        {
+            
+            size_type newSize = this->len + n;
+            size_type newCapacity = 0;
+            if (this->empty())
+                newCapacity += n;
+            else if (this->_capacity < this->len + n)
+            {
+                newCapacity = this->_capacity * 2;
+                if (newCapacity < this->len + n)
+                    newCapacity = this->_capacity + n;
+            }
+            T tmp[newSize];
+            size_type sz = 0;
+            iterator it = this->begin();
+            if (position == this->begin())
+            {
+                while (n)
+                {
+                    tmp[sz] = x;
+                    sz++;
+                    n--;
+                }
+                while (it != this->end())
+                {
+                    tmp[sz] = *it;
+                    sz++;
+                    it++;
+                }
+                this->reserve(newCapacity);
+                for (int i = 0; i < sz; i++)
+                    this->vec[i] = tmp[i];
+                this->len = sz;
+            }
+            // else
+            // {
+            //     while (it < position)
+            //     {
+            //         tmp[sz++] = *it++;
+            //     }
+            //     while (n--)
+            //     {
+            //         tmp[sz++] = x;
+            //     }
+            //     while (it != this->end())
+            //     {
+            //         tmp[sz++] = *it++;
+            //     }
+            // }
+            // this->reserve(newCapacity);
+            // for (int i = 0; i < sz; i++)
+            // {
+            //     this->push_back(tmp[i]);
+            // }
+            // std::copy(tmp, tmp + sz, std::ostream_iterator<T> (std::cout, " "));
+        }
         void resize(size_type n, T c = T())
         {
 
@@ -129,9 +170,11 @@ namespace ft
         void push_back(const T &x)
         {
             size_type n;
-            if (this->len == this->_capacity)
+            if (this->len == 0)
+                this->reserve(1);
+            else if (this->len + 1 > this->_capacity)
             {
-                n = this->_capacity == 0 ? 1 : this->_capacity * 2;
+                n =  this->_capacity * 2;
                 this->reserve(n);
             }
             this->vec[this->len] = x;
