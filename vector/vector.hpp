@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/17 14:27:35 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/17 15:02:44 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,9 @@ namespace ft
                 this->vec[i] = tmp[i];
             delete tmp;
         }
-        void insert(iterator position, size_type n, const T &x)
+
+        size_type getNewCapacity(size_type n)
         {
-            
-            size_type newSize = this->len + n;
             size_type newCapacity = 0;
             if (this->empty())
                 newCapacity += n;
@@ -97,56 +96,64 @@ namespace ft
                 if (newCapacity < this->len + n)
                     newCapacity = this->_capacity + n;
             }
+            return newCapacity;
+        }
+
+        void addFront(iterator position, size_type n, const T &x)
+        {
+            size_type sz = 0;
+            size_type newSize = this->len + n;
+            size_type newCapacity = getNewCapacity(n);
+            iterator it = this->begin();
+            T tmp[newSize];
+            while (n--)
+                tmp[sz++] = x;
+            while (it != this->end())
+                tmp[sz++] = *it++;
+            this->reserve(newCapacity);
+            for (int i = 0; i < sz; i++)
+                this->vec[i] = tmp[i];
+            this->len = sz;
+        }
+
+        void insertAfter(iterator position, size_type n, const T &x)
+        {
+            size_type sz = 0;
+            size_type newSize = this->len + n;
+            size_type newCapacity = getNewCapacity(n);
+            iterator it = this->begin();
+            T tmp[newSize];
+
+            while (it < position)
+            {
+                tmp[sz] = *it;
+                it++;
+                sz++;
+            }
+            while (n--)
+                tmp[sz++] = x;
+            while (it != this->end())
+                tmp[sz++] = *it++;
+            this->reserve(newCapacity);
+            for (int i = 0; i < sz; i++)
+                this->vec[i] = tmp[i];
+            this->len = sz;
+        }
+
+        void insert(iterator position, size_type n, const T &x)
+        {
+            size_type newSize = this->len + n;
+            size_type newCapacity = 0;
+
             T tmp[newSize];
             size_type sz = 0;
             iterator it = this->begin();
             if (position == this->begin())
-            {
-                while (n)
-                {
-                    tmp[sz] = x;
-                    sz++;
-                    n--;
-                }
-                while (it != this->end())
-                {
-                    tmp[sz] = *it;
-                    sz++;
-                    it++;
-                }
-                this->reserve(newCapacity);
-                for (int i = 0; i < sz; i++)
-                    this->vec[i] = tmp[i];
-                this->len = sz;
-            }
+                addFront(position, n, x);
             else
-            {
-                while (it < position)
-                {
-                    tmp[sz] = *it;
-                    it++;
-                    sz++;
-                }
-                while (n)
-                {
-                    tmp[sz] = x;
-                    sz++;
-                    n--;
-                }
-                while (it != this->end())
-                {
-                    tmp[sz] = *it;
-                    it++;
-                    sz++;
-                }
-                this->reserve(newCapacity);
-                for (int i = 0; i < sz; i++)
-                {
-                    this->vec[i] = tmp[i];
-                }
-                this->len = sz;
-            }
+                insertAfter(position, n, x);
         }
+
         void resize(size_type n, T c = T())
         {
 
@@ -180,7 +187,7 @@ namespace ft
                 this->reserve(1);
             else if (this->len + 1 > this->_capacity)
             {
-                n =  this->_capacity * 2;
+                n = this->_capacity * 2;
                 this->reserve(n);
             }
             this->vec[this->len] = x;
