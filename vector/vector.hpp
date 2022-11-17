@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/17 14:23:35 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/17 14:27:35 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,27 +119,33 @@ namespace ft
                     this->vec[i] = tmp[i];
                 this->len = sz;
             }
-            // else
-            // {
-            //     while (it < position)
-            //     {
-            //         tmp[sz++] = *it++;
-            //     }
-            //     while (n--)
-            //     {
-            //         tmp[sz++] = x;
-            //     }
-            //     while (it != this->end())
-            //     {
-            //         tmp[sz++] = *it++;
-            //     }
-            // }
-            // this->reserve(newCapacity);
-            // for (int i = 0; i < sz; i++)
-            // {
-            //     this->push_back(tmp[i]);
-            // }
-            // std::copy(tmp, tmp + sz, std::ostream_iterator<T> (std::cout, " "));
+            else
+            {
+                while (it < position)
+                {
+                    tmp[sz] = *it;
+                    it++;
+                    sz++;
+                }
+                while (n)
+                {
+                    tmp[sz] = x;
+                    sz++;
+                    n--;
+                }
+                while (it != this->end())
+                {
+                    tmp[sz] = *it;
+                    it++;
+                    sz++;
+                }
+                this->reserve(newCapacity);
+                for (int i = 0; i < sz; i++)
+                {
+                    this->vec[i] = tmp[i];
+                }
+                this->len = sz;
+            }
         }
         void resize(size_type n, T c = T())
         {

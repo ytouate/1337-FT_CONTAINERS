@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/17 14:22:49 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/17 14:29:06 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int main(void)
     theirVec.insert(theirVec.begin(), 1, 50);
     theirVec.insert(theirVec.begin(), 1, 60);
     theirVec.insert(theirVec.begin(), 1, 70);
+    theirVec.insert(theirVec.begin() + 2, 1, 999);
     myVec.insert(myVec.begin(), 1, 10);
     myVec.insert(myVec.begin(), 1, 20);
     myVec.insert(myVec.begin(), 1, 30);
@@ -94,8 +95,8 @@ int main(void)
     myVec.insert(myVec.begin(), 1, 60);
     myVec.insert(myVec.begin(), 1, 70);
     myVec.insert(myVec.begin(), 1, 70);
+    myVec.insert(myVec.begin() + 2, 1, 999);
     
-    system("leaks main.exe");
     
     // myVec.insert(myVec.begin(), 1, 20);
     std::cout << theirVec.size() << " " << theirVec.capacity() << std::endl;
@@ -103,6 +104,7 @@ int main(void)
     std::copy(theirVec.begin(), theirVec.end(), std::ostream_iterator<int> (std::cout, " "));
     std::cout << std::endl;
     std::copy(myVec.begin(), myVec.end(), std::ostream_iterator<int> (std::cout, " "));
-    // std::cout << "\n";
+    std::cout << "\n";
+    system("leaks main.exe");
     return (0);
 }
