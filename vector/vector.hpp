@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/18 13:10:22 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/18 15:01:53 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,24 @@ namespace ft
             delete tmp;
         }
 
+        iterator erase(iterator position)
+        {
+            T tmp[this->len - 1];
+            size_type i = 0;
+            iterator it = this->begin();
+            while (it != this->end())
+            {
+                if (it != position)
+                    tmp[i++] = *it;
+                it++;
+            }
+            this->len--;
+            this->reserve(this->len);
+            for (int j = 0; j < this->len; j++)
+                this->vec[j] = tmp[j];
+            return position;
+        }
+        iterator erase(iterator first, iterator last);
         size_type getNewCapacity(size_type n)
         {
             size_type newCapacity = 0;

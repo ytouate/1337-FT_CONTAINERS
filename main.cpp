@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/18 13:11:03 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/18 15:02:25 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,15 @@ int main(void)
     // theirVec.push_back(30);
     // theirVec.insert(theirVec.begin(), 1, 5);
     theirVec.insert(theirVec.begin(), 10);
-    theirVec.insert(theirVec.begin(), 20);
-    theirVec.insert(theirVec.begin(), 30);
-    theirVec.insert(theirVec.begin(), 40);
-    theirVec.insert(theirVec.begin(), 50);
-    theirVec.insert(theirVec.begin(), 60);
-    theirVec.insert(theirVec.begin(), 70);
-    theirVec.insert(theirVec.begin(), 80);
+    theirVec.insert(theirVec.begin() + 1, 10);
+    // theirVec.insert(theirVec.begin() + 1, 10);
+    std::vector<int>::iterator a = theirVec.erase(theirVec.begin() + 1);
 
     myVec.insert(myVec.begin(), 10);
-    myVec.insert(myVec.begin(), 20);
-    myVec.insert(myVec.begin(), 30);
-    myVec.insert(myVec.begin(), 40);
-    myVec.insert(myVec.begin(), 50);
-    myVec.insert(myVec.begin(), 60);
-    myVec.insert(myVec.begin(), 70);
-    myVec.insert(myVec.begin(), 80);
+    myVec.insert(myVec.begin() + 1, 10);
+    ft::vector<int>::iterator b = myVec.erase(myVec.begin() + 1);
+    if (b == myVec.begin() )
+        std::cout << "am here\n";
     // std::vector<int>::iterator a = theirVec.insert(theirVec.begin() + 1, 10);
     // return 0;
     // myVec.insert(myVec.begin(), 1, 20);
@@ -64,6 +57,6 @@ int main(void)
     std::cout << std::endl;
     std::copy(myVec.begin(), myVec.end(), std::ostream_iterator<int> (std::cout, " "));
     std::cout << "\n";
-    system("leaks main.exe");
+    // system("leaks main.exe");
     return (0);
 }
