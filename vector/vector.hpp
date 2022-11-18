@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/18 18:22:47 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/18 18:34:39 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,11 @@ namespace ft
                     this->pop_back();
             }
         }
-
+        void clear( void ) 
+        {
+            erase(this->begin(), this->end());
+            this->len = 0;
+        }
         // modifiers
         void pop_back(void)
         {

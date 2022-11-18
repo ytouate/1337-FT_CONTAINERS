@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/18 18:23:09 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/18 18:35:12 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ int main(void)
     myVec.insert(myVec.begin(), 60);
     myVec.insert(myVec.begin(), 70);
     myVec.insert(myVec.begin(), 80);
-
-    myVec.erase(myVec.begin(), myVec.end() - 9);
+    theirVec.clear();
+    myVec.clear();    
     // theirVec.erase(theirVec.begin(), theirVec.end() - 8);
     // std::vector<int>::iterator a = theirVec.insert(theirVec.begin() + 1, 10);
     // return 0;
