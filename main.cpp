@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/17 15:47:22 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/17 15:49:06 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int main(void)
     theirVec.insert(theirVec.begin() + 3, 1, 40);
     theirVec.insert(theirVec.begin() + 4, 1, 50);
     theirVec.insert(theirVec.end(), 1, 999);
-    
+
     myVec.insert(myVec.begin(), 1, 10);
     myVec.push_back(1);
     myVec.push_back(2);
@@ -59,10 +59,7 @@ int main(void)
     myVec.insert(myVec.begin() + 3, 1, 40);
     myVec.insert(myVec.begin() + 4, 1, 50);
     myVec.insert(myVec.end(), 1, 999);
-    
 
-    
-    
     // myVec.insert(myVec.begin(), 1, 20);
     std::cout << theirVec.size() << " " << theirVec.capacity() << std::endl;
     std::cout << myVec.size() << " " << myVec.capacity() << std::endl;

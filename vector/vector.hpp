@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/17 15:46:51 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/17 15:51:37 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,7 +219,7 @@ namespace ft
         allocator_type get_allocator() const { return this->_alloc; }
         vector &operator=(const vector<T, Allocator> &rhs);
         vector(vector const &obj);
-        ~vector() {}
+        ~vector() { delete this->vec; }
 
     private:
         size_type len;
