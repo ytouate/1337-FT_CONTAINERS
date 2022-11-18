@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/18 15:01:53 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/18 18:22:47 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,12 +97,47 @@ namespace ft
                 it++;
             }
             this->len--;
-            this->reserve(this->len);
             for (int j = 0; j < this->len; j++)
                 this->vec[j] = tmp[j];
             return position;
         }
-        iterator erase(iterator first, iterator last);
+        bool isInRange(iterator first, iterator last, iterator toFind)
+        {
+            for (; first != last; first++)
+            {
+                if (toFind == first)
+                    return true;
+            }
+            return false;
+        }
+
+        iterator erase(iterator first, iterator last)
+        {
+            difference_type diff = last - first;
+            bool flag = false;
+            std::cout << "diff == " << diff << std::endl;
+            T tmp[this->len];
+            size_type i = 0;
+            iterator it = this->begin();
+            while (diff)
+            {
+                if (!isInRange(first, last, it))
+                {
+                    tmp[i++] = *it;
+                    flag = true;
+                }
+                else
+                    diff--;
+            }
+            if (flag)
+            {
+                this->len = i;
+                for (int j = 0; j < i; j++)
+                    this->vec[j] = tmp[j];
+            }
+            return first;
+        }
+
         size_type getNewCapacity(size_type n)
         {
             size_type newCapacity = 0;
