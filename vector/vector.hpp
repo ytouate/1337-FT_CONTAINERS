@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/18 18:34:39 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/18 21:38:31 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,10 @@ namespace ft
                     flag = true;
                 }
                 else
+                {
+                    this->len--;
                     diff--;
+                }
             }
             if (flag)
             {

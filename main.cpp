@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/18 18:35:12 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/18 21:46:15 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,51 +24,68 @@
 #include "reverse_iterator.hpp"
 #include "vector/vector.hpp"
 #include <memory>
+#include <fstream>
 
 int main(void)
 {
     ft::vector<int> myVec;
     std::vector<int> theirVec;
-    ft::vector<int>::iterator it = myVec.begin();
-    // myVec.push_back(10);
-    // myVec.push_back(20);
-    // myVec.push_back(30);
+    
+    ft::vector<int>::iterator myVecIt;
+    ft::vector<int>::iterator myVecIte;
+    
+    std::vector<int>::iterator theirVecIt;
+    std::vector<int>::iterator theirVecIte;
+    
+    std::ofstream theirResult("theirResult.txt");
+    std::ofstream myResult("myResult.txt");
 
-    // theirVec.push_back(10);
-    // theirVec.push_back(20);
-    // theirVec.push_back(30);
-    // theirVec.insert(theirVec.begin(), 1, 5);
-    theirVec.insert(theirVec.begin(), 10);
-    theirVec.insert(theirVec.begin(), 20);
-    theirVec.insert(theirVec.begin(), 30);
-    theirVec.insert(theirVec.begin(), 40);
-    theirVec.insert(theirVec.begin(), 50);
-    theirVec.insert(theirVec.begin(), 60);
-    theirVec.insert(theirVec.begin(), 70);
-    theirVec.insert(theirVec.begin(), 80);
-
-    myVec.insert(myVec.begin(), 10);
-    myVec.insert(myVec.begin(), 20);
-    myVec.insert(myVec.begin(), 30);
-    myVec.insert(myVec.begin(), 40);
-    myVec.insert(myVec.begin(), 50);
-    myVec.insert(myVec.begin(), 60);
-    myVec.insert(myVec.begin(), 70);
-    myVec.insert(myVec.begin(), 80);
-    theirVec.clear();
-    myVec.clear();    
-    // theirVec.erase(theirVec.begin(), theirVec.end() - 8);
-    // std::vector<int>::iterator a = theirVec.insert(theirVec.begin() + 1, 10);
-    // return 0;
-    // myVec.insert(myVec.begin(), 1, 20);
-    std::cout << "==== myVec Data ====\n";
-    std::cout << myVec.size() << " " << myVec.capacity() << std::endl;
-    std::copy(theirVec.begin(), theirVec.end(), std::ostream_iterator<int> (std::cout, " "));
-    std::cout << std::endl;
-    std::cout << "==== theirVec Data ====\n";
-    std::cout << theirVec.size() << " " << theirVec.capacity() << std::endl;
-    std::copy(myVec.begin(), myVec.end(), std::ostream_iterator<int> (std::cout, " "));
-    std::cout << "\n";
-    // system("leaks main.exe");
-    return (0);
+    std::srand(time(NULL));
+    for (int i = 0; i < 1000; i++)
+    {
+        const int val = std::rand();
+        myVec.push_back(val);
+        theirVec.push_back(val);
+    }
+    theirResult << theirVec.size() << std::endl;
+    myResult << myVec.size() << std::endl;
+    for (int i = 0; i < 1000; i++)
+    {
+        if (i % 2)
+        {
+            myVec.erase(myVec.begin());
+            theirVec.erase(theirVec.begin());
+        }
+    }
+    theirResult << theirVec.size() << std::endl;
+    myResult << myVec.size() << std::endl;
+    myVec.erase(myVec.begin(), myVec.end());
+    theirVec.erase(theirVec.begin(), theirVec.end());
+    for (int i = 0; i < 1000; i++)
+    {
+        const int val = std::rand();
+        myVec.insert(myVec.begin(), val);
+        theirVec.insert(theirVec.begin(), val);
+    }
+    theirResult << theirVec.size() << std::endl;
+    myResult << myVec.size() << std::endl;
+    for (int i = 0; i < 500; i++)
+    {
+        const int val = std::rand();
+        myVec.insert(myVec.begin() + i, val);
+        theirVec.insert(theirVec.begin() + i, val);
+    }
+    theirResult << theirVec.size() << std::endl;
+    myResult << myVec.size() << std::endl;
+    for (int i = 0; i < 1000; i++)
+    {
+        myResult << myVec[i] << "\n";
+        theirResult << theirVec[i] << "\n";
+    }
+    theirResult << theirVec.size() << std::endl;
+    myResult << myVec.size() << std::endl;
+    if (!system("diff theirResult.txt myResult.txt"))
+        std::cout << "OK\n";
+    else
+        std::cout << "KO\n";
 }
