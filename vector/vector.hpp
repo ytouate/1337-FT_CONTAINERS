@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/17 15:51:37 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/18 13:10:22 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,10 @@ namespace ft
             while (n--)
                 tmp[sz++] = x;
             while (it != this->end())
-                tmp[sz++] = *it++;
+            {
+                tmp[sz++] = *it;
+                it++;
+            }
             this->reserve(newCapacity);
             for (int i = 0; i < sz; i++)
                 this->vec[i] = tmp[i];
@@ -158,7 +161,11 @@ namespace ft
             else
                 insertAfter(position, n, x);
         }
-
+        iterator    insert(iterator position, const T &x)
+        {
+            insert(position, 1, x);
+            return (position);
+        }
         void resize(size_type n, T c = T())
         {
 
@@ -183,7 +190,7 @@ namespace ft
             this->len--;
             this->reserve(this->len);
         }
-        iterator insert(iterator position, const T &x);
+        // iterator insert(iterator position, const T &x);
         // void insert(iterator position, size_type n, const T & x);
         void push_back(const T &x)
         {
