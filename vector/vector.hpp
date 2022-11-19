@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/19 15:34:09 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/19 15:50:08 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ namespace ft
                 it++;
             }
             this->len--;
-            for (int j = 0; j < this->len; j++)
+            for (size_type j = 0; j < this->len; j++)
                 this->vec[j] = tmp[j];
             return position;
         }
@@ -134,7 +134,7 @@ namespace ft
             if (flag)
             {
                 this->len = i;
-                for (int j = 0; j < i; j++)
+                for (size_type j = 0; j < i; j++)
                     this->vec[j] = tmp[j];
             }
             return first;
@@ -154,7 +154,7 @@ namespace ft
             return newCapacity;
         }
 
-        void addFront(iterator position, size_type n, const T &x)
+        void addFront(size_type n, const T &x)
         {
             size_type sz = 0;
             size_type newSize = this->len + n;
@@ -169,7 +169,7 @@ namespace ft
                 it++;
             }
             this->reserve(newCapacity);
-            for (int i = 0; i < sz; i++)
+            for (size_type i = 0; i < sz; i++)
                 this->_alloc.construct(&this->vec[i], tmp[i]);
             this->len = sz;
         }
@@ -198,21 +198,16 @@ namespace ft
                 
             }
             this->reserve(newCapacity);
-            for (int i = 0; i < sz; i++)
+            for (size_type i = 0; i < sz; i++)
                 this->_alloc.construct(&this->vec[i], tmp[i]);
             this->len = sz;
         }
 
         void insert(iterator position, size_type n, const T &x)
         {
-            size_type newSize = this->len + n;
-            size_type newCapacity = 0;
-
-            T tmp[newSize];
-            size_type sz = 0;
             iterator it = this->begin();
             if (position == this->begin())
-                addFront(position, n, x);
+                addFront(n, x);
             else
                 insertAfter(position, n, x);
         }
@@ -273,6 +268,7 @@ namespace ft
         }
         explicit vector(size_type n, const T &value = T(), const Allocator &alloc = Allocator())
         {
+            (void)value;
             len = n;
             this->_capacity = n;
             this->_alloc = alloc;
