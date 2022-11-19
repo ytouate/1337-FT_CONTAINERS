@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/18 21:46:15 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/19 15:27:29 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,16 @@ int main(void)
     }
     theirResult << theirVec.size() << std::endl;
     myResult << myVec.size() << std::endl;
+    for (int i = 0; i < 1000; i++)
+    {
+        if (i % 2)
+        {
+            myVec.push_back(i);
+            theirVec.push_back(i);
+        }
+    }
+    theirResult << theirVec.size() << std::endl;
+    myResult << myVec.size() << std::endl;
     myVec.erase(myVec.begin(), myVec.end());
     theirVec.erase(theirVec.begin(), theirVec.end());
     for (int i = 0; i < 1000; i++)
@@ -84,8 +94,12 @@ int main(void)
     }
     theirResult << theirVec.size() << std::endl;
     myResult << myVec.size() << std::endl;
-    if (!system("diff theirResult.txt myResult.txt"))
+    bool res = system("diff theirResult.txt myResult.txt");
+    if (!res)
         std::cout << "OK\n";
     else
         std::cout << "KO\n";
+    system("rm theirResult.txt myResult.txt");
+    return res;
+    
 }

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/18 21:38:31 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/19 15:34:09 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ namespace ft
         {
             difference_type diff = last - first;
             bool flag = false;
-            std::cout << "diff == " << diff << std::endl;
             T tmp[this->len];
             size_type i = 0;
             iterator it = this->begin();
@@ -171,7 +170,7 @@ namespace ft
             }
             this->reserve(newCapacity);
             for (int i = 0; i < sz; i++)
-                this->vec[i] = tmp[i];
+                this->_alloc.construct(&this->vec[i], tmp[i]);
             this->len = sz;
         }
 
@@ -200,7 +199,7 @@ namespace ft
             }
             this->reserve(newCapacity);
             for (int i = 0; i < sz; i++)
-                this->vec[i] = tmp[i];
+                this->_alloc.construct(&this->vec[i], tmp[i]);
             this->len = sz;
         }
 
@@ -242,7 +241,7 @@ namespace ft
             erase(this->begin(), this->end());
             this->len = 0;
         }
-        // modifiers
+        
         void pop_back(void)
         {
             if (this->empty())
@@ -250,8 +249,6 @@ namespace ft
             this->len--;
             this->reserve(this->len);
         }
-        // iterator insert(iterator position, const T &x);
-        // void insert(iterator position, size_type n, const T & x);
         void push_back(const T &x)
         {
             size_type n;
@@ -262,7 +259,7 @@ namespace ft
                 n = this->_capacity * 2;
                 this->reserve(n);
             }
-            this->vec[this->len] = x;
+            this->_alloc.construct(&this->vec[this->len], x);
             this->len++;
         }
 
