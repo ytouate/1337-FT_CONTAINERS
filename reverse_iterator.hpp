@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:35:09 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/14 09:49:49 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/18 21:49:08 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,13 @@ namespace ft
             this->_iter--;
             return temp;
         }
-        inline reverse_iterator operator++(int notUsed)
+        inline reverse_iterator operator++(int)
         {
-            (void)notUsed;
             this->_iter--;
             return *this;
         }
-        inline reverse_iterator operator--(int notUsed)
+        inline reverse_iterator operator--(int)
         {
-            (void)notUsed;
             this->_iter++;
             return *this;
         }
