@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 16:08:00 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/17 15:51:27 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/19 20:39:55 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,20 @@ namespace ft
 
         inline iterator () : _ptr (nullptr) {}
         inline iterator(pointer ptr) : _ptr(ptr) {}
-        inline reference operator*(void) { return *_ptr; }
+        inline reference const operator*(void) { return *_ptr; }
         inline pointer operator->(void) { return _ptr; }
         inline ptrdiff_t operator-(iterator const &right) { return this->_ptr - right._ptr; }
         inline ptrdiff_t operator+(iterator const &right) { return this->_ptr + right._ptr; }
         inline iterator operator-(const int n) { return this->_ptr - n; }
         inline iterator operator+(const int n) { return this->_ptr + n; }
-        inline bool operator==(iterator const &right) { return this->_ptr == right._ptr; }
-        inline bool operator!=(iterator const &right) { return this->_ptr != right._ptr; }
-        inline bool operator<(iterator const &right) { return this->_ptr < right._ptr; }
-        inline bool operator>(iterator const &right) { return this->_ptr > right._ptr; }
-        inline bool operator<=(iterator const &right) { return this->_ptr <= right._ptr; }
-        inline bool operator>=(iterator const &right) { return this->_ptr >= right._ptr; }
+        inline bool operator==(iterator const &right) const { return this->_ptr == right._ptr; }
+        inline bool operator!=(iterator const &right) const { return this->_ptr != right._ptr; }
+        inline bool operator<(iterator const &right) const { return this->_ptr < right._ptr; }
+        inline bool operator>(iterator const &right) const { return this->_ptr > right._ptr; }
+        inline bool operator<=(iterator const &right) const { return this->_ptr <= right._ptr; }
+        inline bool operator>=(iterator const &right) const { return this->_ptr >= right._ptr; }
         inline reference operator[](const int n) { return _ptr[n]; }
         inline iterator(iterator const &obj) { this->_ptr = obj._ptr; }
-
         inline iterator operator+=(difference_type n)
         {
             this->_ptr += n;

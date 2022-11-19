@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/19 15:27:29 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/19 20:38:21 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,18 @@ int main(void)
     ft::vector<int> myVec;
     std::vector<int> theirVec;
     
-    ft::vector<int>::iterator myVecIt;
-    ft::vector<int>::iterator myVecIte;
-    
+    ft::vector<int>::iterator myVecIt = myVec.begin();
+    ft::vector<int>::iterator myVecIte = myVec.end();
+    ft::vector<int>::const_iterator x = myVec.begin();
+    ft::vector<int>::const_iterator y = myVec.end();
+    std::vector<int>::const_iterator j = theirVec.begin();
+
+    if (myVecIt < myVecIte)
+        std::cout << "non const\n";
+
+    if (x > y)
+        std::cout << "const\n";
+       j += 1;
     std::vector<int>::iterator theirVecIt;
     std::vector<int>::iterator theirVecIte;
     
