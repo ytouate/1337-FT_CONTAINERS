@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/20 11:54:11 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/20 15:54:35 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ namespace ft
         }
 
         // iterators
-        const_iterator begin() const { return ft::iterator<T>(&this->vec[0]); }
+        const_iterator begin() const { return ft::iterator<T>(vec); }
         const_iterator end() const { return ft::iterator<T>(&this->vec[this->len]); }
         iterator begin() { return ft::iterator<T>(&vec[0]); }
         iterator end() { return ft::iterator<T>(&vec[this->len]); }
@@ -78,12 +78,18 @@ namespace ft
         {
             if (n <= this->_capacity)
                 return;
-            this->_capacity = n;
-            T *tmp = this->vec;
+            T tmp[this->len];
+            for (size_type i = 0; i < this->len; ++i)
+            {
+                tmp[i] = this->vec[i];
+                this->_alloc.destroy(&vec[i]);
+            }
+            if (_capacity > 0)
+                this->_alloc.deallocate(vec, this->_capacity);
             this->vec = this->_alloc.allocate(n);
+            this->_capacity = n;
             for (size_type i = 0; i < this->len; i++)
-                this->vec[i] = tmp[i];
-            delete tmp;
+                this->_alloc.construct(&this->vec[i], tmp[i]);
         }
 
         iterator erase(iterator position)
@@ -95,13 +101,14 @@ namespace ft
             {
                 if (it != position)
                     tmp[i++] = *it;
-                else
-                    this->_alloc.destroy(&*it);
                 it++;
             }
-            this->len--;
+            this->pop_back();
             for (size_type j = 0; j < this->len; j++)
-                this->vec[j] = tmp[j];
+            {
+                    this->vec[j] = tmp[j];
+                // this->_alloc.construct(&this->vec[j], tmp[j]);
+            }
             return position;
         }
         bool isInRange(iterator first, iterator last, iterator toFind)
@@ -157,7 +164,6 @@ namespace ft
             return newCapacity;
         }
 
-
         void insert(iterator position, size_type n, const T &x)
         {
             iterator it = this->begin();
@@ -173,22 +179,27 @@ namespace ft
         }
         void resize(size_type n, T c = T())
         {
-
-            if (n > this->_capacity)
+            if (n > this->len)
             {
                 this->reserve(n);
-                for (int i = this->len; i < this->_capacity; i++)
-                    this->push_back(c);
+                for (size_type i = this->len; i < n; i++)
+                {
+                    this->_alloc.construct(&this->vec[i], c);
+                }
             }
             else
             {
                 while (this->len > n)
                     this->pop_back();
             }
+            this->len = n;
         }
         void clear(void)
         {
-            erase(this->begin(), this->end());
+            for (size_type i = 0; i < this->len; i++)
+            {
+                this->_alloc.destroy(vec + i);
+            }
             this->len = 0;
         }
 
@@ -196,8 +207,7 @@ namespace ft
         {
             if (this->empty())
                 return;
-            this->len--;
-            this->reserve(this->len);
+            this->_alloc.destroy(&this->vec[--this->len]);
         }
         void push_back(const T &x)
         {
@@ -219,20 +229,21 @@ namespace ft
             this->len = 0;
             this->_capacity = 0;
             this->_alloc = alloc;
-            this->vec = this->_alloc.allocate(this->len);
+            // this->vec = this->_alloc.allocate(this->len);
         }
         explicit vector(size_type n, const T &value = T(), const Allocator &alloc = Allocator())
         {
             len = n;
             this->_capacity = n;
             this->_alloc = alloc;
-            this->vec = this->_alloc.allocate(n);
-            for (int i = 0; i < n; i++)
-                this->_alloc.construct(&this->vec, value);
+            if (n != 0)
+                this->vec = this->_alloc.allocate(n);
+            for (size_type i = 0; i < n; i++)
+                this->_alloc.construct(&this->vec[i], value);
         }
         allocator_type get_allocator() const { return this->_alloc; }
         vector &operator=(const vector<T, Allocator> &rhs);
-        vector(const vector<T, Allocator>& x)
+        vector(const vector<T, Allocator> &x)
         {
             this->len = x.size();
             this->_capacity = x.capacity();
@@ -241,7 +252,31 @@ namespace ft
             for (size_type i = 0; i < this->len; i++)
                 this->_alloc.construct(&this->vec[i], x[i]);
         }
-        ~vector() { delete this->vec; }
+        // template <class InputIterator>
+        vector(iterator first, iterator last, const Allocator &alloc = Allocator())
+        {
+            difference_type diff = last - first;
+            this->_alloc = alloc;
+            this->vec = this->_alloc.allocate(diff);
+            this->_capacity = diff;
+            this->len = diff;
+            for (difference_type i = 0; i < diff; i++)
+            {
+                // vec[i] = *first;
+                _alloc.construct(&vec[i], *first);
+                // this->_alloc.construct(&vec[i], *reinterpret_cast<T *>(first));
+                // std::cout << &*first << std::endl;
+                // this->_alloc.destroy(&*first);
+                first++;
+            }
+        }
+        ~vector()
+        {
+            this->clear();
+            if (this->_capacity)
+                this->_alloc.deallocate(&*this->begin(), this->_capacity);
+            this->_capacity = 0;
+        }
 
     private:
         void addFront(size_type n, const T &x)

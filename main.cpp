@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/20 12:20:48 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/20 13:30:43 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@
 int main(void)
 {
     ft::vector<int> myVec;
+
+    myVec.reserve(64);
+    system("leaks main.exe");
+    return 0;
     std::vector<int> theirVec;
     
     ft::vector<int>::iterator myVecIt = myVec.begin();
@@ -37,38 +41,7 @@ int main(void)
     std::vector<int>::const_iterator j = theirVec.begin();
     std::vector<int>::const_iterator p = theirVec.end();
     std::vector<int>::iterator theirVecIt;
-    // *x = 10;
-    // x + y;
-    myVecIt - myVecIte;
-    bool i = myVecIt != myVecIte;
-    i = myVecIt == myVecIte;
-    i = myVecIt < myVecIt;
-    i = myVecIte <= myVecIte;
-    i = myVecIt > myVecIt;
-    i = myVecIt >= myVecIt;
-    myVecIt + 1;
-    myVecIt - 1;
-    myVecIt - myVecIt;
-    myVecIt += 1;
-    myVecIt -= 1;
-    myVecIt++;
-    myVecIt--;
-    ++myVecIt;
-    --myVecIt;
 
-    constMyVecIt - constMyVecIte;
-    i = myVecIt != constMyVecIte;
-    i = constMyVecIt == constMyVecIte;
-    i = constMyVecIt < constMyVecIt;
-    i = constMyVecIte <= constMyVecIte;
-    i = constMyVecIt > constMyVecIt;
-    i = constMyVecIt >= constMyVecIt;
-    constMyVecIt + 1;
-    constMyVecIt - 1;
-    constMyVecIt - constMyVecIt;
-    j += 1;
-    constMyVecIt += 1;
-    constMyVecIt -= 1;
     // constMyVecIt++;
     // j++;
     // constMyVecIt--;
@@ -78,12 +51,10 @@ int main(void)
     // ft::vector<int>::const_iterator temp = constMyVecIt;
     // constMyVecIt = constMyVecIte;
     // constMyVecIte = temp; 
-    return 0;
     std::vector<int>::iterator theirVecIte;
     
     std::ofstream theirResult("theirResult.txt");
     std::ofstream myResult("myResult.txt");
-
     std::srand(time(NULL));
     for (int i = 0; i < 1000; i++)
     {

@@ -6,12 +6,14 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 13:41:14 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/15 11:31:28 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/20 12:34:13 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #if !defined(ITERATOR_TRAITS_HPP)
 #define ITERATOR_TRAITS_HPP
+
+#include <iostream>
 
 namespace ft
 {
