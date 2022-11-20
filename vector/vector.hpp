@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/19 15:50:08 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/20 10:00:51 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ namespace ft
         typedef const iterator const_iterator;
         typedef typename Allocator::const_pointer const_pointer;
         typedef ft::reverse_iterator<iterator> reverse_iterator;
-        typedef const reverse_iterator const_reverse_iterator;
+        typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 
         // element access
         reference operator[](size_type n) { return this->vec[n]; }
@@ -195,7 +195,6 @@ namespace ft
                 tmp[sz] = *it;
                 sz++;
                 it++;
-                
             }
             this->reserve(newCapacity);
             for (size_type i = 0; i < sz; i++)
@@ -211,7 +210,7 @@ namespace ft
             else
                 insertAfter(position, n, x);
         }
-        iterator    insert(iterator position, const T &x)
+        iterator insert(iterator position, const T &x)
         {
             insert(position, 1, x);
             return (position);
@@ -231,12 +230,12 @@ namespace ft
                     this->pop_back();
             }
         }
-        void clear( void ) 
+        void clear(void)
         {
             erase(this->begin(), this->end());
             this->len = 0;
         }
-        
+
         void pop_back(void)
         {
             if (this->empty())
@@ -268,17 +267,24 @@ namespace ft
         }
         explicit vector(size_type n, const T &value = T(), const Allocator &alloc = Allocator())
         {
-            (void)value;
             len = n;
             this->_capacity = n;
             this->_alloc = alloc;
             this->vec = this->_alloc.allocate(n);
             for (int i = 0; i < n; i++)
-                this->vec[i] = n;
+                this->_alloc.construct(&this->vec, value);
         }
         allocator_type get_allocator() const { return this->_alloc; }
         vector &operator=(const vector<T, Allocator> &rhs);
-        vector(vector const &obj);
+        vector(const vector<T, Allocator>& x)
+        {
+            this->len = x.size();
+            this->_capacity = x.capacity();
+            this->_alloc = x.get_allocator();
+            this->vec = this->_alloc.allocate(this->_capacity);
+            for (size_type i = 0; i < this->len; i++)
+                this->_alloc.construct(&this->vec[i], x[i]);
+        }
         ~vector() { delete this->vec; }
 
     private:

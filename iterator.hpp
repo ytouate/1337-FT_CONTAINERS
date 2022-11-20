@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 16:08:00 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/19 20:39:55 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/20 09:30:52 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ namespace ft
         typedef typename ft::iterator_traits<T *>::pointer pointer;
         typedef typename ft::iterator_traits<T *>::reference reference;
 
-        inline iterator () : _ptr (nullptr) {}
+        inline iterator() : _ptr(nullptr) {}
         inline iterator(pointer ptr) : _ptr(ptr) {}
         inline reference const operator*(void) { return *_ptr; }
         inline pointer operator->(void) { return _ptr; }
@@ -90,7 +90,6 @@ namespace ft
     private:
         T *_ptr;
     };
-
 }
 
 #endif

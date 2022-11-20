@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:35:09 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/18 21:49:08 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/19 22:29:15 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ namespace ft
         typedef typename ft::iterator_traits<T>::difference_type difference_type;
         typedef typename ft::iterator_traits<T>::pointer pointer;
         typedef typename ft::iterator_traits<T>::reference reference;
-
         inline reference operator*(void) { return *_iter; }
         reverse_iterator(T ptr) : _iter(ptr) {}
         inline difference_type operator-(reverse_iterator const &right) { return this->_iter + right._iter; }
