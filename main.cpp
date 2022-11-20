@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/20 09:53:21 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/20 12:20:48 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,53 @@ int main(void)
     
     ft::vector<int>::iterator myVecIt = myVec.begin();
     ft::vector<int>::iterator myVecIte = myVec.end();
-    ft::vector<int>::const_iterator x = myVec.begin();
-    ft::vector<int>::const_iterator y = myVec.end();
+    ft::vector<int>::const_iterator constMyVecIt = myVec.begin();
+    ft::vector<int>::const_iterator constMyVecIte = myVec.end();
     std::vector<int>::const_iterator j = theirVec.begin();
-
-    if (myVecIt < myVecIte)
-        std::cout << "non const\n";
-
-    if (x > y)
-        std::cout << "const\n";
-       j += 1;
+    std::vector<int>::const_iterator p = theirVec.end();
     std::vector<int>::iterator theirVecIt;
+    // *x = 10;
+    // x + y;
+    myVecIt - myVecIte;
+    bool i = myVecIt != myVecIte;
+    i = myVecIt == myVecIte;
+    i = myVecIt < myVecIt;
+    i = myVecIte <= myVecIte;
+    i = myVecIt > myVecIt;
+    i = myVecIt >= myVecIt;
+    myVecIt + 1;
+    myVecIt - 1;
+    myVecIt - myVecIt;
+    myVecIt += 1;
+    myVecIt -= 1;
+    myVecIt++;
+    myVecIt--;
+    ++myVecIt;
+    --myVecIt;
+
+    constMyVecIt - constMyVecIte;
+    i = myVecIt != constMyVecIte;
+    i = constMyVecIt == constMyVecIte;
+    i = constMyVecIt < constMyVecIt;
+    i = constMyVecIte <= constMyVecIte;
+    i = constMyVecIt > constMyVecIt;
+    i = constMyVecIt >= constMyVecIt;
+    constMyVecIt + 1;
+    constMyVecIt - 1;
+    constMyVecIt - constMyVecIt;
+    j += 1;
+    constMyVecIt += 1;
+    constMyVecIt -= 1;
+    // constMyVecIt++;
+    // j++;
+    // constMyVecIt--;
+    // ++constMyVecIt;
+    // --constMyVecIt;
+    j = p;
+    // ft::vector<int>::const_iterator temp = constMyVecIt;
+    // constMyVecIt = constMyVecIte;
+    // constMyVecIte = temp; 
+    return 0;
     std::vector<int>::iterator theirVecIte;
     
     std::ofstream theirResult("theirResult.txt");
