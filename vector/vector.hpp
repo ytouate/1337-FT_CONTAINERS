@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/20 15:54:35 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/20 21:43:45 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ namespace ft
         const_reverse_iterator rend() const { return ft::reverse_iterator<ft::iterator<T> >(&this->vec[-1]); }
 
         // capacity
-        size_type max_size() const { return this->_alloc.max_size(); }
+        size_type max_size() const { return std::min<size_type> (this->_alloc.max_size(), std::numeric_limits<ptrdiff_t>::max());}
         size_type size() const { return this->len; }
         size_type capacity() const { return this->_capacity; }
         bool empty() const { return this->len == 0; }
@@ -323,7 +323,10 @@ namespace ft
             }
             this->reserve(newCapacity);
             for (size_type i = 0; i < sz; i++)
-                this->_alloc.construct(&this->vec[i], tmp[i]);
+            {
+                this->vec[i] = tmp[i];
+            }
+                // this->_alloc.construct(&this->vec[i], tmp[i]);
             this->len = sz;
         }
         size_type len;
