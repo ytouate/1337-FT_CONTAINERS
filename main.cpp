@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/21 11:55:35 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/21 13:22:46 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,33 @@
 #include <fstream>
 int main(void)
 {
-    ft::vector<int> myVec;
-    ft::vector<int>::iterator it;
-    ft::vector<int>::iterator ite;
-    myVec.push_back(10);
-    myVec.push_back(20);
-    ft::vector<int>::const_iterator b = myVec.begin();
-    // it = myVec.begin();
-    // it++;
-    b++;
+    // ft::vector<int> myVec;
+    // ft::vector<int>::iterator it;
+    // ft::vector<int>::iterator ite;
+    // myVec.push_back(10);
+    // myVec.push_back(20);
+    // ft::vector<int>::const_iterator b = myVec.begin();
+    // // it = myVec.begin();
+    // // it++;
+    // b++;
 
-    std::cout << *b << std::endl;
-    // std::vector<int> s;
-    // s.push_back(211) ;s.push_back(343);
-    // std::vector<int>::const_iterator cit = s.begin();
-    // cit++;
+    // std::cout << *b << std::endl;
+    ft::vector<int> s;
+    std::vector<int> a;
+
+    srand(time(NULL));
+    for (int i = 0; i < 1000; i++)
+    {
+        const int val = rand() % 1000;
+        s.push_back(val);
+        a.push_back(val);
+    }
+    std::vector<int>::iterator it = a.begin();
+    ft::vector<int>::iterator cit = s.begin();
+    std::cout << *(42 + it) << std::endl;
+    std::cout << *(42 + it - 3) << std::endl << std::endl;
+    std::cout << *(42 + cit) << std::endl;
+    std::cout << *(42 + cit - 3) << std::endl;
     // std::vector<int>::iterator a = s.begin();
     // std::vector<int>::iterator b = s.end();
     // 42 + a;

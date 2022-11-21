@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 16:08:00 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/21 11:55:22 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/21 13:25:01 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,21 @@ namespace ft
         inline iterator(iterator const &obj) { this->_ptr = obj._ptr; }
         inline iterator operator-(difference_type n)
         {
-            this->_ptr = this->_ptr - n;
-            return *this;
+            pointer oldPtr = _ptr;
+            _ptr -= n;
+            iterator temp(*this);
+            _ptr = oldPtr;
+            return temp;
         }
         inline iterator operator+(difference_type n)
         {
-            this->_ptr = this->_ptr + n;
-            return *this;
+            pointer oldPtr = _ptr;
+            _ptr += n;
+            iterator temp(*this);
+            _ptr = oldPtr;
+            return temp;
         }
+
         inline iterator operator+=(difference_type n)
         {
             this->_ptr += n;
@@ -70,6 +77,7 @@ namespace ft
             this->_ptr -= n;
             return *this;
         }
+        
         inline iterator operator--(int)
         {
             iterator temp = *this;
@@ -82,7 +90,6 @@ namespace ft
             this->_ptr++;
             return temp;
         }
-
         inline iterator & operator++(void)
         {
             this->_ptr++;
@@ -93,32 +100,30 @@ namespace ft
             this->_ptr--;
             return *this;
         }
+        
         inline iterator &operator=(iterator const &rhs)
         {
             this->_ptr = rhs._ptr;
             return *this;
         }
         ~iterator() {}
+        friend iterator operator+(difference_type n, iterator &x)
+        {
+            pointer oldPtr = x._ptr;
+            x._ptr += n;
+            iterator temp(x);
+            x._ptr = oldPtr;
+            return temp;
+        }
 
     private:
         T *_ptr;
     };
 }
-// template <class _Iter>
-// inline _LIBCPP_INLINE_VISIBILITY _LIBCPP_CONSTEXPR_IF_NODEBUG
-// __wrap_iter<_Iter>
-// operator+(typename __wrap_iter<_Iter>::difference_type __n,
-//           __wrap_iter<_Iter> __x) _NOEXCEPT_DEBUG
+
+// template <class T>
+// ft::iterator<const T> &operator+(typename ft::iterator<T>::difference_type n, ft::iterator<const T> &x)
 // {
-//     __x += __n;
-//     return __x;
+//     return x.operator+=(n);
 // }
-
-template <class T>
-ft::iterator<T> operator+(typename ft::iterator<T>::difference_type n, ft::iterator<T> &x)
-{
-    x += n;
-    return x;
-}
-
 #endif
