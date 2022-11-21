@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/20 21:43:45 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/21 11:39:36 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ namespace ft
         typedef Allocator allocator_type;
         typedef typename Allocator::pointer pointer;
         typedef ft::iterator<T> iterator;
-        typedef const iterator const_iterator;
+        typedef ft::iterator<const T> const_iterator;
         typedef typename Allocator::const_pointer const_pointer;
         typedef ft::reverse_iterator<iterator> reverse_iterator;
         typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;

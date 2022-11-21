@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 16:08:00 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/20 22:13:12 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/21 11:55:22 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ namespace ft
         typedef typename ft::iterator_traits<T *>::pointer pointer;
         typedef typename ft::iterator_traits<T *>::reference reference;
         typedef T const &const_reference;
+        operator ft::iterator< const T> () const
+        {
+            ft::iterator<const T> constThis (this->_ptr);
+            return constThis;
+        }
         inline const_reference operator*(void) const { return *_ptr; }
         inline const_reference operator[](const int n) const { return _ptr[n]; }
         inline iterator() : _ptr(NULL) {}
@@ -65,8 +70,6 @@ namespace ft
             this->_ptr -= n;
             return *this;
         }
-        // inline iterator operator+=(difference_type n) const { return this->_ptr + n; }
-        // inline const iterator operator-=(difference_type n) const { return this->_ptr - n; }
         inline iterator operator--(int)
         {
             iterator temp = *this;
