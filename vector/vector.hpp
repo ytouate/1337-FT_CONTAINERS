@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/21 11:39:36 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/21 20:33:58 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,12 @@ namespace ft
                 throw std::out_of_range("Index out of range");
             return this->vec[n];
         }
-
+        void swap (vector<T, Allocator> &x)
+        {
+            ft::vector<T, Allocator> temp = x;
+            x = *this;
+            this->operator=(temp);
+        }
         // iterators
         const_iterator begin() const { return ft::iterator<T>(vec); }
         const_iterator end() const { return ft::iterator<T>(&this->vec[this->len]); }
@@ -167,6 +172,7 @@ namespace ft
         void insert(iterator position, size_type n, const T &x)
         {
             iterator it = this->begin();
+            
             if (position == this->begin())
                 addFront(n, x);
             else
@@ -174,8 +180,9 @@ namespace ft
         }
         iterator insert(iterator position, const T &x)
         {
+            difference_type diff = position - this->begin();
             insert(position, 1, x);
-            return (position);
+            return (this->begin() + diff);
         }
         void resize(size_type n, T c = T())
         {
@@ -281,53 +288,45 @@ namespace ft
     private:
         void addFront(size_type n, const T &x)
         {
-            size_type sz = 0;
-            size_type newSize = this->len + n;
             size_type newCapacity = getNewCapacity(n);
             iterator it = this->begin();
-            T tmp[newSize];
+            vector tmp;
+            tmp.reserve(this->len + n);
             while (n--)
-                tmp[sz++] = x;
+                tmp.push_back(x);
             while (it != this->end())
-            {
-                tmp[sz++] = *it;
-                it++;
-            }
+                tmp.push_back(*it++);
             this->reserve(newCapacity);
-            for (size_type i = 0; i < sz; i++)
+            for (size_type i = 0; i < tmp.len; i++)
+            {
+                if (i < this->len)
+                    this->_alloc.destroy(&this->vec[i]);
                 this->_alloc.construct(&this->vec[i], tmp[i]);
-            this->len = sz;
+            }
+            this->len = tmp.len;
         }
 
         void insertAfter(iterator position, size_type n, const T &x)
         {
-            size_type sz = 0;
-            size_type newSize = this->len + n;
+            if (n > max_size()) _alloc.allocate(n);
             size_type newCapacity = getNewCapacity(n);
             iterator it = this->begin();
-            T tmp[newSize];
-
+            vector tmp;
+            tmp.reserve(this->len + n);
             while (it < position)
-            {
-                tmp[sz] = *it;
-                it++;
-                sz++;
-            }
+                tmp.push_back(*it++);
             while (n--)
-                tmp[sz++] = x;
+                tmp.push_back(x);
             while (it != this->end())
-            {
-                tmp[sz] = *it;
-                sz++;
-                it++;
-            }
+                tmp.push_back(*it++);
             this->reserve(newCapacity);
-            for (size_type i = 0; i < sz; i++)
+            for (size_type i = 0; i < tmp.len; i++)
             {
-                this->vec[i] = tmp[i];
+                if (i < this->len)
+                    this->_alloc.destroy(&this->vec[i]);
+                this->_alloc.construct(&this->vec[i], tmp[i]);
             }
-                // this->_alloc.construct(&this->vec[i], tmp[i]);
-            this->len = sz;
+            this->len = tmp.len;
         }
         size_type len;
         Allocator _alloc;

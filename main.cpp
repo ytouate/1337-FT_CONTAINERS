@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/21 15:38:45 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/21 19:47:37 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,20 @@
 #include "vector/vector.hpp"
 #include <memory>
 #include <fstream>
+#include<math.h>
 int main(void)
 {
-    // ft::vector<int> myVec;
-    // ft::vector<int>::iterator it;
-    // ft::vector<int>::iterator ite;
+    ft::vector<int> myVec(5000, 0);
+    ft::vector<std::string>::iterator ait;
+    ft::vector<std::string>::iterator aite;
+
+    std::vector<std::string> theirVec(5000, "Test");
+    // std::vector<int>::iterator bit;
+    // std::vector<int>::iterator bite;
+    // myVec.insert(myVec.begin(), 0, 10);
+    // theirVec.insert(theirVec.begin(), 0, 10);
+    myVec.insert(myVec.begin() + 115, std::numeric_limits<short int>::max(), 10);
+    // myVec.insert(myVec.begin() + 15, (std::size_t)std::numeric_limits<std::ptrdiff_t>::max(), "123");
     // myVec.push_back(10);
     // myVec.push_back(20);
     // ft::vector<int>::const_iterator b = myVec.begin();
@@ -38,24 +47,24 @@ int main(void)
     // b++;
 
     // std::cout << *b << std::endl;
-    ft::vector<int> s;
-    std::vector<int> a;
+    // ft::vector<int> s;
+    // std::vector<int> a;
 
-    srand(time(NULL));
-    for (int i = 0; i < 1000; i++)
-    {
-        const int val = rand() % 1000;
-        s.push_back(val);
-        a.push_back(val);
-    }
+    // srand(time(NULL));
+    // for (int i = 0; i < 1000; i++)
+    // {
+    //     const int val = rand() % 1000;
+    //     s.push_back(val);
+    //     a.push_back(val);
+    // }
+    // // std::vector<int>::iterator it = a.begin();
+    // ft::vector<int>::iterator cit = s.begin();
+    // ft::vector<int>::const_iterator cite = s.end();
     // std::vector<int>::iterator it = a.begin();
-    ft::vector<int>::iterator cit = s.begin();
-    ft::vector<int>::const_iterator cite = s.end();
-    std::vector<int>::iterator it = a.begin();
-    std::vector<int>::iterator ite = a.end();
+    // std::vector<int>::iterator ite = a.end();
 
-    if (cit < cite)
-        std::cout << "am here\n";
+    // if (cit < cite)
+    //     std::cout << "am here\n";
     // std::cout << *(42 + it) << std::endl;
     // std::cout << *(42 + it - 3) << std::endl << std::endl;
     // std::cout << *(42 + cit) << std::endl;
