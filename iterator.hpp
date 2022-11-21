@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 16:08:00 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/21 13:25:01 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/21 15:29:11 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ namespace ft
         typedef typename ft::iterator_traits<T *>::value_type value_type;
         typedef typename ft::iterator_traits<T *>::pointer pointer;
         typedef typename ft::iterator_traits<T *>::reference reference;
+        typedef ft::iterator<const T> const_iterator;
         typedef T const &const_reference;
         operator ft::iterator< const T> () const
         {
@@ -41,13 +42,13 @@ namespace ft
         inline iterator(pointer ptr) : _ptr(ptr) {}
         inline reference const operator*(void) { return *_ptr; }
         inline pointer operator->(void) const { return _ptr; }
-        inline ptrdiff_t operator-(iterator const &right) const { return this->_ptr - right._ptr; }
-        inline bool operator==(iterator const &right) const { return this->_ptr == right._ptr; }
-        inline bool operator!=(iterator const &right) const { return this->_ptr != right._ptr; }
-        inline bool operator<(iterator const &right) const { return this->_ptr < right._ptr; }
-        inline bool operator>(iterator const &right) const { return this->_ptr > right._ptr; }
-        inline bool operator<=(iterator const &right) const { return this->_ptr <= right._ptr; }
-        inline bool operator>=(iterator const &right) const { return this->_ptr >= right._ptr; }
+        inline ptrdiff_t operator-(iterator const &right)  { return this->_ptr - right._ptr; }
+        inline bool operator==(iterator const &right)  { return this->_ptr == right._ptr; }
+        inline bool operator!=(iterator const &right)  { return this->_ptr != right._ptr; }
+        inline bool operator<(iterator const &right)  { return this->_ptr < right._ptr; }
+        inline bool operator>(iterator const &right)  { return this->_ptr > right._ptr; }
+        inline bool operator<=(iterator const &right)  { return this->_ptr <= right._ptr; }
+        inline bool operator>=(iterator const &right)  { return this->_ptr >= right._ptr; }
         inline reference operator[](const int n) { return _ptr[n]; }
         inline iterator(iterator const &obj) { this->_ptr = obj._ptr; }
         inline iterator operator-(difference_type n)
@@ -121,9 +122,4 @@ namespace ft
     };
 }
 
-// template <class T>
-// ft::iterator<const T> &operator+(typename ft::iterator<T>::difference_type n, ft::iterator<const T> &x)
-// {
-//     return x.operator+=(n);
-// }
 #endif
