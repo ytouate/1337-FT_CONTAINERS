@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/21 15:14:23 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/21 15:38:45 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ int main(void)
     }
     // std::vector<int>::iterator it = a.begin();
     ft::vector<int>::iterator cit = s.begin();
-    ft::vector<int>::iterator cite = s.end();
+    ft::vector<int>::const_iterator cite = s.end();
     std::vector<int>::iterator it = a.begin();
     std::vector<int>::iterator ite = a.end();
 
-    if (cit == cite)
+    if (cit < cite)
         std::cout << "am here\n";
     // std::cout << *(42 + it) << std::endl;
     // std::cout << *(42 + it - 3) << std::endl << std::endl;
