@@ -6,13 +6,13 @@
 #    By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/03 12:47:40 by ytouate           #+#    #+#              #
-#    Updated: 2022/11/22 14:10:49 by ytouate          ###   ########.fr        #
+#    Updated: 2022/11/22 22:36:40 by ytouate          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FILE = ./main.cpp
 
-NAME = main.exe
+NAME = CONTAINERS.out
 
 CPPFLAGS = -std=c++98  #-fsanitize=address -g#-Wall -Wextra -Werror 
 

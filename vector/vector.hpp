@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/22 22:17:24 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/22 22:34:02 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,7 +259,10 @@ namespace ft
                 this->_alloc.construct(&this->vec[i], value);
         }
         allocator_type get_allocator() const { return this->_alloc; }
-        vector &operator=(const vector<T, Allocator> &rhs);
+        vector &operator=(const vector<T, Allocator> &rhs)
+        {
+            assign(rhs.begin(), rhs.end());
+        }
         vector(const vector<T, Allocator> &x)
         {
             this->len = x.size();
@@ -279,11 +282,7 @@ namespace ft
             this->len = diff;
             for (difference_type i = 0; i < diff; i++)
             {
-                // vec[i] = *first;
                 _alloc.construct(&vec[i], *first);
-                // this->_alloc.construct(&vec[i], *reinterpret_cast<T *>(first));
-                // std::cout << &*first << std::endl;
-                // this->_alloc.destroy(&*first);
                 first++;
             }
         }
@@ -302,6 +301,7 @@ namespace ft
                 this->_alloc.deallocate(&*this->begin(), this->_capacity);
             this->_capacity = 0;
         }
+
 
     private:
         void addFront(size_type n, const T &x)
