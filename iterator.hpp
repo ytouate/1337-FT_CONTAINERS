@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 16:08:00 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/22 16:59:06 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/22 19:08:46 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ namespace ft
         ~iterator() {}
         friend iterator operator+(difference_type n, iterator &x)
         {
-            std::cout << "an hona\n";
             pointer oldPtr = x._ptr;
             x._ptr += n;
             iterator temp(x);

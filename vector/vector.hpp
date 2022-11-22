@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/22 16:00:27 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/22 22:17:24 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@
 #include "../iterator.hpp"
 #include <iostream>
 
+template <class T>
+void ft_swap(T &a, T &b)
+{
+    T c = a;
+    a = b;
+    b = c;
+}
 namespace ft
 {
     template <class T, class Allocator = std::allocator<T> >
@@ -58,24 +65,25 @@ namespace ft
                 throw std::out_of_range("Index out of range");
             return this->vec[n];
         }
-        void swap (vector<T, Allocator> &x)
+        void swap(vector<T, Allocator> &x)
         {
-            ft::vector<T, Allocator> temp = x;
-            x = *this;
-            this->operator=(temp);
+            ft_swap(this->_alloc, x._alloc);
+            ft_swap(this->vec, x.vec);
+            ft_swap(this->len, x.len);
+            ft_swap(this->_capacity, x._capacity);
         }
         // iterators
         const_iterator begin() const { return ft::iterator<T>(vec); }
         const_iterator end() const { return ft::iterator<T>(&this->vec[this->len]); }
         iterator begin() { return ft::iterator<T>(&vec[0]); }
         iterator end() { return ft::iterator<T>(&vec[this->len]); }
-        const_reverse_iterator rbegin() const { return ft::reverse_iterator<ft::iterator< const T> >(&this->vec[this->len]); }
+        const_reverse_iterator rbegin() const { return ft::reverse_iterator<ft::iterator<const T> >(&this->vec[this->len]); }
         reverse_iterator rbegin() { return ft::reverse_iterator<ft::iterator<T> >(&vec[this->len]); }
         reverse_iterator rend() { return ft::reverse_iterator<ft::iterator<T> >(&vec[0]); }
-        const_reverse_iterator rend() const { return ft::reverse_iterator<ft::iterator< const T> >(&this->vec[0]); }
+        const_reverse_iterator rend() const { return ft::reverse_iterator<ft::iterator<const T> >(&this->vec[0]); }
 
         // capacity
-        size_type max_size() const { return std::min<size_type> (this->_alloc.max_size(), std::numeric_limits<ptrdiff_t>::max());}
+        size_type max_size() const { return std::min<size_type>(this->_alloc.max_size(), std::numeric_limits<ptrdiff_t>::max()); }
         size_type size() const { return this->len; }
         size_type capacity() const { return this->_capacity; }
         bool empty() const { return this->len == 0; }
@@ -111,7 +119,7 @@ namespace ft
             this->pop_back();
             for (size_type j = 0; j < this->len; j++)
             {
-                    this->vec[j] = tmp[j];
+                this->vec[j] = tmp[j];
                 // this->_alloc.construct(&this->vec[j], tmp[j]);
             }
             return position;
@@ -150,7 +158,9 @@ namespace ft
             {
                 this->len = i;
                 for (size_type j = 0; j < i; j++)
+                {
                     this->vec[j] = tmp[j];
+                }
             }
             return first;
         }
@@ -172,7 +182,7 @@ namespace ft
         void insert(iterator position, size_type n, const T &x)
         {
             iterator it = this->begin();
-            
+
             if (position == this->begin())
                 addFront(n, x);
             else
@@ -277,6 +287,14 @@ namespace ft
                 first++;
             }
         }
+        void assign(size_type n, const T &t)
+        {
+            for (size_type i = 0; i < len; i++)
+                _alloc.destroy(&vec[i]);
+            erase(begin(), end());
+            insert(begin(), n, t);
+        }
+
         ~vector()
         {
             this->clear();
@@ -308,7 +326,8 @@ namespace ft
 
         void insertAfter(iterator position, size_type n, const T &x)
         {
-            if (n > max_size()) _alloc.allocate(n);
+            if (n > max_size())
+                _alloc.allocate(n);
             size_type newCapacity = getNewCapacity(n);
             iterator it = this->begin();
             vector tmp;
@@ -335,4 +354,81 @@ namespace ft
     };
 }
 
+template <class T, class Alloc>
+bool operator==(const ft::vector<T, Alloc> &lhs, const ft::vector<T, Alloc> &rhs)
+{
+    if (lhs.size() == rhs.size())
+    {
+        size_t i = 0;
+        for (; i < lhs.size(); i++)
+        {
+            if (lhs[i] != rhs[i])
+                return false;
+        }
+        return true;
+    }
+    return false;
+}
+
+template <class T, class Alloc>
+bool operator!=(const ft::vector<T, Alloc> &lhs, const ft::vector<T, Alloc> &rhs)
+{
+    return !(lhs == rhs);
+}
+
+template <class T, class Alloc>
+bool operator<(const ft::vector<T, Alloc> &lhs, const ft::vector<T, Alloc> &rhs)
+{
+    if (lhs.size() < rhs.size())
+        return true;
+    else if (lhs.size() > rhs.size())
+        return false;
+    else
+    {
+        size_t i = 0;
+        for (; i < lhs.size(); i++)
+        {
+            if (lhs[i] < rhs[i])
+                return true;
+            else if (lhs[i] < rhs[i])
+                return false;
+        }
+        return false;
+    }
+}
+
+template <class T, class Alloc>
+bool operator<=(const ft::vector<T, Alloc> &lhs, const ft::vector<T, Alloc> &rhs)
+{
+    if (lhs.size() > rhs.size())
+        return false;
+    else
+    {
+        size_t i = 0;
+        for (; i < lhs.size(); i++)
+        {
+            if (lhs[i] > rhs[i])
+                return false;
+        }
+        return true;
+    }
+}
+
+template <class T, class Alloc>
+bool operator>(const ft::vector<T, Alloc> &lhs, const ft::vector<T, Alloc> &rhs)
+{
+    return (!(lhs <= rhs));
+}
+
+template <class T, class Alloc>
+bool operator>=(const ft::vector<T, Alloc> &lhs, const ft::vector<T, Alloc> &rhs)
+{
+    return lhs == rhs or lhs > rhs;
+}
+
+template <class T, class Allocator>
+void swap(ft::vector<T, Allocator> &x, ft::vector<T, Allocator> &y)
+{
+    x.swap(y);
+}
 #endif // VECTOR_HPP
