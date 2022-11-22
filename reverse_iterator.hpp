@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:35:09 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/22 15:29:29 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/22 16:05:23 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,12 @@ namespace ft
         typedef typename ft::iterator_traits<Iterator>::difference_type difference_type;
         typedef typename ft::iterator_traits<Iterator>::pointer pointer;
         typedef typename ft::iterator_traits<Iterator>::reference reference;
-        inline reference operator*(void) const { return *this->base(); }
+        inline reference operator*(void) const
+        {
+            Iterator temp = _iter;
+            temp--;
+            return *temp;
+        }
         explicit reverse_iterator(Iterator ptr) : _iter(ptr) {}
         template <class U>
         reverse_iterator(const reverse_iterator<U> &u)
@@ -71,7 +76,7 @@ namespace ft
         }
         pointer operator->(void) const
         {
-            return _iter.operator->();
+            return &(operator*());
         }
         inline reverse_iterator operator--(int)
         {
@@ -84,10 +89,9 @@ namespace ft
             *this = *this + n;
             return *this;
         }
-        reference operator[](difference_type n) const
+        reference operator[](reverse_iterator <Iterator>::difference_type n) const
         {
-            reference ref = _iter[n];
-            return ref;
+            return _iter[-n - 1];
         }
         reverse_iterator& operator-=(difference_type n)
         {
