@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/22 15:19:20 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/22 16:42:22 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,9 @@ int main(void)
     ft::vector<int>::reverse_iterator ite = myVec.rend();
     std::vector<int>::reverse_iterator cit = theiVec.rbegin();
     std::vector<int>::reverse_iterator cite = theiVec.rend();
-    ptrdiff_t a = ite - it;
-    ptrdiff_t b = cite - cit;
-    std::cout << b << std::endl;
-    std::cout << a << std::endl;
+
+    if (it == myVec.rbegin())
+        std::cout << "something\n";
     // std::vector<std::string> theirVec(5000, "Test");
     // std::vector<int>::iterator bit;
     // std::vector<int>::iterator bite;
