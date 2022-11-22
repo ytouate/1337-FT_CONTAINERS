@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/21 20:33:58 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/22 00:13:16 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ namespace ft
         const_iterator end() const { return ft::iterator<T>(&this->vec[this->len]); }
         iterator begin() { return ft::iterator<T>(&vec[0]); }
         iterator end() { return ft::iterator<T>(&vec[this->len]); }
-        const_reverse_iterator rbegin() const { return ft::reverse_iterator<ft::iterator<T> >(&this->vec[this->len - 1]); }
+        const_reverse_iterator rbegin() const { return ft::reverse_iterator<ft::iterator< const T> >(&this->vec[this->len - 1]); }
         reverse_iterator rbegin() { return ft::reverse_iterator<ft::iterator<T> >(&vec[this->len - 1]); }
         reverse_iterator rend() { return ft::reverse_iterator<ft::iterator<T> >(&vec[-1]); }
-        const_reverse_iterator rend() const { return ft::reverse_iterator<ft::iterator<T> >(&this->vec[-1]); }
+        const_reverse_iterator rend() const { return ft::reverse_iterator<ft::iterator< const T> >(&this->vec[-1]); }
 
         // capacity
         size_type max_size() const { return std::min<size_type> (this->_alloc.max_size(), std::numeric_limits<ptrdiff_t>::max());}

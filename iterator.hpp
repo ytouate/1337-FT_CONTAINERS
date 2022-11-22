@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 16:08:00 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/21 15:54:05 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/22 15:28:03 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ namespace ft
         friend bool operator>= (const iterator& a, const iterator& b) { return a._ptr >= b._ptr; };
         friend bool operator> (const iterator& a, const iterator& b) { return a._ptr > b._ptr; };     
         inline ptrdiff_t operator-(iterator const &right)  { return this->_ptr - right._ptr; }
-        inline reference operator[](const int n) { return _ptr[n]; }
+        inline reference operator[](difference_type n) const { return _ptr[n]; }
         inline iterator(iterator const &obj) { this->_ptr = obj._ptr; }
         inline iterator operator-(difference_type n)
         {
@@ -111,6 +111,7 @@ namespace ft
         ~iterator() {}
         friend iterator operator+(difference_type n, iterator &x)
         {
+            std::cout << "an hona\n";
             pointer oldPtr = x._ptr;
             x._ptr += n;
             iterator temp(x);

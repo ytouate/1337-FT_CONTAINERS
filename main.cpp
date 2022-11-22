@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/21 19:47:37 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/22 15:19:20 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,27 @@
 #include <memory>
 #include <fstream>
 #include<math.h>
+
 int main(void)
 {
-    ft::vector<int> myVec(5000, 0);
-    ft::vector<std::string>::iterator ait;
-    ft::vector<std::string>::iterator aite;
-
-    std::vector<std::string> theirVec(5000, "Test");
+    ft::vector<int> myVec(5000, 10);
+    std::vector<int> theiVec(5000, 10);
+    // ft::vector<std::string>::iterator ait;
+    // ft::vector<std::string>::iterator aite;
+    ft::vector<int>::reverse_iterator it = myVec.rbegin();
+    ft::vector<int>::reverse_iterator ite = myVec.rend();
+    std::vector<int>::reverse_iterator cit = theiVec.rbegin();
+    std::vector<int>::reverse_iterator cite = theiVec.rend();
+    ptrdiff_t a = ite - it;
+    ptrdiff_t b = cite - cit;
+    std::cout << b << std::endl;
+    std::cout << a << std::endl;
+    // std::vector<std::string> theirVec(5000, "Test");
     // std::vector<int>::iterator bit;
     // std::vector<int>::iterator bite;
     // myVec.insert(myVec.begin(), 0, 10);
     // theirVec.insert(theirVec.begin(), 0, 10);
-    myVec.insert(myVec.begin() + 115, std::numeric_limits<short int>::max(), 10);
+    // myVec.insert(myVec.begin() + 115, std::numeric_limits<short int>::max(), 10);
     // myVec.insert(myVec.begin() + 15, (std::size_t)std::numeric_limits<std::ptrdiff_t>::max(), "123");
     // myVec.push_back(10);
     // myVec.push_back(20);
