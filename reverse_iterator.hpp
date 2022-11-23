@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:35:09 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/23 22:33:23 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/23 23:49:42 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ namespace ft
             return &(operator*());
         }
         reverse_iterator() : _iter(NULL) {}
-        inline bool operator==(reverse_iterator const &right) { return this->_iter == right._iter; }
-        inline bool operator!=(reverse_iterator const &right) { return this->_iter != right._iter; }
-        inline bool operator<(reverse_iterator const &right) { return this->_iter > right._iter; }
-        inline bool operator>(reverse_iterator const &right) { return this->_iter < right._iter; }
-        inline bool operator<=(reverse_iterator const &right) { return this->_iter >= right._iter; }
-        inline bool operator>=(reverse_iterator const &right) { return this->_iter <= right._iter; }
+        // inline bool operator==(reverse_iterator const &right) { return this->_iter == right._iter; }
+        // inline bool operator!=(reverse_iterator const &right) { return this->_iter != right._iter; }
+        // inline bool operator<(reverse_iterator const &right) { return this->_iter > right._iter; }
+        // inline bool operator>(reverse_iterator const &right) { return this->_iter < right._iter; }
+        // inline bool operator<=(reverse_iterator const &right) { return this->_iter >= right._iter; }
+        // inline bool operator>=(reverse_iterator const &right) { return this->_iter <= right._iter; }
 
         
         
@@ -115,54 +115,95 @@ namespace ft
     };
 };
 
-// template <class Iterator>
-// bool operator==(
-//     const ft::reverse_iterator<Iterator> &x,
-//     const ft::reverse_iterator<Iterator> &y)
-// {
-//     return x.base() == y.base();
-// }
+template <class Iterator>
+bool operator==(
+    const ft::reverse_iterator<Iterator> &x,
+    const ft::reverse_iterator<Iterator> &y)
+{
+    return x.base() == y.base();
+}
 
-// template <class Iterator>
-// bool operator<(
-//     const ft::reverse_iterator<Iterator> &x,
-//     const ft::reverse_iterator<Iterator> &y)
-// {
-    
-//     return x.base() < y.base();
-// }
+template <class Iterator>
+bool operator<(
+    const ft::reverse_iterator<Iterator> &x,
+    const ft::reverse_iterator<Iterator> &y)
+{
 
-// template <class Iterator>
-// bool operator!=(
-//     const ft::reverse_iterator<Iterator> &x,
-//     const ft::reverse_iterator<Iterator> &y)
-// {
-//     return x.base() != y.base();
-// }
+    return x.base() > y.base();
+}
 
-// template <class Iterator>
-// bool operator>(
-//     const ft::reverse_iterator<Iterator> &x,
-//     const ft::reverse_iterator<Iterator> &y)
-// {
-//     return x.base() > y.base();
-// }
+template <class Iterator, class Iterator_b>
+bool operator<(
+    const ft::reverse_iterator<Iterator> &x,
+    const ft::reverse_iterator<Iterator_b> &y)
+{
 
-// template <class Iterator>
-// bool operator>=(
-//     const ft::reverse_iterator<Iterator> &x,
-//     const ft::reverse_iterator<Iterator> &y)
-// {
-//     return x.base() >= y.base();
-// }
+    return x.base() > y.base();
+}
+template <class Iterator>
+bool operator!=(
+    const ft::reverse_iterator<Iterator> &x,
+    const ft::reverse_iterator<Iterator> &y)
+{
+    return x.base() != y.base();
+}
 
-// template <class Iterator>
-// bool operator<=(
-//     const ft::reverse_iterator<Iterator> &x,
-//     const ft::reverse_iterator<Iterator> &y)
-// {
-//     x.base() <= y.base();
-// }
+template <class Iterator, class Iterator_b>
+bool operator!=(
+    const ft::reverse_iterator<Iterator> &x,
+    const ft::reverse_iterator<Iterator_b> &y)
+{
+    return x.base() != y.base();
+}
+template <class Iterator>
+bool operator>(
+    const ft::reverse_iterator<Iterator> &x,
+    const ft::reverse_iterator<Iterator> &y)
+{
+    return x.base() < y.base();
+}
+template <class Iterator, class Iterator_b>
+bool operator>(
+    const ft::reverse_iterator<Iterator> &x,
+    const ft::reverse_iterator<Iterator_b> &y)
+{
+    return x.base() < y.base();
+}
+template <class Iterator>
+bool operator>=(
+    const ft::reverse_iterator<Iterator> &x,
+    const ft::reverse_iterator<Iterator> &y)
+{
+    return x.base() <= y.base();
+}
+
+template <class Iterator, class Iterator_b>
+bool operator>=(
+    const ft::reverse_iterator<Iterator> &x,
+    const ft::reverse_iterator<Iterator_b> &y)
+{
+    return x.base() <= y.base();
+}
+template <class Iterator>
+bool operator<=(
+    const ft::reverse_iterator<Iterator> &x,
+    const ft::reverse_iterator<Iterator> &y)
+{
+    return x.base() >= y.base();
+}
+
+template <class Iterator, class Iterator_b>
+bool operator<=(
+    const ft::reverse_iterator<Iterator> &x,
+    const ft::reverse_iterator<Iterator_b> &y)
+{
+    return x.base() >= y.base();
+}
+template <class Iterator_a, class Iterator_b>
+inline bool operator==(ft::reverse_iterator<Iterator_a> const &lhs, ft::reverse_iterator <Iterator_b> const &rhs)
+{
+    return lhs.base() == rhs.base();
+}
 
 template <class Iterator>
 typename ft::reverse_iterator<Iterator>::difference_type operator-(
@@ -170,7 +211,7 @@ typename ft::reverse_iterator<Iterator>::difference_type operator-(
     const ft::reverse_iterator<Iterator> &y)
 {
     typename ft::reverse_iterator<Iterator>::difference_type result = y.base() - x.base();
-    return  result;
+    return result;
 }
 
 template <class Iterator>
