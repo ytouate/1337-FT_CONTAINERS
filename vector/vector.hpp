@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/22 22:34:02 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/23 22:23:35 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,7 +246,6 @@ namespace ft
             this->len = 0;
             this->_capacity = 0;
             this->_alloc = alloc;
-            // this->vec = this->_alloc.allocate(this->len);
         }
         explicit vector(size_type n, const T &value = T(), const Allocator &alloc = Allocator())
         {
@@ -272,8 +271,8 @@ namespace ft
             for (size_type i = 0; i < this->len; i++)
                 this->_alloc.construct(&this->vec[i], x[i]);
         }
-        // template <class InputIterator>
-        vector(iterator first, iterator last, const Allocator &alloc = Allocator())
+        template <class InputIterator>
+        vector(InputIterator first, InputIterator last, const Allocator &alloc = Allocator())
         {
             difference_type diff = last - first;
             this->_alloc = alloc;
