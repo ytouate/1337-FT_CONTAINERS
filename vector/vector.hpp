@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/23 22:52:14 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/24 19:27:42 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,32 @@ namespace ft
         size_type size() const { return this->len; }
         size_type capacity() const { return this->_capacity; }
         bool empty() const { return this->len == 0; }
+
+        template <class Iterator>
+        void assign(Iterator first, Iterator last)
+        {
+            for (size_type i = 0; i < this->len; i++)
+                this->_alloc.destroy((&this->vec[i]));
+            erase(begin(), end());
+            insert(begin(), first, last);
+            (void)first;
+            (void)last;
+        }
+        template <class Iterator>
+        void insert(iterator position,
+                    Iterator first, Iterator last)
+        {
+            while (first != last)
+            {
+                value_type val = *first;
+                position = this->insert(position, val);
+                first++;
+                position++;
+            }
+            (void)first;
+            (void)last;
+            (void)position;
+        }
         void reserve(size_type n)
         {
             if (n <= this->_capacity)
@@ -128,7 +154,7 @@ namespace ft
         {
             for (; first != last; first++)
             {
-                if (toFind == first)
+                if (&toFind == &first)
                     return true;
             }
             return false;
@@ -138,14 +164,15 @@ namespace ft
         {
             difference_type diff = last - first;
             bool flag = false;
-            T tmp[this->len];
+            size_type _len = this->len;
+            T temp[this->len];
             size_type i = 0;
             iterator it = this->begin();
-            while (diff)
+            while (diff > 0 )
             {
-                if (!isInRange(first, last, it))
+                if (it >= first and it < last and i < _len - 1)
                 {
-                    tmp[i++] = *it;
+                    temp[i++] = *it;
                     flag = true;
                 }
                 else
@@ -153,13 +180,19 @@ namespace ft
                     this->len--;
                     diff--;
                 }
+                it++;
+            }
+            for (ptrdiff_t j = 0; j < (last - first); j++)
+            {
+                std::cout << "am heerre\n";
+                this->_alloc.destroy(&this->vec[j]);
             }
             if (flag)
             {
                 this->len = i;
                 for (size_type j = 0; j < i; j++)
                 {
-                    this->vec[j] = tmp[j];
+                    this->vec[j] = temp[j];
                 }
             }
             return first;
@@ -261,6 +294,8 @@ namespace ft
         vector &operator=(const vector<T, Allocator> &rhs)
         {
             assign(rhs.begin(), rhs.end());
+            return *this;
+            // assign(this->begin(), rhs.begin(), rhs.end());
         }
         vector(const vector<T, Allocator> &x)
         {
@@ -300,7 +335,6 @@ namespace ft
                 this->_alloc.deallocate(&*this->begin(), this->_capacity);
             this->_capacity = 0;
         }
-
 
     private:
         void addFront(size_type n, const T &x)

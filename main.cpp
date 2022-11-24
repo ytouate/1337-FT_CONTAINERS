@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/23 22:57:32 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/24 14:39:00 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 
 int main(void)
 {
-    ft::vector<int> myVec(5000, 10);
-    std::vector<int> theiVec(5000, 10);
+    ft::vector<int> myVec(37, -5);
+    std::vector<int> theiVec(37, -5);
     // ft::vector<std::string>::iterator ait;
     // ft::vector<std::string>::iterator aite;
     ft::vector<int>::reverse_iterator it = myVec.rbegin();
@@ -38,8 +38,9 @@ int main(void)
     std::vector<int>::reverse_iterator cit = theiVec.rbegin();
     std::vector<int>::reverse_iterator cite = theiVec.rend();
 
-    if (it == myVec.rbegin())
-        std::cout << "mine\n";
+
+    myVec.erase(myVec.begin() + 1, myVec.end() + 2);
+    std::copy(myVec.begin(), myVec.end(), std::ostream_iterator<int> (std::cout, " "));
     // if (cit == theiVec.rbegin())
     //     std::cout << "am here\n";
     // std::vector<std::string> theirVec(5000, "Test");
