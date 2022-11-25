@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/24 19:27:42 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/25 16:41:32 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ namespace ft
             (void)last;
             (void)position;
         }
+
         void reserve(size_type n)
         {
             if (n <= this->_capacity)
@@ -144,17 +145,14 @@ namespace ft
             }
             this->pop_back();
             for (size_type j = 0; j < this->len; j++)
-            {
                 this->vec[j] = tmp[j];
-                // this->_alloc.construct(&this->vec[j], tmp[j]);
-            }
             return position;
         }
         bool isInRange(iterator first, iterator last, iterator toFind)
         {
             for (; first != last; first++)
             {
-                if (&toFind == &first)
+                if (toFind == first)
                     return true;
             }
             return false;
@@ -163,37 +161,23 @@ namespace ft
         iterator erase(iterator first, iterator last)
         {
             difference_type diff = last - first;
-            bool flag = false;
-            size_type _len = this->len;
-            T temp[this->len];
-            size_type i = 0;
-            iterator it = this->begin();
-            while (diff > 0 )
+            // bool flag = false;
+            vector v;
+            v.reserve(this->len - diff);
+            iterator it = begin();
+            while (it != end())
             {
-                if (it >= first and it < last and i < _len - 1)
-                {
-                    temp[i++] = *it;
-                    flag = true;
-                }
+                if (!isInRange(first, last, it))
+                    v.push_back(*it);
                 else
-                {
-                    this->len--;
                     diff--;
-                }
                 it++;
             }
-            for (ptrdiff_t j = 0; j < (last - first); j++)
+            this->len = v.size();
+            for (size_type i = 0; i < v.size(); i++)
             {
-                std::cout << "am heerre\n";
-                this->_alloc.destroy(&this->vec[j]);
-            }
-            if (flag)
-            {
-                this->len = i;
-                for (size_type j = 0; j < i; j++)
-                {
-                    this->vec[j] = temp[j];
-                }
+                this->_alloc.destroy(&vec[i]);
+                this->vec[i] = v.at(i);
             }
             return first;
         }
@@ -334,6 +318,7 @@ namespace ft
             if (this->_capacity)
                 this->_alloc.deallocate(&*this->begin(), this->_capacity);
             this->_capacity = 0;
+            this->len = 0;
         }
 
     private:

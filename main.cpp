@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/24 14:39:00 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/25 16:23:25 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ int main(void)
     std::vector<int>::reverse_iterator cite = theiVec.rend();
 
 
-    myVec.erase(myVec.begin() + 1, myVec.end() + 2);
-    std::copy(myVec.begin(), myVec.end(), std::ostream_iterator<int> (std::cout, " "));
+    myVec.erase(myVec.begin() + 1, myVec.begin() + 2);
+    // std::copy(myVec.begin(), myVec.end(), std::ostream_iterator<int> (std::cout, " "));
     // if (cit == theiVec.rbegin())
     //     std::cout << "am here\n";
     // std::vector<std::string> theirVec(5000, "Test");
