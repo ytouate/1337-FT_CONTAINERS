@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/25 19:04:10 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/26 20:01:56 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,16 @@
 #include "vector/vector.hpp"
 #include <memory>
 #include <fstream>
-#include<math.h>
+#include <math.h>
+
+#include "is_integral.hpp"
 
 int main(void)
 {
+
+    bool val = ft::is_integral<int>::value;
+
+    std::cout << val << std::endl;
     ft::vector<int> myVec(37, -5);
     std::vector<int> theiVec(37, -5);
     // ft::vector<std::string>::iterator ait;
@@ -37,7 +43,6 @@ int main(void)
     ft::vector<int>::reverse_iterator ite = myVec.rend();
     std::vector<int>::reverse_iterator cit = theiVec.rbegin();
     std::vector<int>::reverse_iterator cite = theiVec.rend();
-
 
     myVec.erase(myVec.begin() + 1, myVec.begin() + 2);
     // std::copy(myVec.begin(), myVec.end(), std::ostream_iterator<int> (std::cout, " "));
@@ -124,9 +129,9 @@ int main(void)
     // j = p;
     // // ft::vector<int>::const_iterator temp = constMyVecIt;
     // // constMyVecIt = constMyVecIte;
-    // // constMyVecIte = temp; 
+    // // constMyVecIte = temp;
     // std::vector<int>::iterator theirVecIte;
-    
+
     // std::ofstream theirResult("theirResult.txt");
     // std::ofstream myResult("myResult.txt");
     // std::srand(time(NULL));
@@ -190,5 +195,4 @@ int main(void)
     //     std::cout << "KO\n";
     // system("rm theirResult.txt myResult.txt");
     // return res;
-    
 }

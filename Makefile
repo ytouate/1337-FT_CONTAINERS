@@ -6,7 +6,7 @@
 #    By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/03 12:47:40 by ytouate           #+#    #+#              #
-#    Updated: 2022/11/24 13:43:42 by ytouate          ###   ########.fr        #
+#    Updated: 2022/11/26 20:03:42 by ytouate          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ $(NAME) : $(O_FILE)
 
 clean:
 	@rm -rf *.o
+	@rm -rf *.gch
 
 fclean: clean
 	@rm -rf $(NAME)

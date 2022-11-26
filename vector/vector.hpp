@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/25 16:41:32 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/26 19:27:24 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,6 @@ namespace ft
                 first++;
                 position++;
             }
-            (void)first;
-            (void)last;
-            (void)position;
         }
 
         void reserve(size_type n)

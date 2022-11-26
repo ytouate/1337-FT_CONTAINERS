@@ -3,6 +3,7 @@
 *.out
 *.vscode
 *.exe
+*.gch
 *.tldr
 TODO
 ft_containers-terminator
