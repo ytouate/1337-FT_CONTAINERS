@@ -6,12 +6,16 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 12:49:07 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/26 12:50:34 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/26 15:20:41 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #if !defined(ENABLE_IF)
 #define ENABLE_IF
+
+#include <iostream>
+#include <vector>
+#include <set>
 
 namespace ft
 {
@@ -22,4 +26,9 @@ namespace ft
     };
 };
 
+template <class T>
+struct ft::enable_if<true, T>
+{
+    typedef T type;
+};
 #endif // ENABLE_IF
