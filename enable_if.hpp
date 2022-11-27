@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 12:49:07 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/26 19:46:14 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/26 20:08:29 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ namespace ft
     template <bool Cond, class T = void>
     struct enable_if
     {
-        
     };
 };
 
