@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:35:09 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/23 23:49:42 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/28 01:49:46 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,7 @@ namespace ft
             return &(operator*());
         }
         reverse_iterator() : _iter(NULL) {}
-        // inline bool operator==(reverse_iterator const &right) { return this->_iter == right._iter; }
-        // inline bool operator!=(reverse_iterator const &right) { return this->_iter != right._iter; }
-        // inline bool operator<(reverse_iterator const &right) { return this->_iter > right._iter; }
-        // inline bool operator>(reverse_iterator const &right) { return this->_iter < right._iter; }
-        // inline bool operator<=(reverse_iterator const &right) { return this->_iter >= right._iter; }
-        // inline bool operator>=(reverse_iterator const &right) { return this->_iter <= right._iter; }
 
-        
-        
         inline reverse_iterator operator++(int)
         {
             reverse_iterator temp = *this;

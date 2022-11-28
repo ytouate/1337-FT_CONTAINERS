@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/28 01:23:20 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/28 01:39:04 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int main(void)
 
     bool val = ft::is_integral<int>::value;
 
-    ft::vector<int> myVec(37, -5);
+    ft::vector<int> myVec(10, 300);
     std::vector<int> theiVec(37, -5);
     // ft::vector<std::string>::iterator ait;
     // ft::vector<std::string>::iterator aite;
