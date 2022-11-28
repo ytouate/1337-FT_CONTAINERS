@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/28 16:23:52 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/28 16:48:18 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,19 @@
 #include "make_pair.hpp"
 int main(void)
 {
-    ft::vector<int> myVec(10, 300);
-    std::vector<int> theiVec(37, -5);
-    ft::vector<std::string>::iterator ait;
-    ft::vector<std::string>::iterator aite;
-    ft::pair<int, int> pair(10, 20);
-    std::cout << pair.first << " " << pair.second << std::endl;
+    
+    // std::pair<std::vector<int>, std::vector<int>> theirPr;
+    std::vector<int> a (10, 20);
+    std::vector<int> b (10, 30);
+    ft::pair<std::vector<int>, std::vector<int> > myPr(b, a);
+    ft::pair<std::vector<int>, std::vector<int> > temp(a, b);
+    
+    std::cout << "== before swap ==\n";
+    std::cout << myPr.first.at(0) << " " << myPr.second.at(0) << std::endl;
+    std::cout << "== after swap ==\n";
+    ft::swap(myPr, temp);
+    std::cout << myPr.first.at(0) << " " << myPr.second.at(0) << std::endl;
+    // theirPr.swap(theirPr);
     // ft::vector<int>::reverse_iterator it = myVec.rbegin();
     // ft::vector<int>::reverse_iterator ite = myVec.rend();
     // std::vector<int>::reverse_iterator cit = theiVec.rbegin();
