@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/26 19:27:24 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/28 01:24:02 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,23 +158,15 @@ namespace ft
         iterator erase(iterator first, iterator last)
         {
             difference_type diff = last - first;
-            // bool flag = false;
             vector v;
             v.reserve(this->len - diff);
+            
             iterator it = begin();
-            while (it != end())
+            while (diff > 0)
             {
-                if (!isInRange(first, last, it))
-                    v.push_back(*it);
-                else
+                    first = erase(first);
                     diff--;
-                it++;
-            }
-            this->len = v.size();
-            for (size_type i = 0; i < v.size(); i++)
-            {
-                this->_alloc.destroy(&vec[i]);
-                this->vec[i] = v.at(i);
+
             }
             return first;
         }

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/26 20:01:56 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/28 01:23:20 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int main(void)
 
     bool val = ft::is_integral<int>::value;
 
-    std::cout << val << std::endl;
     ft::vector<int> myVec(37, -5);
     std::vector<int> theiVec(37, -5);
     // ft::vector<std::string>::iterator ait;
@@ -44,8 +43,14 @@ int main(void)
     std::vector<int>::reverse_iterator cit = theiVec.rbegin();
     std::vector<int>::reverse_iterator cite = theiVec.rend();
 
-    myVec.erase(myVec.begin() + 1, myVec.begin() + 2);
-    // std::copy(myVec.begin(), myVec.end(), std::ostream_iterator<int> (std::cout, " "));
+    // while (!myVec.empty())
+    // {
+        std::cout << myVec.size() << std::endl;
+        myVec.erase(myVec.begin() + 1, myVec.begin() + 2);
+        std::cout << myVec.size() << std::endl;
+        std::cout << myVec.capacity() << std::endl;
+    // }
+    std::copy(myVec.begin(), myVec.end(), std::ostream_iterator<int> (std::cout, " "));
     // if (cit == theiVec.rbegin())
     //     std::cout << "am here\n";
     // std::vector<std::string> theirVec(5000, "Test");

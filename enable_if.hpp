@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 12:49:07 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/26 20:08:29 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/27 23:46:54 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,10 @@
 namespace ft
 {
     template <bool Cond, class T = void>
-    struct enable_if
-    {
-    };
+    struct enable_if {};
+
+    template <class T>
+    struct enable_if<true, T> { typedef T type; };
 };
 
-template <class T>
-struct ft::enable_if<true, T>
-{
-    typedef T type;
-};
 #endif // ENABLE_IF
