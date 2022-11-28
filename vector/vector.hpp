@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/28 02:44:24 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/28 15:14:32 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,12 +232,13 @@ namespace ft
         {
             while (first != last)
             {
-                value_type val = *first;
-                position = this->insert(position, val);
+                // value_type val = *first;
+                position = this->insert(position, *first);
                 first++;
                 position++;
             }
         }
+
 
         iterator erase(iterator position)
         {

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/28 01:39:04 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/28 15:15:50 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,31 @@
 #include <memory>
 #include <fstream>
 #include <math.h>
-
+#include "lexicographical_compare.hpp"
 #include "is_integral.hpp"
 
 int main(void)
 {
-
-    bool val = ft::is_integral<int>::value;
-
     ft::vector<int> myVec(10, 300);
     std::vector<int> theiVec(37, -5);
-    // ft::vector<std::string>::iterator ait;
-    // ft::vector<std::string>::iterator aite;
-    ft::vector<int>::reverse_iterator it = myVec.rbegin();
-    ft::vector<int>::reverse_iterator ite = myVec.rend();
-    std::vector<int>::reverse_iterator cit = theiVec.rbegin();
-    std::vector<int>::reverse_iterator cite = theiVec.rend();
-
-    // while (!myVec.empty())
-    // {
-        std::cout << myVec.size() << std::endl;
-        myVec.erase(myVec.begin() + 1, myVec.begin() + 2);
-        std::cout << myVec.size() << std::endl;
-        std::cout << myVec.capacity() << std::endl;
-    // }
-    std::copy(myVec.begin(), myVec.end(), std::ostream_iterator<int> (std::cout, " "));
+    ft::vector<std::string>::iterator ait;
+    ft::vector<std::string>::iterator aite;
+    // ft::vector<int>::reverse_iterator it = myVec.rbegin();
+    // ft::vector<int>::reverse_iterator ite = myVec.rend();
+    // std::vector<int>::reverse_iterator cit = theiVec.rbegin();
+    // std::vector<int>::reverse_iterator cite = theiVec.rend();
+    bool _bool = ft::lexicographical_compare(ait, aite, ait + 10, aite);
+    std::cout << _bool << std::endl;
+    // theiVec.insert(theiVec.begin(), list.begin(), list.end());
+    // myVec.insert(myVec.begin(), list.begin(), list.end());
+    // // while (!myVec.empty())
+    // // {
+    //     std::cout << myVec.size() << std::endl;
+    //     myVec.erase(myVec.begin() + 1, myVec.begin() + 2);
+    //     std::cout << myVec.size() << std::endl;
+    //     std::cout << myVec.capacity() << std::endl;
+    // // }
+    // std::copy(myVec.begin(), myVec.end(), std::ostream_iterator<int> (std::cout, " "));
     // if (cit == theiVec.rbegin())
     //     std::cout << "am here\n";
     // std::vector<std::string> theirVec(5000, "Test");
