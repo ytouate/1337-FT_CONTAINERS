@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/28 15:15:50 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/28 16:23:52 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,22 @@
 #include <math.h>
 #include "lexicographical_compare.hpp"
 #include "is_integral.hpp"
-
+#include "pair.hpp"
+#include "make_pair.hpp"
 int main(void)
 {
     ft::vector<int> myVec(10, 300);
     std::vector<int> theiVec(37, -5);
     ft::vector<std::string>::iterator ait;
     ft::vector<std::string>::iterator aite;
+    ft::pair<int, int> pair(10, 20);
+    std::cout << pair.first << " " << pair.second << std::endl;
     // ft::vector<int>::reverse_iterator it = myVec.rbegin();
     // ft::vector<int>::reverse_iterator ite = myVec.rend();
     // std::vector<int>::reverse_iterator cit = theiVec.rbegin();
     // std::vector<int>::reverse_iterator cite = theiVec.rend();
-    bool _bool = ft::lexicographical_compare(ait, aite, ait + 10, aite);
-    std::cout << _bool << std::endl;
+    // bool _bool = ft::lexicographical_compare(ait, aite, ait + 10, aite);
+    // std::cout << _bool << std::endl;
     // theiVec.insert(theiVec.begin(), list.begin(), list.end());
     // myVec.insert(myVec.begin(), list.begin(), list.end());
     // // while (!myVec.empty())
