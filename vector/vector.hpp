@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/28 16:42:09 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/28 18:55:27 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 #include "../reverse_iterator.hpp"
 #include "../iterator.hpp"
 #include <iostream>
+#include "../enable_if.hpp"
+#include "../is_integral.hpp"
+
 
 template <class T>
 void ftSwap(T &a, T &b)
@@ -64,8 +67,10 @@ namespace ft
                 this->_alloc.construct(&this->vec[i], value);
         }
 
-        // template <class InputIterator>
-        vector(iterator first, iterator last, const Allocator &alloc = Allocator()) // TODO
+        template <class InputIterator>
+        vector(InputIterator first, InputIterator last, const Allocator &alloc = Allocator(),
+                typename ft::enable_if<!std::__is_input_iterator<InputIterator>::value
+                    && !ft::is_integral<InputIterator>::value >::type* = 0)
         {
             difference_type diff = last - first;
             this->_alloc = alloc;
@@ -79,6 +84,22 @@ namespace ft
             }
         }
 
+        template <class InputIterator>
+        vector(InputIterator first, InputIterator last, const Allocator &alloc = Allocator(),
+            typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type * = 0)
+        {
+            difference_type diff = std::distance(first, last);
+            this->_alloc = alloc;
+            if (diff != 0)
+                this->vec = this->_alloc.allocate(diff);
+            this->_capacity = diff;
+            this->len = diff;
+            for (difference_type i = 0; i < diff; i++)
+            {
+                _alloc.construct(&vec[i], *first);
+                first++;
+            }
+        }
         vector(const vector<T, Allocator> &x)
         {
             this->len = x.size();
@@ -228,7 +249,7 @@ namespace ft
 
         template <class Iterator>
         void insert(iterator position,
-                    Iterator first, Iterator last)
+                    Iterator first, Iterator last, typename ft::enable_if<!ft::is_integral<Iterator>::value>::type* = 0)
         {
             while (first != last)
             {

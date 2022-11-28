@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:35:09 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/28 01:49:46 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/28 17:56:03 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,13 @@ namespace ft
     class reverse_iterator
     {
     public:
-        typedef typename ft::iterator_traits<Iterator>::iterator_category iterator_category;
-        typedef typename ft::iterator_traits<Iterator>::value_type value_type;
-        typedef typename ft::iterator_traits<Iterator>::difference_type difference_type;
-        typedef typename ft::iterator_traits<Iterator>::pointer pointer;
-        typedef typename ft::iterator_traits<Iterator>::reference reference;
+        typedef Iterator                                                        iterator_type;
+        typedef typename ft::iterator_traits<Iterator>::iterator_category       iterator_category;
+        typedef typename ft::iterator_traits<Iterator>::value_type              value_type;
+        typedef typename ft::iterator_traits<Iterator>::difference_type         difference_type;
+        typedef typename ft::iterator_traits<Iterator>::pointer                 pointer;
+        typedef typename ft::iterator_traits<Iterator>::reference               reference;
+
         explicit reverse_iterator(Iterator x) : _iter(x) {}
         template <class U> reverse_iterator(const reverse_iterator<U> &u)
         {
