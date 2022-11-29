@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:35:09 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/28 17:56:03 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/29 19:11:42 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include "iterator_traits.hpp"
 #include "iterator"
-
+#include "enable_if.hpp"
 template <class T>
 class iterator;
 
@@ -103,6 +103,8 @@ namespace ft
             // this->_iter = rhs._iter;
             return *this;
         }
+        bool operator != ( reverse_iterator rhs) { return _iter != rhs.base(); }
+        bool operator < ( reverse_iterator rhs) { return _iter > rhs.base(); }
 
     private:
         Iterator _iter;
@@ -134,7 +136,7 @@ bool operator<(
 
     return x.base() > y.base();
 }
-template <class Iterator>
+template <class Iterator, typename ft::enable_if<std::is_const<Iterator>::value>::type* = 0>
 bool operator!=(
     const ft::reverse_iterator<Iterator> &x,
     const ft::reverse_iterator<Iterator> &y)

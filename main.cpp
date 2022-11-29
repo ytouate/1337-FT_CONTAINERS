@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/28 23:06:41 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/29 15:46:46 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,36 @@
 #include <string>
 #include <sstream>
 #include "make_pair.hpp"
+
+        // intvector v(s_int, s_int + s_size);
+
+        // CHECK_AND_PRINT_ALL(v);
+
+        // v.push_back(64);
+        // v.assign(v.begin(), v.begin() + 21);
+
+        // CHECK_AND_PRINT_ALL(v);
+
+        // v.push_back(64);
+        // v.assign(v.begin(), v.end());
+
+        // CHECK_AND_PRINT_ALL(v);
 int main(void)
 {
-    std::istringstream str("1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-    std::istreambuf_iterator<char> it(str), end;
-    ft::vector<char> vec(it, end);
+    std::vector<int> v(12, 20);
+    ft::vector<int> vec(12, 20);
+    vec.push_back(64);
+    for (int i = 0; i < vec.size(); i++)
+        std::cout << vec[i] << " ";
+    std::cout << "\n\n";
+    std::cout << *vec.begin() << std::endl;
+    std::cout << *(vec.begin() + 1) << std::endl;
+    vec.assign(vec.begin(), vec.begin() + 1);
+    v.push_back(64);
+    // v.assign(v.begin(), v.begin() + 10);
+    
+    for (int i = 0; i < v.size(); i++)
+        std::cout << v[i] << " ";
     // std::vector<char> v(it, end);
     // std::pair<std::vector<int>, std::vector<int>> theirPr;
     // theirPr.swap(theirPr);
@@ -62,7 +87,7 @@ int main(void)
     // std::copy(v.begin(), v.end(), std::ostream_iterator<char> (std::cout, " "));
     
     // std::cout << " \n";
-    std::copy(vec.begin(), vec.end(), std::ostream_iterator<char> (std::cout, " "));
+    // std::copy(vec.begin(), vec.end(), std::ostream_iterator<char> (std::cout, " "));
     // if (cit == theiVec.rbegin())
     //     std::cout << "am here\n";
     // std::vector<std::string> theirVec(5000, "Test");
