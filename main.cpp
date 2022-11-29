@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/28 16:48:18 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/28 23:06:41 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,17 @@
 #include "lexicographical_compare.hpp"
 #include "is_integral.hpp"
 #include "pair.hpp"
+#include "istream"
+#include <string>
+#include <sstream>
 #include "make_pair.hpp"
 int main(void)
 {
-    
+    std::istringstream str("1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    std::istreambuf_iterator<char> it(str), end;
+    ft::vector<char> vec(it, end);
+    // std::vector<char> v(it, end);
     // std::pair<std::vector<int>, std::vector<int>> theirPr;
-    std::vector<int> a (10, 20);
-    std::vector<int> b (10, 30);
-    ft::pair<std::vector<int>, std::vector<int> > myPr(b, a);
-    ft::pair<std::vector<int>, std::vector<int> > temp(a, b);
-    
-    std::cout << "== before swap ==\n";
-    std::cout << myPr.first.at(0) << " " << myPr.second.at(0) << std::endl;
-    std::cout << "== after swap ==\n";
-    ft::swap(myPr, temp);
-    std::cout << myPr.first.at(0) << " " << myPr.second.at(0) << std::endl;
     // theirPr.swap(theirPr);
     // ft::vector<int>::reverse_iterator it = myVec.rbegin();
     // ft::vector<int>::reverse_iterator ite = myVec.rend();
@@ -60,7 +56,13 @@ int main(void)
     //     std::cout << myVec.size() << std::endl;
     //     std::cout << myVec.capacity() << std::endl;
     // // }
-    // std::copy(myVec.begin(), myVec.end(), std::ostream_iterator<int> (std::cout, " "));
+    // std::cout << " size = " << v.size() << std::endl;
+    // for (int i = 0; i < v.size(); i++)
+    //     std::cout << v[i] << std::endl;
+    // std::copy(v.begin(), v.end(), std::ostream_iterator<char> (std::cout, " "));
+    
+    // std::cout << " \n";
+    std::copy(vec.begin(), vec.end(), std::ostream_iterator<char> (std::cout, " "));
     // if (cit == theiVec.rbegin())
     //     std::cout << "am here\n";
     // std::vector<std::string> theirVec(5000, "Test");
