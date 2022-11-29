@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/29 18:42:11 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/30 00:28:31 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,9 @@ namespace ft
         void assign(Iterator first, Iterator last,
             typename ft::enable_if<!ft::is_integral<Iterator>::value>::type* = 0)
         {
-            erase(begin(), end());
+            // erase(begin(), end());
+            while (!empty())
+                pop_back();
             insert(begin(), first, last);
         }
 

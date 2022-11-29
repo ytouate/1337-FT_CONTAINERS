@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:35:09 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/29 19:11:42 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/30 00:33:18 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,10 @@ namespace ft
         inline reverse_iterator &operator=(reverse_iterator const &rhs)
         {
             this->_iter.operator=(rhs._iter);
-            // this->_iter = rhs._iter;
             return *this;
         }
-        bool operator != ( reverse_iterator rhs) { return _iter != rhs.base(); }
-        bool operator < ( reverse_iterator rhs) { return _iter > rhs.base(); }
+        // bool operator != ( reverse_iterator rhs) { return _iter != rhs.base(); }
+        // bool operator < ( reverse_iterator rhs) { return _iter > rhs.base(); }
 
     private:
         Iterator _iter;
@@ -133,10 +132,9 @@ bool operator<(
     const ft::reverse_iterator<Iterator> &x,
     const ft::reverse_iterator<Iterator_b> &y)
 {
-
     return x.base() > y.base();
 }
-template <class Iterator, typename ft::enable_if<std::is_const<Iterator>::value>::type* = 0>
+template <class Iterator>
 bool operator!=(
     const ft::reverse_iterator<Iterator> &x,
     const ft::reverse_iterator<Iterator> &y)
