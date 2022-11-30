@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/30 01:26:55 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/30 17:15:18 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,38 +33,15 @@
 #include <string>
 #include <sstream>
 #include "make_pair.hpp"
+#include "stack/stack.hpp"
 
-        // intvector v(s_int, s_int + s_size);
-
-        // CHECK_AND_PRINT_ALL(v);
-
-        // v.push_back(64);
-        // v.assign(v.begin(), v.begin() + 21);
-
-        // CHECK_AND_PRINT_ALL(v);
-
-        // v.push_back(64);
-        // v.assign(v.begin(), v.end());
-
-        // CHECK_AND_PRINT_ALL(v);
 int main(void)
 {
-    std::vector<int> v(12, 20);
-    ft::vector<int> vec(12, 20);
-    std::pair<int, int> pair;
+    ft::stack<int> stack1;
+    ft::stack<int> stack2;
 
-    pair.swap(pair);
-    vec.push_back(64);
-    for (int i = 0; i < vec.size(); i++)
-        std::cout << vec[i] << " ";
-    std::cout << "\n\n";
-    std::cout << "the begin i passed " << *(vec.begin() + 1) << std::endl; 
-    vec.assign(vec.begin(), vec.begin() + 1);
-    v.push_back(64);
-    // v.assign(v.begin(), v.begin() + 10);
-    std::stack<int> stack;
-    for (int i = 0; i < v.size(); i++)
-        std::cout << v[i] << " ";
+    if (stack1 == stack2)
+        std::cout << " am here \n";
     // std::vector<char> v(it, end);
     // std::pair<std::vector<int>, std::vector<int>> theirPr;
     // theirPr.swap(theirPr);
