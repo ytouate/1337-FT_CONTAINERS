@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/30 00:23:54 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/30 01:26:55 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ int main(void)
 {
     std::vector<int> v(12, 20);
     ft::vector<int> vec(12, 20);
+    std::pair<int, int> pair;
+
+    pair.swap(pair);
     vec.push_back(64);
     for (int i = 0; i < vec.size(); i++)
         std::cout << vec[i] << " ";
@@ -59,7 +62,7 @@ int main(void)
     vec.assign(vec.begin(), vec.begin() + 1);
     v.push_back(64);
     // v.assign(v.begin(), v.begin() + 10);
-    
+    std::stack<int> stack;
     for (int i = 0; i < v.size(); i++)
         std::cout << v[i] << " ";
     // std::vector<char> v(it, end);

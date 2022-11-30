@@ -6,4 +6,5 @@
 *.gch
 *.tldr
 TODO
+main.cpp
 ft_containers-terminator
