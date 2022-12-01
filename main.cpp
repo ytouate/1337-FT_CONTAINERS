@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/30 17:15:18 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/02 00:37:18 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,21 @@
 #include "make_pair.hpp"
 #include "stack/stack.hpp"
 
+template <typename T>
+T times2(const T &v)
+{
+    return v * 2;
+}
 int main(void)
 {
-    ft::stack<int> stack1;
-    ft::stack<int> stack2;
+    // ft::vector<int> v(10, 100);
 
-    if (stack1 == stack2)
-        std::cout << " am here \n";
+    // long (*fn) (const long &) = &times2;
+    // std::transform(v.rbegin(), v.rend(), v.rbegin(), fn);
+    
+    // for (int i = 0; i < v.size(); i++)
+    //     std::cout << " " << v.at(i);
+    // std::cout << "\n";
     // std::vector<char> v(it, end);
     // std::pair<std::vector<int>, std::vector<int>> theirPr;
     // theirPr.swap(theirPr);

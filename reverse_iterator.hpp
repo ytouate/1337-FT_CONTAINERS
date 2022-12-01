@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:35:09 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/01 22:56:40 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/01 23:40:10 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,6 @@ namespace ft
             this->_iter.operator=(rhs._iter);
             return *this;
         }
-        // bool operator != (const reverse_iterator &rhs) { return _iter != rhs.base(); }
-        // bool operator < (const  reverse_iterator &rhs) { return _iter > rhs.base(); }
-
     private:
         Iterator _iter;
     };
