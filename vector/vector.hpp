@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/30 00:28:31 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/01 23:01:03 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 #include <iostream>
 #include "../enable_if.hpp"
 #include "../is_integral.hpp"
-
 
 template <class T>
 void ftSwap(T &a, T &b)
@@ -69,9 +68,7 @@ namespace ft
 
         template <class InputIterator>
         vector(InputIterator first, InputIterator last, const Allocator &alloc = Allocator(),
-                typename ft::enable_if<std::__is_input_iterator<InputIterator>::value
-                    && !std::__is_forward_iterator<InputIterator>::value 
-                    && !ft::is_integral<InputIterator>::value >::type* = 0)
+               typename ft::enable_if<std::__is_input_iterator<InputIterator>::value && !std::__is_forward_iterator<InputIterator>::value && !ft::is_integral<InputIterator>::value>::type * = 0)
         {
             this->_alloc = alloc;
             this->len = 0;
@@ -82,8 +79,7 @@ namespace ft
 
         template <class InputIterator>
         vector(InputIterator first, InputIterator last, const Allocator &alloc = Allocator(),
-                typename ft::enable_if<!ft::is_integral<InputIterator>::value
-                && std::__is_random_access_iterator<InputIterator>::value>::type* = 0)
+               typename ft::enable_if<!ft::is_integral<InputIterator>::value && std::__is_random_access_iterator<InputIterator>::value>::type * = 0)
         {
             difference_type diff = std::distance(first, last);
             this->_alloc = alloc;
@@ -124,7 +120,7 @@ namespace ft
 
         template <class Iterator>
         void assign(Iterator first, Iterator last,
-            typename ft::enable_if<!ft::is_integral<Iterator>::value>::type* = 0)
+                    typename ft::enable_if<!ft::is_integral<Iterator>::value>::type * = 0)
         {
             // erase(begin(), end());
             while (!empty())
@@ -207,7 +203,7 @@ namespace ft
         const_reference front() const { return this->vec[0]; }
         reference back() { return this->vec[this->len - 1]; }
         const_reference back() const { return this->vec[this->len - 1]; }
-    
+
         // modifiers
         void push_back(const T &x)
         {
@@ -250,7 +246,7 @@ namespace ft
         template <class Iterator>
         void insert(iterator position,
                     Iterator first, Iterator last,
-                    typename ft::enable_if<!ft::is_integral<Iterator>::value>::type* = 0)
+                    typename ft::enable_if<!ft::is_integral<Iterator>::value>::type * = 0)
         {
             while (first != last)
             {
@@ -259,7 +255,6 @@ namespace ft
                 position++;
             }
         }
-
 
         iterator erase(iterator position)
         {
@@ -309,6 +304,7 @@ namespace ft
             }
             this->len = 0;
         }
+
     private:
         void addFront(size_type n, const T &x)
         {
@@ -365,7 +361,7 @@ namespace ft
             }
             this->len = tmp.len;
         }
-        
+
         size_type len;
         Allocator _alloc;
         size_type _capacity;
@@ -410,13 +406,17 @@ namespace ft
     }
 
     template <class T, class Alloc>
-    bool operator!=(const ft::vector<T, Alloc> &lhs, const ft::vector<T, Alloc> &rhs)
+    bool operator!=(
+        const ft::vector<T, Alloc> &lhs,
+        const ft::vector<T, Alloc> &rhs)
     {
         return !(lhs == rhs);
     }
 
     template <class T, class Alloc>
-    bool operator<=(const ft::vector<T, Alloc> &lhs, const ft::vector<T, Alloc> &rhs)
+    bool operator<=(
+        const ft::vector<T, Alloc> &lhs,
+        const ft::vector<T, Alloc> &rhs)
     {
         if (lhs.size() > rhs.size())
             return false;
@@ -433,12 +433,16 @@ namespace ft
     }
 
     template <class T, class Alloc>
-    bool operator>(const ft::vector<T, Alloc> &lhs, const ft::vector<T, Alloc> &rhs)
+    bool operator>(
+        const ft::vector<T, Alloc> &lhs,
+        const ft::vector<T, Alloc> &rhs)
     {
         return (!(lhs <= rhs));
     }
     template <class T, class Alloc>
-    bool operator>=(const ft::vector<T, Alloc> &lhs, const ft::vector<T, Alloc> &rhs)
+    bool operator>=(
+        const ft::vector<T, Alloc> &lhs,
+        const ft::vector<T, Alloc> &rhs)
     {
         return lhs == rhs or lhs > rhs;
     }
