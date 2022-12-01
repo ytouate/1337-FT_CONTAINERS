@@ -3,16 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/01 23:01:03 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/01 23:36:14 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #if !defined(VECTOR_HPP)
 #define VECTOR_HPP
 
+#include <type_traits>
+#include <iterator>
+
+#include <limits>
+#include <cstddef>
 #include "../reverse_iterator.hpp"
 #include "../iterator.hpp"
 #include <iostream>
@@ -37,7 +42,7 @@ namespace ft
         typedef typename Allocator::reference reference;
         typedef typename Allocator::const_reference const_reference;
         typedef size_t size_type;
-        typedef ptrdiff_t difference_type;
+        typedef std::ptrdiff_t difference_type;
         typedef T value_type;
         typedef Allocator allocator_type;
         typedef typename Allocator::pointer pointer;
@@ -68,7 +73,9 @@ namespace ft
 
         template <class InputIterator>
         vector(InputIterator first, InputIterator last, const Allocator &alloc = Allocator(),
-               typename ft::enable_if<std::__is_input_iterator<InputIterator>::value && !std::__is_forward_iterator<InputIterator>::value && !ft::is_integral<InputIterator>::value>::type * = 0)
+               typename ft::enable_if<std::__is_input_iterator<InputIterator>::value
+                    && !std::__is_forward_iterator<InputIterator>::value
+                    && !ft::is_integral<InputIterator>::value>::type * = 0)
         {
             this->_alloc = alloc;
             this->len = 0;
@@ -147,7 +154,7 @@ namespace ft
 
         // capacity
         size_type size() const { return this->len; }
-        size_type max_size() const { return std::min<size_type>(this->_alloc.max_size(), std::numeric_limits<ptrdiff_t>::max()); }
+        size_type max_size() const { return std::min<size_type>(this->_alloc.max_size(), std::numeric_limits<std::ptrdiff_t>::max()); }
         size_type capacity() const { return this->_capacity; }
         bool empty() const { return this->len == 0; }
         void resize(size_type n, T c = T())

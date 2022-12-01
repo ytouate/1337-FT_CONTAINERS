@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 01:20:20 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/30 17:33:15 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/01 23:00:46 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ namespace ft
             return *this;
         }
         void push(const value_type &s) { c.push_back(s); }
-        void swap(stack &s) _NOEXCEPT
+        void swap(stack &s) throw()
         {
             ft::swap(c, s.c);
         }

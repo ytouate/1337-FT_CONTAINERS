@@ -6,13 +6,15 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 16:08:00 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/01 23:21:01 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/02 00:38:01 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#if !defined(MACRO)
-#define MACRO
+#if !defined(ITERATOR_HPP)
+#define ITERATOR_HPP
 
+#include <type_traits>
+#include <cstddef>
 #include <iostream>
 #include <iterator>
 #include <set>
