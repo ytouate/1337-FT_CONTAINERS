@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pair.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 15:31:32 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/30 00:57:30 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/01 23:01:01 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ namespace ft
             this->second = pr.second;
             return *this;
         }
-        void swap(pair &pr) _NOEXCEPT
+        void swap(pair &pr) throw()
         {
             pair temp = pr;
             pr = *this;
@@ -92,7 +92,7 @@ namespace ft
         return !(lhs < rhs);
     }
 
-    template <class T1, class T2>  void swap (ft::pair<T1,T2>& x, ft::pair<T1,T2>& y) _NOEXCEPT
+    template <class T1, class T2>  void swap (ft::pair<T1,T2>& x, ft::pair<T1,T2>& y) throw()
     {
         x.swap(y);
     }

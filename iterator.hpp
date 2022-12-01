@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   iterator.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 16:08:00 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/22 19:08:46 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/01 23:05:30 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#if !defined(MACRO)
-#define MACRO
+#if !defined(ITERATOR_HPP)
+#define ITERATOR_HPP
 
+#include <type_traits>
+#include <cstddef>
 #include <iostream>
 #include <iterator>
 #include <set>

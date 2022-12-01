@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   iterator_traits.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 13:41:14 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/20 12:34:13 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/01 23:00:29 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ namespace ft
         typedef T *pointer;
         typedef T &reference;
         typedef std::random_access_iterator_tag iterator_category;
-        typedef ptrdiff_t difference_type;
+        typedef std::ptrdiff_t difference_type;
     };
     template <class T>
     class iterator_traits<const T *>
     {
     public:
-        typedef ptrdiff_t difference_type;
+        typedef std::ptrdiff_t difference_type;
         typedef T value_type;
         typedef const T *pointer;
         typedef const T &reference;

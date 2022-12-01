@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   reverse_iterator.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:35:09 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/01 22:56:40 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/01 23:04:02 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #if !defined(REVERSE_ITERATOR_HPP)
 #define REVERSE_ITERATOR_HPP
 
+#include <cstddef>
 #include "iterator_traits.hpp"
 #include "iterator"
 #include "enable_if.hpp"
