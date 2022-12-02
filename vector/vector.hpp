@@ -3,34 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/01 23:36:14 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/02 17:42:02 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #if !defined(VECTOR_HPP)
 #define VECTOR_HPP
 
-#include <type_traits>
-#include <iterator>
+#include "../inc.hpp"
 
-#include <limits>
-#include <cstddef>
-#include "../reverse_iterator.hpp"
-#include "../iterator.hpp"
-#include <iostream>
-#include "../enable_if.hpp"
-#include "../is_integral.hpp"
 
-template <class T>
-void ftSwap(T &a, T &b)
-{
-    T c = a;
-    a = b;
-    b = c;
-}
 namespace ft
 {
     template <class T, class Allocator = std::allocator<T> >
@@ -73,9 +58,7 @@ namespace ft
 
         template <class InputIterator>
         vector(InputIterator first, InputIterator last, const Allocator &alloc = Allocator(),
-               typename ft::enable_if<std::__is_input_iterator<InputIterator>::value
-                    && !std::__is_forward_iterator<InputIterator>::value
-                    && !ft::is_integral<InputIterator>::value>::type * = 0)
+               typename ft::enable_if<std::__is_input_iterator<InputIterator>::value && !std::__is_forward_iterator<InputIterator>::value && !ft::is_integral<InputIterator>::value>::type * = 0)
         {
             this->_alloc = alloc;
             this->len = 0;
@@ -313,6 +296,13 @@ namespace ft
         }
 
     private:
+        template <class U>
+        void ftSwap(U &a, U &b)
+        {
+            U c = a;
+            a = b;
+            b = c;
+        }
         void addFront(size_type n, const T &x)
         {
             size_type newCapacity = getNewCapacity(n);

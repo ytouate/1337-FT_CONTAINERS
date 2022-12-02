@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/02 17:24:19 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/02 17:36:37 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@ T times2(const T &v)
 }
 int main(void)
 {
-    std::vector<int> v(10, 100);
+    ft::vector<int> v(10, 100);
 
+    // std::vector<int>::reverse_iterator rit = v.rbegin();
+    // if (rit == rit)
+    //     std::cout << " helo ";
     long (*fn) (const long &) = &times2;
     std::transform(v.rbegin(), v.rend(), v.rbegin(), fn);
     
