@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   iterator_traits.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 13:41:14 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/01 23:00:29 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/02 17:10:07 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #if !defined(ITERATOR_TRAITS_HPP)
 #define ITERATOR_TRAITS_HPP
 
-#include <iostream>
+#include "inc.hpp"
 
 namespace ft
 {

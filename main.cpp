@@ -6,34 +6,11 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/02 00:37:18 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/02 17:24:19 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <vector>
-#include <iostream>
-#include <set>
-#include <forward_list>
-#include <map>
-#include <list>
-#include <deque>
-#include <stack>
-#include <array>
-#include <memory.h>
-#include "iterator.hpp"
-#include "reverse_iterator.hpp"
-#include "vector/vector.hpp"
-#include <memory>
-#include <fstream>
-#include <math.h>
-#include "lexicographical_compare.hpp"
-#include "is_integral.hpp"
-#include "pair.hpp"
-#include "istream"
-#include <string>
-#include <sstream>
-#include "make_pair.hpp"
-#include "stack/stack.hpp"
+#include "inc.hpp"
 
 template <typename T>
 T times2(const T &v)
@@ -42,10 +19,10 @@ T times2(const T &v)
 }
 int main(void)
 {
-    // ft::vector<int> v(10, 100);
+    std::vector<int> v(10, 100);
 
-    // long (*fn) (const long &) = &times2;
-    // std::transform(v.rbegin(), v.rend(), v.rbegin(), fn);
+    long (*fn) (const long &) = &times2;
+    std::transform(v.rbegin(), v.rend(), v.rbegin(), fn);
     
     // for (int i = 0; i < v.size(); i++)
     //     std::cout << " " << v.at(i);

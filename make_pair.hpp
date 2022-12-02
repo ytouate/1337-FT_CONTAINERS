@@ -6,14 +6,14 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:08:41 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/28 16:25:08 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/02 17:19:22 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #if !defined(MAKE_PAIR)
 #define MAKE_PAIR
 
-#include "pair.hpp"
+#include "inc.hpp"
 
 namespace ft
 {

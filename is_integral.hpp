@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   is_integral.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 20:00:34 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/01 23:24:40 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/02 17:09:59 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #if !defined(IS_INTEGRAL)
 #define IS_INTEGRAL
-#include <cstddef>
-#include <iostream>
+
+#include "inc.hpp"
 
 namespace ft
 {

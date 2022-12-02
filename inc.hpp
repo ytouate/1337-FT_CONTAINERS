@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   enable_if.hpp                                      :+:      :+:    :+:   */
+/*   inc.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/26 12:49:07 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/02 17:18:08 by ytouate          ###   ########.fr       */
+/*   Created: 2022/12/02 17:09:15 by ytouate           #+#    #+#             */
+/*   Updated: 2022/12/02 17:24:55 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#if !defined(ENABLE_IF)
-#define ENABLE_IF
+#if !defined(INC_HPP)
+#define INC_HPP
 
-#include "inc.hpp"
+#include <cstddef>
+#include <iostream>
+#include <stack>
+#include <vector>
 
-namespace ft
-{
-    template <bool Cond, class T = void>
-    struct enable_if {};
+#include "iterator_traits.hpp"
+#include "iterator"
+#include "reverse_iterator.hpp"
+#include "enable_if.hpp"
+#include "is_integral.hpp"
+#include "pair.hpp"
+#include "make_pair.hpp"
+#include "vector/vector.hpp"
+#include "stack/stack.hpp"
 
-    template <class T>
-    struct enable_if<true, T> { typedef T type; };
-};
-
-#endif // ENABLE_IF
+#endif // INC_HPP

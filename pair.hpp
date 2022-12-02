@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   pair.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 15:31:32 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/01 23:01:01 by codespace        ###   ########.fr       */
+/*   Updated: 2022/12/02 17:17:07 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #if !defined(PAIR)
 #define PAIR
 
-#include <iostream>
+#include "inc.hpp"
 
 namespace ft
 {

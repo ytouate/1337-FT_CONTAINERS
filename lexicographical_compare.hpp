@@ -6,12 +6,14 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 15:08:38 by ytouate           #+#    #+#             */
-/*   Updated: 2022/11/28 15:12:11 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/02 17:10:39 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #if !defined(LEXICOGRAPHICAL_COMPARE)
 #define LEXICOGRAPHICAL_COMPARE
+
+#include "inc.hpp"
 
 namespace ft
 {

@@ -6,17 +6,15 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:35:09 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/02 00:38:11 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/02 17:17:33 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #if !defined(REVERSE_ITERATOR_HPP)
 #define REVERSE_ITERATOR_HPP
 
-#include <cstddef>
-#include "iterator_traits.hpp"
-#include "iterator"
-#include "enable_if.hpp"
+#include "inc.hpp"
+
 template <class T>
 class iterator;
 
