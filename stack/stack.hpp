@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 01:20:20 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/02 17:43:10 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/02 18:02:03 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ namespace ft
     public:
         typedef typename Container::value_type value_type;
         typedef typename Container::size_type size_type;
-        typedef typename Container::reference   reference;
+        typedef typename Container::reference reference;
         typedef typename Container::const_reference const_reference;
         typedef Container container_type;
 
@@ -52,41 +52,46 @@ namespace ft
         void pop() { c.pop_back(); }
         template <class U, class C>
         friend bool operator==(const stack<U, C> &x,
-                        const stack<U, C> &y)
+                               const stack<U, C> &y)
         {
             return x.c == y.c;
         }
-         template <class U, class C>
+        template <class U, class C>
         friend bool operator<(const stack<U, C> &x,
-                    const stack<U, C> &y)
+                              const stack<U, C> &y)
         {
             return x.c < y.c;
         }
-         template <class U, class C>
+        template <class U, class C>
         friend bool operator!=(const stack<U, C> &x,
-                        const stack<U, C> &y)
+                               const stack<U, C> &y)
         {
             return x.c != y.c;
         }
-         template <class U, class C>
+        template <class U, class C>
         friend bool operator>(const stack<U, C> &x,
-                    const stack<U, C> &y)
+                              const stack<U, C> &y)
         {
             return x.c > y.c;
         }
-         template <class U, class C>
+        template <class U, class C>
         friend bool operator>=(const stack<U, C> &x,
-                        const stack<U, C> &y)
+                               const stack<U, C> &y)
         {
             return x.c >= y.c;
         }
-         template <class U, class C>
+        template <class U, class C>
         friend bool operator<=(const stack<U, C> &x,
-                        const stack<U, C> &y)
+                               const stack<U, C> &y)
         {
             return x.c <= y.c;
         }
     };
+    template <class T, class Container>
+    void swap(stack<T, Container> &x, stack<T, Container> &y) throw()
+    {
+        x.swap(y);
+    }
 }
 
 #endif // STACK_HPP

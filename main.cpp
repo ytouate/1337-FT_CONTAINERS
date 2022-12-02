@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/02 17:36:37 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/02 17:47:13 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int main(void)
 {
     ft::vector<int> v(10, 100);
 
+    ft::stack<int> a;
     // std::vector<int>::reverse_iterator rit = v.rbegin();
     // if (rit == rit)
     //     std::cout << " helo ";

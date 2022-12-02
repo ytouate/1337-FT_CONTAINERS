@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/02 17:42:02 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/02 18:06:59 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #define VECTOR_HPP
 
 #include "../inc.hpp"
-
 
 namespace ft
 {
@@ -58,7 +57,9 @@ namespace ft
 
         template <class InputIterator>
         vector(InputIterator first, InputIterator last, const Allocator &alloc = Allocator(),
-               typename ft::enable_if<std::__is_input_iterator<InputIterator>::value && !std::__is_forward_iterator<InputIterator>::value && !ft::is_integral<InputIterator>::value>::type * = 0)
+               typename ft::enable_if<std::__is_input_iterator<InputIterator>::value
+                        && !std::__is_forward_iterator<InputIterator>::value
+                        && !ft::is_integral<InputIterator>::value>::type * = 0)
         {
             this->_alloc = alloc;
             this->len = 0;
@@ -69,7 +70,8 @@ namespace ft
 
         template <class InputIterator>
         vector(InputIterator first, InputIterator last, const Allocator &alloc = Allocator(),
-               typename ft::enable_if<!ft::is_integral<InputIterator>::value && std::__is_random_access_iterator<InputIterator>::value>::type * = 0)
+               typename ft::enable_if<!ft::is_integral<InputIterator>::value
+                        && std::__is_random_access_iterator<InputIterator>::value>::type * = 0)
         {
             difference_type diff = std::distance(first, last);
             this->_alloc = alloc;
@@ -112,7 +114,6 @@ namespace ft
         void assign(Iterator first, Iterator last,
                     typename ft::enable_if<!ft::is_integral<Iterator>::value>::type * = 0)
         {
-            // erase(begin(), end());
             while (!empty())
                 pop_back();
             insert(begin(), first, last);
@@ -137,7 +138,7 @@ namespace ft
 
         // capacity
         size_type size() const { return this->len; }
-        size_type max_size() const { return std::min<size_type>(this->_alloc.max_size(), std::numeric_limits<std::ptrdiff_t>::max()); }
+        size_type max_size() const { return std::min<size_type>( this->_alloc.max_size(), std::numeric_limits<std::ptrdiff_t>::max()); }
         size_type capacity() const { return this->_capacity; }
         bool empty() const { return this->len == 0; }
         void resize(size_type n, T c = T())
@@ -364,6 +365,8 @@ namespace ft
         size_type _capacity;
         T *vec;
     };
+    /*---- NON-MEMBER FUNCTIONS ----*/
+
     // comparisons
     template <class T, class Alloc>
     bool operator==(const ft::vector<T, Alloc> &lhs, const ft::vector<T, Alloc> &rhs)
