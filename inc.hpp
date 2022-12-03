@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 17:09:15 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/02 17:42:42 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/02 19:52:31 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@
 #include <stack>
 #include <vector>
 
-#include "iterator_traits.hpp"
-#include "iterator.hpp"
-#include "reverse_iterator.hpp"
-#include "enable_if.hpp"
-#include "is_integral.hpp"
-#include "pair.hpp"
-#include "make_pair.hpp"
+#include "utility/iterator_traits.hpp"
+#include "utility/iterator.hpp"
+#include "utility/reverse_iterator.hpp"
+#include "utility/enable_if.hpp"
+#include "utility/is_integral.hpp"
+#include "pair/pair.hpp"
+#include "utility/make_pair.hpp"
 #include "vector/vector.hpp"
 #include "stack/stack.hpp"
 

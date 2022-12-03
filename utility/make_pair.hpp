@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   enable_if.hpp                                      :+:      :+:    :+:   */
+/*   make_pair.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/26 12:49:07 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/02 17:18:08 by ytouate          ###   ########.fr       */
+/*   Created: 2022/11/28 16:08:41 by ytouate           #+#    #+#             */
+/*   Updated: 2022/12/02 19:52:46 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#if !defined(ENABLE_IF)
-#define ENABLE_IF
+#if !defined(MAKE_PAIR)
+#define MAKE_PAIR
 
-#include "inc.hpp"
+#include "../inc.hpp"
 
 namespace ft
 {
-    template <bool Cond, class T = void>
-    struct enable_if {};
+    template <class T1, class T2>  ft::pair<T1,T2> make_pair (T1 x, T2 y)
+    {
+        return ft::pair<T1, T2> (x, y);
+    }
+} // namespace ft
 
-    template <class T>
-    struct enable_if<true, T> { typedef T type; };
-};
-
-#endif // ENABLE_IF
+#endif // MAKE_PAIR

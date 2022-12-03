@@ -6,14 +6,14 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 20:00:34 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/02 17:09:59 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/02 19:52:22 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #if !defined(IS_INTEGRAL)
 #define IS_INTEGRAL
 
-#include "inc.hpp"
+#include "../inc.hpp"
 
 namespace ft
 {

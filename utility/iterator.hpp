@@ -6,14 +6,14 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 16:08:00 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/02 17:18:15 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/02 19:52:06 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #if !defined(ITERATOR_HPP)
 #define ITERATOR_HPP
 
-#include "inc.hpp"
+#include "../inc.hpp"
 namespace ft
 {
     template <class T>

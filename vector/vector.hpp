@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/02 18:06:59 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/03 17:07:02 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,12 +167,12 @@ namespace ft
                 tmp[i] = this->vec[i];
                 this->_alloc.destroy(&vec[i]);
             }
-            if (_capacity > 0)
+            if (this->_capacity > 0 && n <= max_size())
                 this->_alloc.deallocate(vec, this->_capacity);
             this->vec = this->_alloc.allocate(n);
             this->_capacity = n;
             for (size_type i = 0; i < this->len; i++)
-                this->_alloc.construct(&this->vec[i], tmp[i]);
+                this->_alloc.construct(&this->vec[i], tmp[i]); 
         }
 
         // element access

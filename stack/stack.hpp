@@ -6,18 +6,18 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 01:20:20 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/02 18:02:03 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/02 19:45:07 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #if !defined(STACK_HPP)
 #define STACK_HPP
 
-#include "../vector/vector.hpp"
+#include "../inc.hpp"
 
 namespace ft
 {
-    template <class T, class Container = ft::vector<T> >
+    template <class T, class Container = std::vector<T> >
     class stack
     {
     public:
