@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/03 17:07:02 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/07 18:38:15 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,7 @@ namespace ft
 
         template <class InputIterator>
         vector(InputIterator first, InputIterator last, const Allocator &alloc = Allocator(),
-               typename ft::enable_if<std::__is_input_iterator<InputIterator>::value
-                        && !std::__is_forward_iterator<InputIterator>::value
-                        && !ft::is_integral<InputIterator>::value>::type * = 0)
+               typename ft::enable_if<std::__is_input_iterator<InputIterator>::value && !std::__is_forward_iterator<InputIterator>::value && !ft::is_integral<InputIterator>::value>::type * = 0)
         {
             this->_alloc = alloc;
             this->len = 0;
@@ -70,8 +68,7 @@ namespace ft
 
         template <class InputIterator>
         vector(InputIterator first, InputIterator last, const Allocator &alloc = Allocator(),
-               typename ft::enable_if<!ft::is_integral<InputIterator>::value
-                        && std::__is_random_access_iterator<InputIterator>::value>::type * = 0)
+               typename ft::enable_if<!ft::is_integral<InputIterator>::value && std::__is_random_access_iterator<InputIterator>::value>::type * = 0)
         {
             difference_type diff = std::distance(first, last);
             this->_alloc = alloc;
@@ -138,7 +135,7 @@ namespace ft
 
         // capacity
         size_type size() const { return this->len; }
-        size_type max_size() const { return std::min<size_type>( this->_alloc.max_size(), std::numeric_limits<std::ptrdiff_t>::max()); }
+        size_type max_size() const { return std::min<size_type>(this->_alloc.max_size(), std::numeric_limits<std::ptrdiff_t>::max()); }
         size_type capacity() const { return this->_capacity; }
         bool empty() const { return this->len == 0; }
         void resize(size_type n, T c = T())
@@ -172,7 +169,7 @@ namespace ft
             this->vec = this->_alloc.allocate(n);
             this->_capacity = n;
             for (size_type i = 0; i < this->len; i++)
-                this->_alloc.construct(&this->vec[i], tmp[i]); 
+                this->_alloc.construct(&this->vec[i], tmp[i]);
         }
 
         // element access
@@ -219,8 +216,6 @@ namespace ft
 
         void insert(iterator position, size_type n, const T &x)
         {
-            iterator it = this->begin();
-
             if (position == this->begin())
                 addFront(n, x);
             else
@@ -239,14 +234,35 @@ namespace ft
                     Iterator first, Iterator last,
                     typename ft::enable_if<!ft::is_integral<Iterator>::value>::type * = 0)
         {
+            // std::cout << "am here\n";
+            int count = 0;
+            difference_type dis = std::distance(first, last);
             while (first != last)
             {
-                position = this->insert(position, *first);
+                position = insert(position, *first);
+                first++;
+                count++;
+                position++;
+            }
+            this->_capacity = dis;
+        }
+
+        template <class Iterator>
+        void insert(iterator position,
+                    Iterator first, Iterator last,
+                    typename ft::enable_if<!ft::is_integral<Iterator>::value
+                    && !std::__is_input_iterator<Iterator>::value
+                    && !std::__is_forward_iterator<Iterator>::value>::type * = 0)
+        {
+            int cap = getNewCapacity(last - first);
+            while (first != last)
+            {
+                position = insert(position, *first);
                 first++;
                 position++;
             }
+            this->reserve(cap);
         }
-
         iterator erase(iterator position)
         {
             T tmp[this->len - 1];
@@ -309,7 +325,7 @@ namespace ft
             size_type newCapacity = getNewCapacity(n);
             iterator it = this->begin();
             vector tmp;
-            tmp.reserve(this->len + n);
+            // tmp.reserve(this->len + n);
             while (n--)
                 tmp.push_back(x);
             while (it != this->end())
@@ -321,20 +337,8 @@ namespace ft
                     this->_alloc.destroy(&this->vec[i]);
                 this->_alloc.construct(&this->vec[i], tmp[i]);
             }
+            // this->_capacity = newCapacity;
             this->len = tmp.len;
-        }
-        size_type getNewCapacity(size_type n)
-        {
-            size_type newCapacity = 0;
-            if (this->empty())
-                newCapacity += n;
-            else if (this->_capacity < this->len + n)
-            {
-                newCapacity = this->_capacity * 2;
-                if (newCapacity < this->len + n)
-                    newCapacity = this->_capacity + n;
-            }
-            return newCapacity;
         }
         void insertAfter(iterator position, size_type n, const T &x)
         {
@@ -358,6 +362,30 @@ namespace ft
                 this->_alloc.construct(&this->vec[i], tmp[i]);
             }
             this->len = tmp.len;
+        }
+        size_type getNewCapacity(size_type n) // n is the number of elements to be added
+        {
+            // capacity > this->len + n;
+            // capacity < this->len + n;
+            // empty vector;
+            // capcity >= size + n;
+            // capcity < size + n && n > size;
+            // capacity < size + n && n <= size;
+            size_type newCapacity = 0;
+            if (len == 0)
+                newCapacity = n;
+            else if (_capacity < len + n)
+            {
+                if (n > len)
+                    newCapacity = n + len;
+                else
+                    newCapacity = this->_capacity * 2;
+            }
+            else if (_capacity >= len + n)
+            {
+                newCapacity = _capacity;
+            }
+            return newCapacity;
         }
 
         size_type len;
