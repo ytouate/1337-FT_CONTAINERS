@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   equal.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/12 15:23:00 by ytouate          ###   ########.fr       */
+/*   Created: 2022/12/14 13:59:49 by ytouate           #+#    #+#             */
+/*   Updated: 2022/12/14 14:00:22 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "inc.hpp"
+#if !defined(EQUAL_HPP)
+#define EQUAL_HPP
 
-int main(void)
+template <class InputIterator1, class InputIterator2>
+bool equal(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2)
 {
-    
-    std::distance
-    if (std::__is_random_access_iterator<::vector<char>::iterator::iterator_category>)
-        return last - first;
-    d
+    while (first1 != last1)
+    {
+        if (!(*first1 == *first2))
+            return false;
+        ++first1;
+        ++first2;
+    }
+    return true;
 }
+
+#endif // EQUAL_HPP

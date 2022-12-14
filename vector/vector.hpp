@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/07 18:38:15 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/07 23:02:19 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,17 +234,12 @@ namespace ft
                     Iterator first, Iterator last,
                     typename ft::enable_if<!ft::is_integral<Iterator>::value>::type * = 0)
         {
-            // std::cout << "am here\n";
-            int count = 0;
-            difference_type dis = std::distance(first, last);
             while (first != last)
             {
                 position = insert(position, *first);
                 first++;
-                count++;
                 position++;
             }
-            this->_capacity = dis;
         }
 
         template <class Iterator>
@@ -254,15 +249,16 @@ namespace ft
                     && !std::__is_input_iterator<Iterator>::value
                     && !std::__is_forward_iterator<Iterator>::value>::type * = 0)
         {
-            int cap = getNewCapacity(last - first);
+            long cap = last - first;
             while (first != last)
             {
                 position = insert(position, *first);
                 first++;
                 position++;
             }
-            this->reserve(cap);
+            this->_capacity = cap;
         }
+
         iterator erase(iterator position)
         {
             T tmp[this->len - 1];
