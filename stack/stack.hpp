@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 01:20:20 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/16 14:59:13 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/16 23:35:50 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,19 +81,13 @@ namespace ft
             return x.c >= y.c;
         }
         container_type getC() const { return this->c; }
-        // template <class U, class C>
-        // friend bool operator<=(const stack<U, C> &x,
-        //                        const stack<U, C> &y)
-        // {
-        //     return x.c <= y.c;
-        // }
+        template <class U, class C>
+        friend bool operator<=(const stack<U, C> &x,
+                               const stack<U, C> &y)
+        {
+            return x.c <= y.c;
+        }
     };
-    template <class U, class C>
-     bool operator<=(const stack<U, C> &x,
-                           const stack<U, C> &y)
-    {
-        return x.getC() <= y.getC();
-    }
     template <class T, class Container>
     void swap(stack<T, Container> &x, stack<T, Container> &y) throw()
     {
