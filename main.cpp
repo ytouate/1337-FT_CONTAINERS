@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/16 23:11:12 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/17 19:09:58 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,13 @@ int main(void)
     ft::redBlackTree<int> tree;
     std::srand(time(nullptr));
 
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 5; i++)
     {
         int val = std::rand();
-        if (tree.search(val) == NULL)
+        if (tree.search(i) == NULL)
         {
-            tree.insert(val);
+            tree.insert(i);
+            tree.insert(-i);
         }
     }
     inOrderTraversal(tree.getTree());

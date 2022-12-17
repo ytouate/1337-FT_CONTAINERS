@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/16 23:32:48 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/17 19:09:16 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ namespace ft
     template <class T>
     struct t_node
     {
-        t_node(T &_data)
+        t_node(const T &_data)
         {
             this->data = _data;
             this->color = RED;
@@ -105,7 +105,7 @@ namespace ft
             return NULL;
         }
 
-        void insert(T &_data)
+        void insert(const T &_data)
         {
             t_node<T> *node = new t_node<T>(_data);
             if (this->root == NULL)
@@ -117,6 +117,33 @@ namespace ft
             }
             add(this->root, node);
             this->_size++;
+        }
+        t_node<T> *getSuccessor(const t_node<T> *_node)
+        {
+            if (_node == NULL)
+                return NULL;
+            t_node<T> *successor = _node->rightChild;
+            if (successor == NULL)
+                return successor;
+            while (successor->leftChild)
+                successor = successor->leftChild;
+            return successor;
+        }
+
+        t_node<T> *getPredecessor(const t_node<T> *_node)
+        {
+            if (_node == NULL)
+                return NULL;
+            t_node<T> *predecessor = _node->leftChild;
+            if (predecessor == NULL)
+                return NULL;
+            // exit(0);
+                
+            while (predecessor->rightChild != NULL)
+            {
+                predecessor = predecessor->rightChild;
+            }
+            return predecessor;
         }
 
     private:
@@ -145,12 +172,20 @@ namespace ft
                 return add(_root->leftChild, newNode);
             }
         }
-
         void leftRotate(t_node<T> *&_node);
         void rightRotate(t_node<T> *&_node);
         void leftRightRotate(t_node<T> *&_node);
         void rightLeftRotate(t_node<T> *&_node);
         void fixViolations(t_node<T> *&_node);
+        // t_node<T> getSuccessor(t_node<T> *&_node)
+        // {
+        //     t_node<T> successor = _node->rightChild;
+        //     if (successor == NULL)
+        //         return successor;
+        //     while (successor->leftChild)
+        //         successor = successor->leftChild;
+        //     return successor;
+        // }
         size_t getHeight();
         size_t size();
         
