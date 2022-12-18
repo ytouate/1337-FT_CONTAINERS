@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/18 13:59:18 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/18 15:53:37 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,9 +133,83 @@ namespace ft
                 y->leftChild->parent = y;
                 y->color = z->color;
             }
+            delete z;
             if (y_original_color == BLACK)
-                ;
-                // ; fix-up
+            {
+                deleteFixUP(x);
+            }
+        }
+        void deleteFixUP(t_node<T> *x)
+        {
+            t_node<T> *w = NULL;
+            while (x and x != this->root and x->color == BLACK)
+            {
+                if (x == x->parent->leftChild)
+                {
+                    w = x->parent->rightChild;
+                    if (w->color == RED)
+                    {
+                        w->color = BLACK;
+                        x->parent->color = RED;
+                        leftRotate(x->parent);
+                        w = x->parent->rightChild;
+                    }
+                    if (w->leftChild->color == BLACK and w->rightChild->color == BLACK)
+                    {
+                        w->color = RED;
+                        x = x->parent;
+                    }
+                    else
+                    {
+                        
+                        if (w->rightChild->color == BLACK)
+                        {
+                            w->leftChild->color = BLACK;
+                            w->color = RED;
+                            rightRotate(w);
+                            w = x->parent->rightChild;
+                        }
+                        w->color = x->parent->color;
+                        x->parent->color = BLACK;
+                        w->rightChild->color = BLACK;
+                        leftRotate(x->parent);
+                        x = this->root;
+                    }
+                }
+                else
+                {
+                    w = x->parent->leftChild;
+                    if (w->color == RED)
+                    {
+                        w->color = BLACK;
+                        x->parent->color = RED;
+                        leftRotate(x->parent);
+                        w = x->parent->leftChild;
+                    }
+                    if (w->rightChild->color == BLACK and w->leftChild->color == BLACK)
+                    {
+                        w->color = RED;
+                        x = x->parent;
+                    }
+                    else
+                    {
+                        if (w->leftChild->color == BLACK)
+                        {
+                            w->rightChild->color = BLACK;
+                            w->color = RED;
+                            rightRotate(w);
+                            w = x->parent->leftChild;
+                        }
+                        w->color = x->parent->color;
+                        x->parent->color = BLACK;
+                        w->leftChild->color = BLACK;
+                        leftRotate(x->parent);
+                        x = this->root;
+                    }
+                }
+            }
+            if (x != NULL)
+                x->color = BLACK;
         }
         t_node<T> *search(t_node<T> *node)
         {
