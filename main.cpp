@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/18 15:54:55 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/18 15:58:14 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ int main(void)
     for (int i = 0; i < 100; i++)
     {
         int val = std::rand() % 100;
-        tree.insert(val);
+        {
+            ft::t_node<int> *node = new ft::t_node<int>(val);
+            tree.insert(node);
+        }
     }
     
     inOrderTraversal(tree.getTree());

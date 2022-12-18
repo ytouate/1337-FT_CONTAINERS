@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/18 15:53:37 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/18 16:00:16 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,31 +72,13 @@ namespace ft
     {
     public:
         t_node<T> *getTree() const { return this->root; }
+        
         redBlackTree()
         {
             this->_size = 0;
             this->root = NULL;
         }
 
-        void transplant(t_node<T> *u, t_node<T> *v)
-        {
-            if (u->parent == NULL)
-                this->root = v;
-            else if (u == u->parent->leftChild) // left child
-                u->parent->leftChild = v;
-            else
-                u->parent->rightChild = v;
-            if (v == NULL)
-                u->parent = NULL;
-            else
-                v->parent = u->parent;
-        }
-        t_node<T> *minimum(t_node<T> *node)
-        {
-            while (node->leftChild != NULL)
-                node = node->leftChild;
-            return node;
-        }
         void erase(t_node<T> *z)
         {
             t_node<T> *y = z;
@@ -139,6 +121,60 @@ namespace ft
                 deleteFixUP(x);
             }
         }
+
+        t_node<T> *search(t_node<T> *node)
+        {
+            t_node<T> *current = this->root;
+            while (current != NULL)
+            {
+                if (current->data < node->data)
+                    current = current->rightChild;
+                else if (current->data > node->data)
+                    current = current->leftChild;
+                else
+                    return current;
+            }
+            return NULL;
+        }
+
+        void insert(t_node<T> *node)
+        {
+            if (this->root == NULL)
+            {
+                this->root = node;
+                this->root->color = BLACK;
+                return;
+            }
+            t_node<T> *prev = NULL;
+            t_node<T> *temp = this->root;
+            while (temp != NULL)
+            {
+                prev = temp;
+                if (node->data < temp->data)
+                    temp = temp->leftChild;
+                else if (node->data == temp->data)
+                {
+                    delete node;
+                    return;
+                }
+                else
+                    temp = temp->rightChild;
+            }
+            node->parent = prev;
+            if (prev == NULL)
+                this->root = node;
+            else if (node->data < prev->data)
+                prev->leftChild = node;
+            else
+                prev->rightChild = node;
+            fixViolations(node);
+            this->_size++;
+        }
+
+        size_t size() const { return this->_size; }
+
+    private:
+
         void deleteFixUP(t_node<T> *x)
         {
             t_node<T> *w = NULL;
@@ -161,7 +197,7 @@ namespace ft
                     }
                     else
                     {
-                        
+
                         if (w->rightChild->color == BLACK)
                         {
                             w->leftChild->color = BLACK;
@@ -211,59 +247,28 @@ namespace ft
             if (x != NULL)
                 x->color = BLACK;
         }
-        t_node<T> *search(t_node<T> *node)
+        
+        void transplant(t_node<T> *u, t_node<T> *v)
         {
-            t_node<T> *current = this->root;
-            while (current != NULL)
-            {
-                if (current->data < node->data)
-                    current = current->rightChild;
-                else if (current->data > node->data)
-                    current = current->leftChild;
-                else
-                    return current;
-            }
-            return NULL;
-        }
-
-        void insert(const T &_data)
-        {
-            t_node<T> *node = new t_node<T>(_data);
-            if (this->root == NULL)
-            {
-                this->root = node;
-                this->root->color = BLACK;
-                return;
-            }
-            t_node<T> *prev = NULL;
-            t_node<T> *temp = this->root;
-            while (temp != NULL)
-            {
-                prev = temp;
-                if (node->data < temp->data)
-                    temp = temp->leftChild;
-                else if (node->data == temp->data)
-                {
-                    delete node;
-                    return;
-                }
-                else
-                    temp = temp->rightChild;
-            }
-            node->parent = prev;
-            if (prev == NULL)
-                this->root = node;
-            else if (node->data < prev->data)
-                prev->leftChild = node;
+            if (u->parent == NULL)
+                this->root = v;
+            else if (u == u->parent->leftChild) // left child
+                u->parent->leftChild = v;
             else
-                prev->rightChild = node;
-            fixViolations(node);
-            this->_size++;
+                u->parent->rightChild = v;
+            if (v == NULL)
+                u->parent = NULL;
+            else
+                v->parent = u->parent;
         }
-
-        size_t size() const { return this->_size; }
-
-    private:
+        
+        t_node<T> *minimum(t_node<T> *node)
+        {
+            while (node->leftChild != NULL)
+                node = node->leftChild;
+            return node;
+        }
+        
         void fixViolations(t_node<T> *z)
         {
             bool isRed;
@@ -357,9 +362,7 @@ namespace ft
             y->rightChild = (x);
             (x)->parent = y;
         }
-
-        size_t getHeight();
-
+        
         t_node<T> *root;
         size_t _size;
     };
