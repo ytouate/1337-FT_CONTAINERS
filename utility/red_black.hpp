@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/18 10:59:27 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/18 13:59:18 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,19 +77,74 @@ namespace ft
             this->_size = 0;
             this->root = NULL;
         }
-        redBlackTree(T &_data)
-        {
-            this->root = new t_node<T>(_data);
-        }
 
-        t_node<T> *search(const T &_data)
+        void transplant(t_node<T> *u, t_node<T> *v)
+        {
+            if (u->parent == NULL)
+                this->root = v;
+            else if (u == u->parent->leftChild) // left child
+                u->parent->leftChild = v;
+            else
+                u->parent->rightChild = v;
+            if (v == NULL)
+                u->parent = NULL;
+            else
+                v->parent = u->parent;
+        }
+        t_node<T> *minimum(t_node<T> *node)
+        {
+            while (node->leftChild != NULL)
+                node = node->leftChild;
+            return node;
+        }
+        void erase(t_node<T> *z)
+        {
+            t_node<T> *y = z;
+            t_node<T> *x = NULL;
+            bool y_original_color = y == NULL ? BLACK : y->color;
+            if (z->leftChild == NULL)
+            {
+                x = z->rightChild;
+                transplant(z, z->rightChild);
+            }
+            else if (z->rightChild == NULL)
+            {
+                x = z->leftChild;
+                transplant(z, z->leftChild);
+            }
+            else
+            {
+                y = minimum(z->rightChild);
+                y_original_color = y == NULL ? BLACK : y->color;
+                x = y->rightChild;
+                if (y->parent == z)
+                {
+                    if (x)
+                        x->parent = y;
+                }
+                else
+                {
+                    transplant(y, y->rightChild);
+                    y->rightChild = z->rightChild;
+                    y->rightChild->parent = y;
+                }
+                transplant(z, y);
+                y->leftChild = z->leftChild;
+                y->leftChild->parent = y;
+                y->color = z->color;
+            }
+            if (y_original_color == BLACK)
+                ;
+                // ; fix-up
+        }
+        t_node<T> *search(t_node<T> *node)
         {
             t_node<T> *current = this->root;
             while (current != NULL)
             {
-                if (current->data < _data)
+                if (current->data < node->data)
                     current = current->rightChild;
-                else if (current->data > _data)
+                else if (current->data > node->data)
                     current = current->leftChild;
                 else
                     return current;
@@ -113,6 +168,11 @@ namespace ft
                 prev = temp;
                 if (node->data < temp->data)
                     temp = temp->leftChild;
+                else if (node->data == temp->data)
+                {
+                    delete node;
+                    return;
+                }
                 else
                     temp = temp->rightChild;
             }
@@ -127,11 +187,9 @@ namespace ft
             this->_size++;
         }
 
-        void debugMessage(const char *s)
-        {
-            std::cerr << s << "\n";
-            exit(1);
-        }
+        size_t size() const { return this->_size; }
+
+    private:
         void fixViolations(t_node<T> *z)
         {
             bool isRed;
@@ -150,7 +208,7 @@ namespace ft
                     }
                     else
                     {
-                        
+
                         if (z == z->parent->rightChild)
                         {
                             z = z->parent;
@@ -187,6 +245,7 @@ namespace ft
             }
             this->root->color = BLACK;
         }
+
         void leftRotate(t_node<T> *x)
         {
             t_node<T> *y = (x)->rightChild;
@@ -205,6 +264,7 @@ namespace ft
             y->leftChild = (x);
             (x)->parent = y;
         }
+
         void rightRotate(t_node<T> *x)
         {
             t_node<T> *y = (x)->leftChild;
@@ -223,9 +283,6 @@ namespace ft
             y->rightChild = (x);
             (x)->parent = y;
         }
-        size_t size() const { return this->_size; }
-
-    private:
 
         size_t getHeight();
 
