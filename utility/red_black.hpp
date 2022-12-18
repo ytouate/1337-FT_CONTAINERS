@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/17 19:09:16 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/18 10:59:27 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 
     lower_bound : returns an iterator pointing to the first element that is not less than key
     upper_bound : returns an iterator pointing to the first element that is greater than key
-    
+
     predecessor and successor are the neighbors of a certain node
 
 */
@@ -58,14 +58,6 @@ namespace ft
             this->rightChild = NULL;
             this->parent = NULL;
             this->isLeftChild = false;
-        }
-        void print(t_node<T> *_node)
-        {
-            if (_node == NULL)
-                return;
-            print(_node->leftChild);
-            std::cout << "The Node data is == " << _node->data << " color == " << _node->color << std::endl;
-            print(_node->rightChild);
         }
         bool color;
         bool isLeftChild;
@@ -90,7 +82,7 @@ namespace ft
             this->root = new t_node<T>(_data);
         }
 
-        t_node<T> *search(T &_data)
+        t_node<T> *search(const T &_data)
         {
             t_node<T> *current = this->root;
             while (current != NULL)
@@ -112,83 +104,131 @@ namespace ft
             {
                 this->root = node;
                 this->root->color = BLACK;
-                this->_size++;
                 return;
             }
-            add(this->root, node);
+            t_node<T> *prev = NULL;
+            t_node<T> *temp = this->root;
+            while (temp != NULL)
+            {
+                prev = temp;
+                if (node->data < temp->data)
+                    temp = temp->leftChild;
+                else
+                    temp = temp->rightChild;
+            }
+            node->parent = prev;
+            if (prev == NULL)
+                this->root = node;
+            else if (node->data < prev->data)
+                prev->leftChild = node;
+            else
+                prev->rightChild = node;
+            fixViolations(node);
             this->_size++;
         }
-        t_node<T> *getSuccessor(const t_node<T> *_node)
-        {
-            if (_node == NULL)
-                return NULL;
-            t_node<T> *successor = _node->rightChild;
-            if (successor == NULL)
-                return successor;
-            while (successor->leftChild)
-                successor = successor->leftChild;
-            return successor;
-        }
 
-        t_node<T> *getPredecessor(const t_node<T> *_node)
+        void debugMessage(const char *s)
         {
-            if (_node == NULL)
-                return NULL;
-            t_node<T> *predecessor = _node->leftChild;
-            if (predecessor == NULL)
-                return NULL;
-            // exit(0);
-                
-            while (predecessor->rightChild != NULL)
-            {
-                predecessor = predecessor->rightChild;
-            }
-            return predecessor;
+            std::cerr << s << "\n";
+            exit(1);
         }
+        void fixViolations(t_node<T> *z)
+        {
+            bool isRed;
+            while (z->parent && z->parent->color == RED)
+            {
+                if (z->parent == z->parent->parent->leftChild) // z parent is leftChild;
+                {
+                    t_node<T> *y = z->parent->parent->rightChild;
+                    isRed = y != NULL and y->color == RED;
+                    if (isRed)
+                    {
+                        z->parent->color = BLACK;
+                        y->color = BLACK;
+                        z->parent->parent->color = RED;
+                        z = z->parent->parent;
+                    }
+                    else
+                    {
+                        
+                        if (z == z->parent->rightChild)
+                        {
+                            z = z->parent;
+                            leftRotate(z);
+                        }
+                        z->parent->color = BLACK;
+                        z->parent->parent->color = RED;
+                        rightRotate(z->parent->parent);
+                    }
+                }
+                else
+                {
+                    t_node<T> *y = z->parent->parent->leftChild;
+                    isRed = y != NULL && y->color == RED;
+                    if (isRed)
+                    {
+                        z->parent->color = BLACK;
+                        y->color = BLACK;
+                        z->parent->parent->color = RED;
+                        z = z->parent->parent;
+                    }
+                    else
+                    {
+                        if (z == z->parent->leftChild)
+                        {
+                            z = z->parent;
+                            rightRotate(z);
+                        }
+                        z->parent->color = BLACK;
+                        z->parent->parent->color = RED;
+                        leftRotate(z->parent->parent);
+                    }
+                }
+            }
+            this->root->color = BLACK;
+        }
+        void leftRotate(t_node<T> *x)
+        {
+            t_node<T> *y = (x)->rightChild;
+            (x)->rightChild = y->leftChild;
+            if (y->leftChild != NULL)
+            {
+                y->leftChild->parent = (x);
+            }
+            y->parent = (x)->parent;
+            if ((x)->parent == NULL)
+                this->root = y;
+            else if ((x) == (x)->parent->leftChild)
+                (x)->parent->leftChild = y;
+            else
+                (x)->parent->rightChild = y;
+            y->leftChild = (x);
+            (x)->parent = y;
+        }
+        void rightRotate(t_node<T> *x)
+        {
+            t_node<T> *y = (x)->leftChild;
+            (x)->leftChild = y->rightChild;
+            if (y->rightChild)
+            {
+                y->rightChild->parent = (x);
+            }
+            y->parent = (x)->parent;
+            if ((x)->parent == NULL)
+                this->root = y;
+            else if ((x) == (x)->parent->leftChild)
+                (x)->parent->leftChild = y;
+            else
+                (x)->parent->rightChild = y;
+            y->rightChild = (x);
+            (x)->parent = y;
+        }
+        size_t size() const { return this->_size; }
 
     private:
-        void add(t_node<T> *_root, t_node<T> *newNode)
-        {
-            if (newNode->data > _root->data)
-            {
-                if (_root->rightChild == NULL)
-                {
-                    _root->rightChild = newNode;
-                    newNode->parent = _root;
-                    newNode->isLeftChild = false;
-                    return;
-                }
-                return add(_root->rightChild, newNode);
-            }
-            else if (newNode->data < _root->data)
-            {
-                if (_root->leftChild == NULL)
-                {
-                    _root->leftChild = newNode;
-                    newNode->parent = _root;
-                    newNode->isLeftChild = true;
-                    return;
-                }
-                return add(_root->leftChild, newNode);
-            }
-        }
-        void leftRotate(t_node<T> *&_node);
-        void rightRotate(t_node<T> *&_node);
-        void leftRightRotate(t_node<T> *&_node);
-        void rightLeftRotate(t_node<T> *&_node);
-        void fixViolations(t_node<T> *&_node);
-        // t_node<T> getSuccessor(t_node<T> *&_node)
-        // {
-        //     t_node<T> successor = _node->rightChild;
-        //     if (successor == NULL)
-        //         return successor;
-        //     while (successor->leftChild)
-        //         successor = successor->leftChild;
-        //     return successor;
-        // }
+
         size_t getHeight();
-        size_t size();
-        
+
         t_node<T> *root;
         size_t _size;
     };

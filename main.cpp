@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/17 19:09:58 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/18 11:01:37 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@ template <typename T>
 void inOrderTraversal(ft::t_node<T> *_node)
 {
     if (_node == NULL)
+    {
         return ;
+    }
     std::string color = _node->color == RED ? "RED" : "BLACK";
     inOrderTraversal(_node->leftChild);
-    std::cout << _node->data << " " << color << std::endl;
+    std::cout << _node->data << " " << color << "\n";
     inOrderTraversal(_node->rightChild);
 }
 int main(void)
@@ -28,14 +30,13 @@ int main(void)
     ft::redBlackTree<int> tree;
     std::srand(time(nullptr));
 
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 100; i++)
     {
         int val = std::rand();
-        if (tree.search(i) == NULL)
+        if (tree.search(val) == NULL )
         {
-            tree.insert(i);
-            tree.insert(-i);
+            tree.insert(val);
         }
     }
-    inOrderTraversal(tree.getTree());
+
 }
