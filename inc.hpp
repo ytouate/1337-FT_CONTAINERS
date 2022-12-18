@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 17:09:15 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/15 21:00:16 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/18 19:11:06 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@
 #include "vector/vector.hpp"
 #include "stack/stack.hpp"
 #include "utility/equal.hpp"
+#include "map/map.hpp"
 
 #endif // INC_HPP
