@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/19 13:38:27 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/19 14:29:06 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,58 +61,61 @@ namespace ft
     class redBlackTree
     {
     public:
-        t_node<T> * cloneNode(t_node<T> *_node)
-        {
-            if (_node != NULL)
-            {
-                t_node<T> *_newNode = this->_alloc.allocate(1);
-                _newNode->color = _node->color;
-                _newNode->data = _node->data;
-                _newNode->leftChild = _node->leftChild;
-                _newNode->rightChild = _node->rightChild;
-                _newNode->parent = _node->parent;
-                return _newNode;
-            }
-            return NULL;
-        }
-
-        void copyTree(t_node<T> *org, t_node<T> *copy)
-        {
-            if (org != NULL)
-            {
-                t_node<T> *newLeftNode = cloneNode(org->leftChild);
-                copy->leftChild = newLeftNode;
-                copyTree(org->leftChild, copy->leftChild);
-
-                
-                t_node<T> *newRightNode = cloneNode(org->rightChild);
-                copy->rightChild = newRightNode;
-                copyTree(org->rightChild, copy->rightChild);
-                
-            }
-        }
         t_node<T> *getTree() const { return this->root; }
 
+        /*
+            Default Constructor of The Tree which
+            sets the size to 0 and sets the root to poin on NULL
+        */
         redBlackTree()
         {
             this->_size = 0;
             this->root = NULL;
         }
-        redBlackTree(const redBlackTree<T> &_tree)
+
+        /*
+            copy constructor which copies the right handside tree object to
+            left handside object (this) all the copy coping is deep copy
+        */
+        redBlackTree(const redBlackTree<T> &tree)
         {
-            this->root = cloneNode(_tree.root);
-            copyTree(_tree.root, this->root);
-            this->_alloc = _tree._alloc;
-            this->_size = _tree._size;
+            this->root = cloneNode(tree.root);
+            copyTree(tree.root, this->root);
+            this->_alloc = tree._alloc;
+            this->_size = tree._size;
         }
 
+        /*
+            Destructor which deallocate all the Tree and sets root to point on NULL;
+        */
         ~redBlackTree()
         {
-            this->_alloc.deallocate(root, _size);
+            clearTree(this->root);
+            this->root = NULL;
+            _size = 0;
         }
 
+        /*
+            copy assignment operator which the following operations are done sequentially
+                - check for self assignment ;
+                - clear the tree of (this ) object { the object who called the operator }
+                - clone the root of right handside object to this->root;
+                - clone the other node of rightHandside object into the calling object;
+                - set the size of the calling object to be equal to rhs.size;
+                - copy the allocator of rhs to calling object 
+                - return a const_reference to the calling object
+        */
         const redBlackTree<T> &operator=(const redBlackTree<T> &rhs)
         {
+            if (this == &rhs)
+                return *this;
+            clearTree(this->root);
+
+            this->root = cloneNode(rhs.root);
+            copyTree(rhs.root, this->root);
+            this->_alloc = rhs._alloc;
+            this->_size = rhs._size;
+            return *this;
         }
 
         void erase(const T &key)
@@ -161,6 +164,11 @@ namespace ft
             }
         }
 
+        /*
+            search method which look for the given key in the tree
+            if the element is found it returns a pointer to the node containing the element
+            else it returns NULL to indicate that the element not found;
+        */
         t_node<T> *search(const T &key)
         {
             t_node<T> *current = this->root;
@@ -211,9 +219,55 @@ namespace ft
             this->_size++;
         }
 
+        /*
+            returns the Number of nodes in the Tree
+        */
         size_t size() const { return this->_size; }
 
     private:
+        t_node<T> *cloneNode(t_node<T> *_node)
+        {
+            if (_node != NULL)
+            {
+                t_node<T> *_newNode = this->_alloc.allocate(1);
+                _newNode->color = _node->color;
+                _newNode->data = _node->data;
+                _newNode->leftChild = _node->leftChild;
+                _newNode->rightChild = _node->rightChild;
+                _newNode->parent = _node->parent;
+                return _newNode;
+            }
+            return NULL;
+        }
+        
+        void copyTree(t_node<T> *org, t_node<T> *copy)
+        {
+            if (org != NULL)
+            {
+                t_node<T> *newLeftNode = cloneNode(org->leftChild);
+                if (copy->leftChild != NULL)
+                    this->_alloc.destroy(copy->leftChild);
+                copy->leftChild = newLeftNode;
+                copyTree(org->leftChild, copy->leftChild);
+
+                t_node<T> *newRightNode = cloneNode(org->rightChild);
+                if (copy->rightChild != NULL)
+                    this->_alloc.destroy(copy->rightChild);
+                copy->rightChild = newRightNode;
+                copyTree(org->rightChild, copy->rightChild);
+            }
+        }
+        
+        void clearTree(t_node<T> *_node)
+        {
+            if (_node != NULL)
+            {
+                clearTree(_node->leftChild);
+                this->_alloc.deallocate(_node, 1);
+                clearTree(_node->rightChild);
+            }
+        }
+        
         t_node<T> *makeNode(const T &key)
         {
             t_node<T> *_new = this->_alloc.allocate(1);
@@ -224,6 +278,7 @@ namespace ft
             _new->parent = NULL;
             return _new;
         }
+        
         void deleteFixUP(t_node<T> *x)
         {
             t_node<T> *w = NULL;

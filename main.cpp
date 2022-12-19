@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/19 13:37:51 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/19 14:09:21 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ int main(void)
     inOrderTraversal(a.getTree());
     std::cout << "\n";
     ft::redBlackTree<int> b(a);
+    b = a;
     inOrderTraversal(b.getTree());
+    
 
-    // system("leaks CONTAINERS.out");
+    system("leaks CONTAINERS.out");
 }
