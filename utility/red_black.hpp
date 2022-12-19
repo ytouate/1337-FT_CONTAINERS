@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/18 16:00:16 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/19 12:34:20 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,14 @@ namespace ft
     template <class T>
     struct t_node
     {
-        t_node(const T &_data)
-        {
-            this->data = _data;
-            this->color = RED;
-            this->leftChild = NULL;
-            this->rightChild = NULL;
-            this->parent = NULL;
-            this->isLeftChild = false;
-        }
         bool color;
-        bool isLeftChild;
         t_node *leftChild;
         t_node *rightChild;
         t_node *parent;
         T data;
     };
 
-    template <class T>
+    template <class T, class Allocator = std::allocator<t_node<T> > >
     class redBlackTree
     {
     public:
@@ -78,9 +68,35 @@ namespace ft
             this->_size = 0;
             this->root = NULL;
         }
-
-        void erase(t_node<T> *z)
+        redBlackTree(const redBlackTree<T> &_tree)
         {
+            
+        }
+        ~redBlackTree()
+        {
+            this->_alloc.deallocate(root, _size);
+        }
+        const redBlackTree<T> & operator = (const redBlackTree<T> &rhs)
+        {
+            
+        }
+
+        t_node<T> *makeNode(const T &key)
+        {
+            t_node<T> *_new = this->_alloc.allocate(1);
+            _new->color = RED;
+            _new->data = key;
+            _new->rightChild = NULL;
+            _new->leftChild = NULL;
+            _new->parent = NULL;
+            return _new;
+        }
+
+        void erase(const T &key)
+        {
+            t_node<T> *z = search(key);
+            if (z == NULL)
+                return ;
             t_node<T> *y = z;
             t_node<T> *x = NULL;
             bool y_original_color = y == NULL ? BLACK : y->color;
@@ -115,21 +131,21 @@ namespace ft
                 y->leftChild->parent = y;
                 y->color = z->color;
             }
-            delete z;
+            this->_alloc.destroy(z);
             if (y_original_color == BLACK)
             {
                 deleteFixUP(x);
             }
         }
 
-        t_node<T> *search(t_node<T> *node)
+        t_node<T> *search(const T& key)
         {
             t_node<T> *current = this->root;
             while (current != NULL)
             {
-                if (current->data < node->data)
+                if (current->data < key)
                     current = current->rightChild;
-                else if (current->data > node->data)
+                else if (current->data > key)
                     current = current->leftChild;
                 else
                     return current;
@@ -137,8 +153,9 @@ namespace ft
             return NULL;
         }
 
-        void insert(t_node<T> *node)
+        void insert(const T& key)
         {
+            t_node<T> *node = makeNode(key);
             if (this->root == NULL)
             {
                 this->root = node;
@@ -154,7 +171,7 @@ namespace ft
                     temp = temp->leftChild;
                 else if (node->data == temp->data)
                 {
-                    delete node;
+                    this->_alloc.destroy(node);
                     return;
                 }
                 else
@@ -364,6 +381,7 @@ namespace ft
         }
         
         t_node<T> *root;
+        Allocator _alloc;
         size_t _size;
     };
 };

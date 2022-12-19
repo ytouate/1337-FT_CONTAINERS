@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/18 19:13:19 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/19 12:34:42 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 template <typename T>
 void inOrderTraversal(ft::t_node<T> *_node)
 {
+    
     if (_node == NULL)
     {
         return ;
@@ -28,5 +29,24 @@ void inOrderTraversal(ft::t_node<T> *_node)
 
 int main(void)
 {
-    ft::map<int, int> map;
+    ft::redBlackTree<int> a;
+    a.insert(10);
+    a.insert(20);
+
+    a.insert(30);
+    a.insert(40);
+
+    a.insert(50);
+    a.insert(-421);
+    // a.insert(10);
+    a.insert(70);
+    a.insert(110);
+    a.insert(80);
+    a.insert(-13);
+    a.insert(90);
+    a.insert(-43);
+    
+    a.erase(-42);
+    inOrderTraversal(a.getTree());
+    // system("leaks CONTAINERS.out");
 }
