@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/19 12:34:20 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/19 13:38:27 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,38 @@ namespace ft
     class redBlackTree
     {
     public:
+        t_node<T> * cloneNode(t_node<T> *_node)
+        {
+            if (_node != NULL)
+            {
+                t_node<T> *_newNode = this->_alloc.allocate(1);
+                _newNode->color = _node->color;
+                _newNode->data = _node->data;
+                _newNode->leftChild = _node->leftChild;
+                _newNode->rightChild = _node->rightChild;
+                _newNode->parent = _node->parent;
+                return _newNode;
+            }
+            return NULL;
+        }
+
+        void copyTree(t_node<T> *org, t_node<T> *copy)
+        {
+            if (org != NULL)
+            {
+                t_node<T> *newLeftNode = cloneNode(org->leftChild);
+                copy->leftChild = newLeftNode;
+                copyTree(org->leftChild, copy->leftChild);
+
+                
+                t_node<T> *newRightNode = cloneNode(org->rightChild);
+                copy->rightChild = newRightNode;
+                copyTree(org->rightChild, copy->rightChild);
+                
+            }
+        }
         t_node<T> *getTree() const { return this->root; }
-        
+
         redBlackTree()
         {
             this->_size = 0;
@@ -70,33 +100,26 @@ namespace ft
         }
         redBlackTree(const redBlackTree<T> &_tree)
         {
-            
+            this->root = cloneNode(_tree.root);
+            copyTree(_tree.root, this->root);
+            this->_alloc = _tree._alloc;
+            this->_size = _tree._size;
         }
+
         ~redBlackTree()
         {
             this->_alloc.deallocate(root, _size);
         }
-        const redBlackTree<T> & operator = (const redBlackTree<T> &rhs)
-        {
-            
-        }
 
-        t_node<T> *makeNode(const T &key)
+        const redBlackTree<T> &operator=(const redBlackTree<T> &rhs)
         {
-            t_node<T> *_new = this->_alloc.allocate(1);
-            _new->color = RED;
-            _new->data = key;
-            _new->rightChild = NULL;
-            _new->leftChild = NULL;
-            _new->parent = NULL;
-            return _new;
         }
 
         void erase(const T &key)
         {
             t_node<T> *z = search(key);
             if (z == NULL)
-                return ;
+                return;
             t_node<T> *y = z;
             t_node<T> *x = NULL;
             bool y_original_color = y == NULL ? BLACK : y->color;
@@ -138,7 +161,7 @@ namespace ft
             }
         }
 
-        t_node<T> *search(const T& key)
+        t_node<T> *search(const T &key)
         {
             t_node<T> *current = this->root;
             while (current != NULL)
@@ -153,7 +176,7 @@ namespace ft
             return NULL;
         }
 
-        void insert(const T& key)
+        void insert(const T &key)
         {
             t_node<T> *node = makeNode(key);
             if (this->root == NULL)
@@ -191,7 +214,16 @@ namespace ft
         size_t size() const { return this->_size; }
 
     private:
-
+        t_node<T> *makeNode(const T &key)
+        {
+            t_node<T> *_new = this->_alloc.allocate(1);
+            _new->color = RED;
+            _new->data = key;
+            _new->rightChild = NULL;
+            _new->leftChild = NULL;
+            _new->parent = NULL;
+            return _new;
+        }
         void deleteFixUP(t_node<T> *x)
         {
             t_node<T> *w = NULL;
@@ -264,12 +296,12 @@ namespace ft
             if (x != NULL)
                 x->color = BLACK;
         }
-        
+
         void transplant(t_node<T> *u, t_node<T> *v)
         {
             if (u->parent == NULL)
                 this->root = v;
-            else if (u == u->parent->leftChild) // left child
+            else if (u == u->parent->leftChild)
                 u->parent->leftChild = v;
             else
                 u->parent->rightChild = v;
@@ -278,20 +310,20 @@ namespace ft
             else
                 v->parent = u->parent;
         }
-        
+
         t_node<T> *minimum(t_node<T> *node)
         {
             while (node->leftChild != NULL)
                 node = node->leftChild;
             return node;
         }
-        
+
         void fixViolations(t_node<T> *z)
         {
             bool isRed;
             while (z->parent && z->parent->color == RED)
             {
-                if (z->parent == z->parent->parent->leftChild) // z parent is leftChild;
+                if (z->parent == z->parent->parent->leftChild)
                 {
                     t_node<T> *y = z->parent->parent->rightChild;
                     isRed = y != NULL and y->color == RED;
@@ -379,7 +411,7 @@ namespace ft
             y->rightChild = (x);
             (x)->parent = y;
         }
-        
+
         t_node<T> *root;
         Allocator _alloc;
         size_t _size;
