@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/19 14:29:06 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/19 19:29:47 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,9 +174,9 @@ namespace ft
             t_node<T> *current = this->root;
             while (current != NULL)
             {
-                if (current->data < key)
+                if (current->data.first < key)
                     current = current->rightChild;
-                else if (current->data > key)
+                else if (current->data.first > key)
                     current = current->leftChild;
                 else
                     return current;
@@ -198,9 +198,9 @@ namespace ft
             while (temp != NULL)
             {
                 prev = temp;
-                if (node->data < temp->data)
+                if (node->data.first < temp->data.first)
                     temp = temp->leftChild;
-                else if (node->data == temp->data)
+                else if (node->data.first == temp->data.first)
                 {
                     this->_alloc.destroy(node);
                     return;
@@ -211,7 +211,7 @@ namespace ft
             node->parent = prev;
             if (prev == NULL)
                 this->root = node;
-            else if (node->data < prev->data)
+            else if (node->data.first < prev->data.first)
                 prev->leftChild = node;
             else
                 prev->rightChild = node;

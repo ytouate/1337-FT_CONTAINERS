@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 19:07:54 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/19 16:41:55 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/19 19:30:43 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,20 @@
 namespace ft
 {
     template <class key, class T, class Compare = std::less<key>,
-              class Allocator = std::allocator<ft::pair<const key, T> > >
+              class Allocator = std::allocator<ft::pair< key, T> > >
     class map
     {
     public:
-        typedef key                                        key_type;
-        typedef T                                          mapped_type;
-        typedef ft::pair<const key, T>                     value_type;
-        typedef Compare                                    key_compare;
-        typedef Allocator                                  allocator_type;
-        typedef typename Allocator::reference              reference;
-        typedef typename Allocator::const_reference        const_reference;
-        typedef typename Allocator::pointer                pointer;
-        typedef typename Allocator::const_pointer          const_pointer;
-        typedef size_t                                     size_type;
+        typedef key                                         key_type;
+        typedef T                                           mapped_type;
+        typedef ft::pair< key, T>                           value_type;
+        typedef Compare                                     key_compare;
+        typedef Allocator                                   allocator_type;
+        typedef typename Allocator::reference               reference;
+        typedef typename Allocator::const_reference         const_reference;
+        typedef typename Allocator::pointer                 pointer;
+        typedef typename Allocator::const_pointer           const_pointer;
+        typedef size_t                                      size_type;
         class value_compare : public std::binary_function<value_type, value_type, bool>
         {
             friend class map;
@@ -46,6 +46,7 @@ namespace ft
                 return comp(x.first, y.first);
             }
         };
+        ft::t_node<ft::pair<key, T> > *getTree() const  {return _tree.getTree(); }
         // construct / copy / destror
         explicit map(const key_compare &comp = key_compare(), const Allocator &alloc = Allocator()) : _tree()
         {
@@ -65,9 +66,12 @@ namespace ft
                 this->_tree.insert(*first);
                 first++;
             }
-            this->_size = this->_tree->size();
+            this->_size = this->_tree.size();
         }
-        const map<key, T, key_compare, Allocator>& operator =(const map<key, T, Compare, Allocator>&rhs);
+        const map<key, T, key_compare, Allocator>& operator =(const map<key, T, Compare, Allocator>&rhs)
+        {
+            this->_tree = rhs._tree;
+        }
     private:
         size_type                       _size;
         Compare                         _comp;

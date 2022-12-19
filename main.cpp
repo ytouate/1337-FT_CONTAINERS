@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/19 16:44:59 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/19 19:17:31 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,20 @@ void inOrderTraversal(ft::t_node<T> *_node)
     }
     std::string color = _node->color == RED ? "RED" : "BLACK";
     inOrderTraversal(_node->leftChild);
-    std::cout << _node->data << " " << color << "\n";
+    std::cout << _node->data.first <<  " " << _node->data.second << " " << "\n";
     inOrderTraversal(_node->rightChild);
 }
 
 int main(void)
 {
-    // ft::vector<ft::pair<int, int> > vec;
-    // vec.push_back(ft::make_pair<int, int> (10, 20));
-    // ft::map<int, int> map(vec.begin(), vec.end());
-    // inOrderTraversal();
-    ft::vector<int> vec;
-    vec.push_back(10);
-    ft::vector<int>::iterator it = vec.begin();
-    return it[0];
-    system("leaks CONTAINERS.out");
+    ft::vector<ft::pair<int, int> > vec;
+        std::srand(time(NULL));
+    for (int i = 0; i < 100; i++)
+    {
+        const int val = std::rand() % 100;
+        vec.push_back(ft::make_pair<int, int> (val, val + 1));
+    } 
+    vec.push_back(ft::make_pair<int, int>(55, 55));
+    ft::map<int, int> map(vec.begin(), vec.end());
+    inOrderTraversal(map.getTree());
 }
