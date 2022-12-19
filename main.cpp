@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/19 19:17:31 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/19 19:32:18 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 template <typename T>
 void inOrderTraversal(ft::t_node<T> *_node)
 {
-    
     if (_node == NULL)
     {
         return ;

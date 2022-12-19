@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 19:07:54 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/19 19:30:43 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/19 19:43:21 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ namespace ft
         {
             this->_tree = rhs._tree;
         }
+        size_type size() const { return _size; }
     private:
         size_type                       _size;
         Compare                         _comp;
