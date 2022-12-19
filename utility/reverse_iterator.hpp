@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:35:09 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/02 19:52:11 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/19 16:46:46 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ namespace ft
             this->_iter += n;
             return *this;
         }
-        reference operator[](reverse_iterator<Iterator>::difference_type n) const
+        reference operator[](reverse_iterator<Iterator>::difference_type n)
         {
             return _iter[-n - 1];
         }

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 16:08:00 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/12 15:19:18 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/19 16:45:32 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ namespace ft
             return constThis;
         }
         inline const_reference operator*(void) const { return *_ptr; }
-        inline const_reference operator[](const int n) const { return _ptr[n]; }
+        inline const_reference operator[](difference_type n) const { return _ptr[n]; }
         inline iterator() : _ptr(NULL) {}
         inline iterator(pointer ptr) : _ptr(ptr) {}
         inline reference const operator*(void) { return *_ptr; }
@@ -45,7 +45,7 @@ namespace ft
         friend bool operator>= (const iterator& a, const iterator& b) { return a._ptr >= b._ptr; };
         friend bool operator> (const iterator& a, const iterator& b) { return a._ptr > b._ptr; };     
         inline ptrdiff_t operator-(iterator const &right)  { return this->_ptr - right._ptr; }
-        inline reference operator[](difference_type n) const { return _ptr[n]; }
+        inline reference operator[](difference_type n) { return _ptr[n]; }
         inline iterator(iterator const &obj) { this->_ptr = obj._ptr; }
         inline iterator operator-(difference_type n)
         {

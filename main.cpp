@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/19 14:09:21 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/19 16:44:59 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,13 @@ void inOrderTraversal(ft::t_node<T> *_node)
 
 int main(void)
 {
-    ft::redBlackTree<int> a;
-    a.insert(10);
-    a.insert(20);
-
-    a.insert(30);
-    a.insert(40);
-
-    a.insert(50);
-    a.insert(-421);
-    // a.insert(10);
-    a.insert(70);
-    a.insert(110);
-    a.insert(80);
-    a.insert(-13);
-    a.insert(90);
-    a.insert(-43);
-    
-    a.erase(-42);
-    inOrderTraversal(a.getTree());
-    std::cout << "\n";
-    ft::redBlackTree<int> b(a);
-    b = a;
-    inOrderTraversal(b.getTree());
-    
-
+    // ft::vector<ft::pair<int, int> > vec;
+    // vec.push_back(ft::make_pair<int, int> (10, 20));
+    // ft::map<int, int> map(vec.begin(), vec.end());
+    // inOrderTraversal();
+    ft::vector<int> vec;
+    vec.push_back(10);
+    ft::vector<int>::iterator it = vec.begin();
+    return it[0];
     system("leaks CONTAINERS.out");
 }

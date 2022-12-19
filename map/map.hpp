@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 19:07:54 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/19 12:06:07 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/19 16:41:55 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #define MAP_HPP
 
 #include "../inc.hpp"
-
+#include "../utility/red_black.hpp"
 namespace ft
 {
     template <class key, class T, class Compare = std::less<key>,
@@ -55,7 +55,18 @@ namespace ft
         }
         template <class inputIterator>
         map(inputIterator first, inputIterator last,
-            const key_compare &comp = key_compare(), const Allocator & = Allocator());
+            const key_compare &comp = key_compare(), const Allocator &alloc = Allocator())
+        {
+            this->_alloc = alloc;
+            this->_comp = comp;
+            
+            while (first != last)
+            {
+                this->_tree.insert(*first);
+                first++;
+            }
+            this->_size = this->_tree->size();
+        }
         const map<key, T, key_compare, Allocator>& operator =(const map<key, T, Compare, Allocator>&rhs);
     private:
         size_type                       _size;
