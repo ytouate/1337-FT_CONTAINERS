@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 16:08:00 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/19 16:45:32 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/20 11:33:07 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,6 @@ namespace ft
         }
         
         inline iterator &operator=(iterator const &rhs) 
-        {
-            this->_ptr = rhs._ptr;
-            return *this;
-        }
-        inline iterator &operator=(iterator const &rhs) const
         {
             this->_ptr = rhs._ptr;
             return *this;

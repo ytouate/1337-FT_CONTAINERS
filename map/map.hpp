@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 19:07:54 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/19 19:43:21 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/20 15:06:21 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ namespace ft
                 return comp(x.first, y.first);
             }
         };
+        typedef ft::bidirectional_iterator<t_node<value_type> > iterator;
         ft::t_node<ft::pair<key, T> > *getTree() const  {return _tree.getTree(); }
         // construct / copy / destror
         explicit map(const key_compare &comp = key_compare(), const Allocator &alloc = Allocator()) : _tree()

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/19 19:29:47 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/20 15:07:24 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,14 @@ namespace ft
         T data;
     };
 
+
     template <class T, class Allocator = std::allocator<t_node<T> > >
     class redBlackTree
     {
     public:
+        typedef bidirectional_iterator<t_node<T> > iterator;
+
+        iterator begin() { return bidirectional_iterator<t_node<T> > (this->root); }
         t_node<T> *getTree() const { return this->root; }
 
         /*
@@ -102,7 +106,7 @@ namespace ft
                 - clone the root of right handside object to this->root;
                 - clone the other node of rightHandside object into the calling object;
                 - set the size of the calling object to be equal to rhs.size;
-                - copy the allocator of rhs to calling object 
+                - copy the allocator of rhs to calling object
                 - return a const_reference to the calling object
         */
         const redBlackTree<T> &operator=(const redBlackTree<T> &rhs)
@@ -239,7 +243,7 @@ namespace ft
             }
             return NULL;
         }
-        
+
         void copyTree(t_node<T> *org, t_node<T> *copy)
         {
             if (org != NULL)
@@ -257,7 +261,7 @@ namespace ft
                 copyTree(org->rightChild, copy->rightChild);
             }
         }
-        
+
         void clearTree(t_node<T> *_node)
         {
             if (_node != NULL)
@@ -267,7 +271,7 @@ namespace ft
                 clearTree(_node->rightChild);
             }
         }
-        
+
         t_node<T> *makeNode(const T &key)
         {
             t_node<T> *_new = this->_alloc.allocate(1);
@@ -278,7 +282,7 @@ namespace ft
             _new->parent = NULL;
             return _new;
         }
-        
+
         void deleteFixUP(t_node<T> *x)
         {
             t_node<T> *w = NULL;

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 13:41:14 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/02 19:52:00 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/20 10:53:14 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,10 @@ namespace ft
         typedef T value_type;
         typedef T *pointer;
         typedef T &reference;
-        typedef std::random_access_iterator_tag iterator_category;
+        typedef  std::random_access_iterator_tag iterator_category;
         typedef std::ptrdiff_t difference_type;
     };
+
     template <class T>
     class iterator_traits<const T *>
     {
@@ -46,7 +47,7 @@ namespace ft
         typedef T value_type;
         typedef const T *pointer;
         typedef const T &reference;
-        typedef std::random_access_iterator_tag iterator_category;
+        typedef  std::random_access_iterator_tag iterator_category;
     };
 };
 
