@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/20 15:07:24 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/20 16:12:46 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ namespace ft
     template <class T>
     struct t_node
     {
+        typedef T value_type;
         bool color;
         t_node *leftChild;
         t_node *rightChild;
@@ -57,14 +58,12 @@ namespace ft
         T data;
     };
 
-
     template <class T, class Allocator = std::allocator<t_node<T> > >
     class redBlackTree
     {
     public:
         typedef bidirectional_iterator<t_node<T> > iterator;
 
-        iterator begin() { return bidirectional_iterator<t_node<T> > (this->root); }
         t_node<T> *getTree() const { return this->root; }
 
         /*
@@ -227,6 +226,18 @@ namespace ft
             returns the Number of nodes in the Tree
         */
         size_t size() const { return this->_size; }
+        t_node<T> *findBegin()
+        {
+            while (this->root->leftChild)
+                this->root = this->root->leftChild;
+            return this->root;
+        }
+        t_node<T> *findEnd()
+        {
+            while (this->root->rightChild)
+                this->root = this->root->rightChild;
+            return this->root->rightChild;
+        }
 
     private:
         t_node<T> *cloneNode(t_node<T> *_node)

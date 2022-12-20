@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 16:08:41 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/02 19:52:46 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/20 16:15:59 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@
 
 namespace ft
 {
-    template <class T1, class T2>  ft::pair<T1,T2> make_pair (T1 x, T2 y)
+    template <class T1, class T2>
+    ft::pair<T1, T2> make_pair(T1 x, T2 y)
     {
-        return ft::pair<T1, T2> (x, y);
+        return ft::pair<T1, T2>(x, y);
     }
 } // namespace ft
 

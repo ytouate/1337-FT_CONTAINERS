@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 10:55:07 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/20 15:09:00 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/20 16:27:59 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,13 @@ namespace ft
         }
         bool operator==(const bidirectional_iterator &a) { return this->current == a.current; };
         bool operator!=(const bidirectional_iterator &a) { return this->current != a.current; };
-        inline const_reference operator*(void) const { return *current; }
-        inline reference const operator*(void) { return *current; }
-        inline pointer operator->(void) const { return current; }
+        // inline const_reference operator*(void) const { return *current; }
+        // inline reference const operator*(void) { return *current; }
+        typename value_type::value_type operator *(void)
+        {
+            return current->data;
+        }
+        inline typename value_type::value_type *operator->(void) const { return &current->data; }
         operator bidirectional_iterator () const
         {
             bidirectional_iterator constThis(this->current);
