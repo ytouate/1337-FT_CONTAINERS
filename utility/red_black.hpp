@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/20 16:12:46 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/20 16:40:40 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,7 @@ namespace ft
             {
                 this->root = node;
                 this->root->color = BLACK;
+                this->_size++;
                 return;
             }
             t_node<T> *prev = NULL;
@@ -228,12 +229,16 @@ namespace ft
         size_t size() const { return this->_size; }
         t_node<T> *findBegin()
         {
+            if (this->root == NULL)
+                return this->root;
             while (this->root->leftChild)
                 this->root = this->root->leftChild;
             return this->root;
         }
         t_node<T> *findEnd()
         {
+            if (this->root == NULL)
+                return this->root;
             while (this->root->rightChild)
                 this->root = this->root->rightChild;
             return this->root->rightChild;

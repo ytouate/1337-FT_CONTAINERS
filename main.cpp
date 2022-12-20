@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/20 16:29:37 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/20 16:39:35 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,16 @@ int main(void)
     vecOfPairs.push_back(ft::make_pair<int, int>(20, 20));
     vecOfPairs.push_back(ft::make_pair<int, int>(30, 20));
     
-    ft::map<int, int> myMap(vecOfPairs.begin(), vecOfPairs.end());
+    // ft::map<int, int> myMap(vecOfPairs.begin(), vecOfPairs.end());
+    ft::map<int, int> myMap;
     ft::map<int, int>::iterator myIt = myMap.begin();
-    std::cout << myIt->first << std::endl;
+    while (myIt != myMap.end())
+    {
+        std::cout << "am here\n";
+        std::cout << (*myIt).first << std::endl;
+        myIt++;
+
+    }
 
     // myMap.insert(ft::make_pair<int, int>(10, 20));
     // myMap.insert(ft::make_pair<int, int>(20, 20));
