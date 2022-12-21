@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/21 19:19:46 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/21 19:26:16 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ namespace ft
             return *this;
         }
 
-        void erase(const T &key)
+        void erase(const _key &key)
         {
             t_node<T> *z = search(key);
             if (z == NULL)
@@ -180,7 +180,7 @@ namespace ft
             if the element is found it returns a pointer to the node containing the element
             else it returns NULL to indicate that the element not found;
         */
-        t_node<T> *search(const T &key)
+        t_node<T> *search(const _key &key) const
         {
             t_node<T> *current = this->root;
             while (current != NULL)
@@ -243,6 +243,7 @@ namespace ft
                 this->root = this->root->leftChild;
             return this->root;
         }
+        
         t_node<T> *findEnd()
         {
             if (this->root == NULL or this->_size == 0)

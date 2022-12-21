@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 19:07:54 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/21 19:18:02 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/21 19:29:21 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,21 @@ namespace ft
         {
             return iterator(_tree.findBegin());
         }
+        size_type count(const key &k) const
+        {
+            return _tree.search(k) == NULL ? 0 : 1;
+        }
+        void erase(const key &k)
+        {
+            _tree.erase(k);
+        }
         iterator end()
         {
             return iterator(_tree.findEnd());
+        }
+        allocator_type get_allocator() const 
+        {
+            return this->_alloc;
         }
         // construct / copy / destror
         explicit map(const key_compare &comp = key_compare(), const Allocator &alloc = Allocator()) : _tree()

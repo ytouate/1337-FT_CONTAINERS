@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/21 19:19:54 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/21 19:27:13 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ int main(void)
     vecOfPairs.push_back(ft::make_pair<std::string, int>("3dsa0", 20));
 
     ft::map<std::string, int> myMap(vecOfPairs.begin(), vecOfPairs.end());
-    myMap.clear();
-
+    // myMap.clear();
+    myMap.erase("DSad");
+    myMap.count("DSad");
     ft::map<std::string, int>::iterator myIt = myMap.begin();
 
     while (myIt != myMap.end())
     {
-        std::cout << "am here\n";
-    // return 0;
+
         std::cout << myIt->first << " ";
         myIt++;
     }
