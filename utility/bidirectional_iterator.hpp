@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 10:55:07 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/20 22:21:17 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/21 19:49:11 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ namespace ft
         bool operator!=(const bidirectional_iterator &a) { return this->current != a.current; };
         // inline const_reference operator*(void) const { return *current; }
         // inline reference const operator*(void) { return *current; }
-        typename value_type::value_type operator *(void)
+        typename value_type::value_type operator*(void)
         {
             return current->data;
         }
         inline typename value_type::value_type *operator->(void) const { return &current->data; }
-        operator bidirectional_iterator () const
+        operator bidirectional_iterator() const
         {
             bidirectional_iterator constThis(this->current);
             return constThis;
@@ -73,14 +73,21 @@ namespace ft
             return temp;
         }
 
-        U *getRoot(U *_node) const {
+        U *getRoot(U *_node) const
+        {
             while (_node->parent)
             {
                 _node = _node->parent;
             }
             return _node;
         }
-        inline const bidirectional_iterator &operator++(int)
+        inline bidirectional_iterator operator++(int)
+        {
+            bidirectional_iterator temp (*this);
+            ++(*this);
+            return temp;
+        }
+        inline bidirectional_iterator &operator++(void)
         {
             if (this->current == NULL)
             {
@@ -116,16 +123,7 @@ namespace ft
                 }
             }
             return *this;
-            // return temp;
         }
-        // inline bidirectional_iterator &operator++(void)
-        // {
-        //     if (current == NULL)
-        //     {
-        //     }
-        //     this->current++;
-        //     return *this;
-        // }
         inline bidirectional_iterator &operator--(void)
         {
             this->current--;
@@ -136,7 +134,7 @@ namespace ft
     private:
         U *current;
     };
-    
+
 }
 
 #endif // bidirectional_iterator

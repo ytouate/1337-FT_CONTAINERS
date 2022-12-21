@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/21 19:27:13 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/21 19:45:02 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,11 @@ int main(void)
 
     std::map<std::string, int> theirMap(vec.begin(), vec.end());
 
-    theirMap.clear();
     std::map<std::string, int>::iterator theirIt = theirMap.begin();
 
-    while (theirIt != theirMap.end())
-    {
-        std::cout << theirIt->first << " ";
-        theirIt++;
-    }
-    std::cout << "\n";
+
+    std::cout << theirIt++->first << std::endl;
+    std::cout << theirIt->first << std::endl;
     // Mine
     std::vector<ft::pair<std::string, int> > vecOfPairs;
     vecOfPairs.push_back(ft::make_pair<std::string, int>("DSad", 20));
@@ -52,19 +48,11 @@ int main(void)
     vecOfPairs.push_back(ft::make_pair<std::string, int>("3dsa0", 20));
 
     ft::map<std::string, int> myMap(vecOfPairs.begin(), vecOfPairs.end());
-    // myMap.clear();
-    myMap.erase("DSad");
-    myMap.count("DSad");
+
     ft::map<std::string, int>::iterator myIt = myMap.begin();
 
-    while (myIt != myMap.end())
-    {
-
-        std::cout << myIt->first << " ";
-        myIt++;
-    }
-    std::cout << "\n";
-
+    std::cout << myIt++->first << std::endl;
+    std::cout << myIt->first << std::endl;
     // myMap.insert(ft::make_pair<int, int>(10, 20));
     // myMap.insert(ft::make_pair<int, int>(20, 20));
     // myMap.insert(ft::make_pair<int, int>(30, 20));

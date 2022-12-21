@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 19:07:54 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/21 19:29:21 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/21 19:32:08 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,10 @@ namespace ft
                 first++;
             }
         }
-        const map<key, T, key_compare, Allocator> &operator=(const map<key, T, Compare, Allocator> &rhs)
+        const map &operator=(const map&rhs)
         {
             this->_tree = rhs._tree;
+            return *this;
         }
         pair<iterator, bool> insert(const value_type &val);
         iterator insert(iterator position, const value_type &val);

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/21 19:26:16 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/21 19:36:10 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,6 @@ namespace ft
             if (this == &rhs)
                 return *this;
             clearTree(this->root);
-
             this->root = cloneNode(rhs.root);
             copyTree(rhs.root, this->root);
             this->_alloc = rhs._alloc;
