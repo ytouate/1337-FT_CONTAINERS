@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/20 16:40:40 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/21 19:19:46 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,11 @@ namespace ft
         T data;
     };
 
-    template <class T, class Allocator = std::allocator<t_node<T> > >
+    template <
+                class T, class _key, class mapped_type,
+                class Compare = std::less<_key>,
+                class Allocator = std::allocator< t_node<T> >
+             >
     class redBlackTree
     {
     public:
@@ -80,7 +84,7 @@ namespace ft
             copy constructor which copies the right handside tree object to
             left handside object (this) all the copy coping is deep copy
         */
-        redBlackTree(const redBlackTree<T> &tree)
+        redBlackTree(const redBlackTree &tree)
         {
             this->root = cloneNode(tree.root);
             copyTree(tree.root, this->root);
@@ -93,8 +97,12 @@ namespace ft
         */
         ~redBlackTree()
         {
-            clearTree(this->root);
-            this->root = NULL;
+            if (_size == 0)
+                this->root = NULL;
+            else
+            {
+                clearTree(this->root);
+            }
             _size = 0;
         }
 
@@ -108,7 +116,7 @@ namespace ft
                 - copy the allocator of rhs to calling object
                 - return a const_reference to the calling object
         */
-        const redBlackTree<T> &operator=(const redBlackTree<T> &rhs)
+        const redBlackTree &operator=(const redBlackTree &rhs)
         {
             if (this == &rhs)
                 return *this;
@@ -229,16 +237,16 @@ namespace ft
         size_t size() const { return this->_size; }
         t_node<T> *findBegin()
         {
-            if (this->root == NULL)
-                return this->root;
+            if (this->root == NULL or this->_size == 0)
+                return NULL;
             while (this->root->leftChild)
                 this->root = this->root->leftChild;
             return this->root;
         }
         t_node<T> *findEnd()
         {
-            if (this->root == NULL)
-                return this->root;
+            if (this->root == NULL or this->_size == 0)
+                return NULL;
             while (this->root->rightChild)
                 this->root = this->root->rightChild;
             return this->root->rightChild;
@@ -277,17 +285,20 @@ namespace ft
                 copyTree(org->rightChild, copy->rightChild);
             }
         }
-
+        public:
         void clearTree(t_node<T> *_node)
         {
             if (_node != NULL)
             {
                 clearTree(_node->leftChild);
-                this->_alloc.deallocate(_node, 1);
+                delete _node;
+                // this->_alloc.deallocate(_node, 1);
                 clearTree(_node->rightChild);
             }
+            _node = NULL;
+            this->_size = 0;
         }
-
+        private:
         t_node<T> *makeNode(const T &key)
         {
             t_node<T> *_new = this->_alloc.allocate(1);

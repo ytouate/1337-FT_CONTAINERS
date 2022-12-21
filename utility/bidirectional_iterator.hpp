@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 10:55:07 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/20 16:27:59 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/20 22:21:17 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,14 +118,14 @@ namespace ft
             return *this;
             // return temp;
         }
-        inline bidirectional_iterator &operator++(void)
-        {
-            if (current == NULL)
-            {
-            }
-            this->current++;
-            return *this;
-        }
+        // inline bidirectional_iterator &operator++(void)
+        // {
+        //     if (current == NULL)
+        //     {
+        //     }
+        //     this->current++;
+        //     return *this;
+        // }
         inline bidirectional_iterator &operator--(void)
         {
             this->current--;
