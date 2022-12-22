@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/21 19:36:10 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/22 11:27:38 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,9 +120,7 @@ namespace ft
         {
             if (this == &rhs)
                 return *this;
-            clearTree(this->root);
-            this->root = cloneNode(rhs.root);
-            copyTree(rhs.root, this->root);
+            this->root = rhs.root;
             this->_alloc = rhs._alloc;
             this->_size = rhs._size;
             return *this;
@@ -234,6 +232,10 @@ namespace ft
             returns the Number of nodes in the Tree
         */
         size_t size() const { return this->_size; }
+        /*
+            finds the first node that will be printed if we used
+            In Order Traversal on the treee
+        */
         t_node<T> *findBegin()
         {
             if (this->root == NULL or this->_size == 0)
@@ -243,6 +245,10 @@ namespace ft
             return this->root;
         }
         
+        /*
+            finds the last node that will be printed if we used
+            In Order Traversal on the tree
+        */
         t_node<T> *findEnd()
         {
             if (this->root == NULL or this->_size == 0)
@@ -292,7 +298,7 @@ namespace ft
             {
                 clearTree(_node->leftChild);
                 delete _node;
-                // this->_alloc.deallocate(_node, 1);
+                // this->_alloc.deallocate(_node 
                 clearTree(_node->rightChild);
             }
             _node = NULL;

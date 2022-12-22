@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 15:31:32 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/02 19:52:41 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/22 10:57:15 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,13 @@ namespace ft
         pair() : first(), second() {}
 
         template <class U, class V>
-        pair(const pair<U, V> &pr)
-        {
-            this->first = pr.first;
-            this->second = pr.second;
-        }
+        pair(const pair<U, V> &pr): first(pr.first), second(pr.second) {}
 
-        pair(const first_type &a, const second_type &b)
-        {
-            this->first = a;
-            this->second = b;
-        }
+        pair(const first_type &a, const second_type &b) : first(a), second(b) {}
 
         pair &operator=(const pair &pr)
         {
-            this->first = pr.first;
+            // this->first = pr.first;
             this->second = pr.second;
             return *this;
         }

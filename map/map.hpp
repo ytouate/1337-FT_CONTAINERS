@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 19:07:54 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/21 19:32:08 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/22 11:37:26 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@
 namespace ft
 {
     template <class key, class T, class Compare = std::less<key>,
-              class Allocator = std::allocator<ft::pair<key, T> > >
+              class Allocator = std::allocator<ft::pair<const key, T> > >
     class map
     {
     public:
         typedef key key_type;
         typedef T mapped_type;
-        typedef ft::pair<key, T> value_type;
+        typedef ft::pair<const key, T> value_type;
         typedef Compare key_compare;
         typedef Allocator allocator_type;
         typedef typename Allocator::reference reference;
@@ -32,6 +32,9 @@ namespace ft
         typedef typename Allocator::pointer pointer;
         typedef typename Allocator::const_pointer const_pointer;
         typedef size_t size_type;
+        typedef ft::bidirectional_iterator<t_node<value_type> > iterator;
+        typedef ft::bidirectional_iterator<const t_node<value_type> > const_iterator;
+
 
         class value_compare : public std::binary_function<value_type, value_type, bool>
         {
@@ -48,11 +51,21 @@ namespace ft
             }
         };
 
-        typedef ft::bidirectional_iterator<t_node<value_type> > iterator;
         
+        key_compare key_comp() const { return this->_comp; }
+        value_compare value_comp() const { return this->_comp; }
         iterator begin()
         {
             return iterator(_tree.findBegin());
+        }
+        iterator search(const key &k) const
+        {
+            iterator it = begin();
+            iterator ite = end();
+            while (it != ite)
+                if (it->first == k)
+                    return it;
+            return end();
         }
         size_type count(const key &k) const
         {
@@ -88,12 +101,18 @@ namespace ft
                 first++;
             }
         }
-        const map &operator=(const map&rhs)
+      const map &operator=(const map&rhs)
         {
             this->_tree = rhs._tree;
+            this->_alloc= rhs._alloc;
+            this->_comp = rhs._comp;
             return *this;
         }
-        pair<iterator, bool> insert(const value_type &val);
+        pair<iterator, bool> insert(const value_type &val)
+        {
+            _tree.insert(val);
+            return val;
+        }
         iterator insert(iterator position, const value_type &val);
         template <class InputIterator>
         void insert(InputIterator first, InputIterator last)

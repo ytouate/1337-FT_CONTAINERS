@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/21 19:45:02 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/22 13:00:27 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,33 +29,33 @@ void inOrderTraversal(ft::t_node<T> *_node)
 
 int main(void)
 {
-    std::vector<std::pair<std::string, int> > vec;
-    vec.push_back(std::make_pair<std::string, int>("DSad", 20));
-    vec.push_back(std::make_pair<std::string, int>("aDa", 20));
-    vec.push_back(std::make_pair<std::string, int>("3dsa0", 20));
+    std::vector<std::pair<int, int> > vec;
+    vec.push_back(std::make_pair<int, int>(1, 20));
+    vec.push_back(std::make_pair<int, int>(2, 20));
+    vec.push_back(std::make_pair<int, int>(3, 20));
 
-    std::map<std::string, int> theirMap(vec.begin(), vec.end());
+    std::map<int, int> theirMap(vec.begin(), vec.end());
 
-    std::map<std::string, int>::iterator theirIt = theirMap.begin();
+    std::map<int, int>::iterator theirIt = theirMap.begin();
 
 
-    std::cout << theirIt++->first << std::endl;
-    std::cout << theirIt->first << std::endl;
+    theirIt++;
+    // --theirIt;
+    //std::cout << theirIt->first << std::endl;
     // Mine
-    std::vector<ft::pair<std::string, int> > vecOfPairs;
-    vecOfPairs.push_back(ft::make_pair<std::string, int>("DSad", 20));
-    vecOfPairs.push_back(ft::make_pair<std::string, int>("aDa", 20));
-    vecOfPairs.push_back(ft::make_pair<std::string, int>("3dsa0", 20));
+    std::vector<ft::pair<int, int> > vecOfPairs;
+    vecOfPairs.push_back(ft::make_pair<int, int>(1, 20));
+    vecOfPairs.push_back(ft::make_pair<int, int>(2, 20));
+    vecOfPairs.push_back(ft::make_pair<int, int>(3, 20));
 
-    ft::map<std::string, int> myMap(vecOfPairs.begin(), vecOfPairs.end());
+    ft::map<int, int> myMap(vecOfPairs.begin(), vecOfPairs.end());
+    ft::map<int, int>::iterator myIt = myMap.begin();
 
-    ft::map<std::string, int>::iterator myIt = myMap.begin();
-
-    std::cout << myIt++->first << std::endl;
-    std::cout << myIt->first << std::endl;
-    // myMap.insert(ft::make_pair<int, int>(10, 20));
-    // myMap.insert(ft::make_pair<int, int>(20, 20));
-    // myMap.insert(ft::make_pair<int, int>(30, 20));
-
-    // inOrderTraversal(map.getTree());
+    ++myIt;
+    if (myIt == NULL)
+        
+    return 0;
+    // --myIt;
+    std::cout << myIt->first << " ";
+    std::cout << "\n" << std::flush;
 }

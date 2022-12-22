@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 10:55:07 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/21 19:49:11 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/22 12:39:52 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ namespace ft
             }
             return _node;
         }
+
         inline bidirectional_iterator operator++(int)
         {
             bidirectional_iterator temp (*this);
@@ -124,9 +125,42 @@ namespace ft
             }
             return *this;
         }
+        U * decrement(U *_node)
+        {
+            if (_node == NULL)
+                return NULL;
+            if (_node->leftChild != NULL)
+            {
+                ++_node;
+                while (_node->rightChild)
+                    _node++;
+            }
+            else
+            {
+                bool wasLeftChild;
+                do
+                {
+                    wasLeftChild = _node == _node->parent->leftChild;
+                    _node = _node->leftChild;
+                } while (wasLeftChild);
+                
+            }
+            return _node;
+        }
         inline bidirectional_iterator &operator--(void)
         {
-            this->current--;
+            if (this->current == NULL)
+            {
+                std::cout << "hna\n";
+                return *this;
+                
+            }
+            if (this->current == this->getRoot(this->current))
+            {
+                this->current = this->current->leftChild;
+                if (this->current == NULL)
+                    std::cout << "NULL\n";
+            }
             return *this;
         }
         ~bidirectional_iterator() {}
