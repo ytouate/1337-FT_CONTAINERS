@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/23 19:18:41 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/25 19:02:39 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int main(void)
     ft::redBlackTree<int, int, std::allocator<int> > tree;
     tree.insert(10);
     tree.insert(20);
+    tree.insert(30);
     std::cout << tree.count(20) << std::endl;
     tree.insert(30);
 
