@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 15:31:32 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/22 10:57:15 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/22 22:09:26 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ namespace ft
 
         pair &operator=(const pair &pr)
         {
-            // this->first = pr.first;
+            this->first = pr.first;
             this->second = pr.second;
             return *this;
         }

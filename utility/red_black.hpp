@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/22 11:27:38 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/23 19:19:30 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,16 @@ namespace ft
     };
 
     template <
-                class T, class _key, class mapped_type,
-                class Compare = std::less<_key>,
-                class Allocator = std::allocator< t_node<T> >
-             >
+        class Key,
+        class Value,
+        class Allocator,
+        class Compare = std::less<Key> >
     class redBlackTree
     {
     public:
+        typedef typename Allocator::value_type T;
         typedef bidirectional_iterator<t_node<T> > iterator;
-
+        typedef typename Allocator::size_type size_type;
         t_node<T> *getTree() const { return this->root; }
 
         /*
@@ -88,7 +89,6 @@ namespace ft
         {
             this->root = cloneNode(tree.root);
             copyTree(tree.root, this->root);
-            this->_alloc = tree._alloc;
             this->_size = tree._size;
         }
 
@@ -116,17 +116,17 @@ namespace ft
                 - copy the allocator of rhs to calling object
                 - return a const_reference to the calling object
         */
+
+
         const redBlackTree &operator=(const redBlackTree &rhs)
         {
-            if (this == &rhs)
-                return *this;
-            this->root = rhs.root;
-            this->_alloc = rhs._alloc;
+            this->clear();
+            copyTree(rhs.root, this->root);
             this->_size = rhs._size;
-            return *this;
         }
 
-        void erase(const _key &key)
+        
+        void erase(const T &key)
         {
             t_node<T> *z = search(key);
             if (z == NULL)
@@ -165,7 +165,8 @@ namespace ft
                 y->leftChild->parent = y;
                 y->color = z->color;
             }
-            this->_alloc.destroy(z);
+            delete z;
+            // this->_alloc.destroy(z);
             if (y_original_color == BLACK)
             {
                 deleteFixUP(x);
@@ -177,14 +178,14 @@ namespace ft
             if the element is found it returns a pointer to the node containing the element
             else it returns NULL to indicate that the element not found;
         */
-        t_node<T> *search(const _key &key) const
+        t_node<T> *search(const T &key) const
         {
             t_node<T> *current = this->root;
             while (current != NULL)
             {
-                if (current->data.first < key)
+                if (current->data < key)
                     current = current->rightChild;
-                else if (current->data.first > key)
+                else if (current->data > key)
                     current = current->leftChild;
                 else
                     return current;
@@ -192,6 +193,15 @@ namespace ft
             return NULL;
         }
 
+        /*
+            searches the tree for element with key equivalent to k and
+            returns the number of matches since the tree cannot have duplicated key
+            the return value will always be one or zero
+        */
+        size_type count(const Key &k) const
+        {
+            return search(k) == NULL ? 0 : 1;
+        }
         void insert(const T &key)
         {
             t_node<T> *node = makeNode(key);
@@ -207,11 +217,12 @@ namespace ft
             while (temp != NULL)
             {
                 prev = temp;
-                if (node->data.first < temp->data.first)
+                if (node->data < temp->data)
                     temp = temp->leftChild;
-                else if (node->data.first == temp->data.first)
+                else if (node->data == temp->data)
                 {
-                    this->_alloc.destroy(node);
+                    delete node;
+                    // this->_alloc.destroy(node);
                     return;
                 }
                 else
@@ -220,7 +231,7 @@ namespace ft
             node->parent = prev;
             if (prev == NULL)
                 this->root = node;
-            else if (node->data.first < prev->data.first)
+            else if (node->data < prev->data)
                 prev->leftChild = node;
             else
                 prev->rightChild = node;
@@ -228,6 +239,21 @@ namespace ft
             this->_size++;
         }
 
+        iterator begin()
+        {
+            return iterator(findBegin());
+        }
+        iterator end()
+        {
+            return iterator(findEnd());
+        }
+        /*
+            returns whether the tree is empty (the size is 0)
+        */
+        bool empty() const
+        {
+            return this->_size == 0;
+        }
         /*
             returns the Number of nodes in the Tree
         */
@@ -244,7 +270,7 @@ namespace ft
                 this->root = this->root->leftChild;
             return this->root;
         }
-        
+
         /*
             finds the last node that will be printed if we used
             In Order Traversal on the tree
@@ -263,7 +289,7 @@ namespace ft
         {
             if (_node != NULL)
             {
-                t_node<T> *_newNode = this->_alloc.allocate(1);
+                t_node<T> *_newNode = new t_node<T>;
                 _newNode->color = _node->color;
                 _newNode->data = _node->data;
                 _newNode->leftChild = _node->leftChild;
@@ -274,40 +300,42 @@ namespace ft
             return NULL;
         }
 
-        void copyTree(t_node<T> *org, t_node<T> *copy)
+        void copyTree(t_node<T> *src, t_node<T> *&dst)
         {
-            if (org != NULL)
+            if (src == NULL)
+                dst = NULL;
+            else
             {
-                t_node<T> *newLeftNode = cloneNode(org->leftChild);
-                if (copy->leftChild != NULL)
-                    this->_alloc.destroy(copy->leftChild);
-                copy->leftChild = newLeftNode;
-                copyTree(org->leftChild, copy->leftChild);
-
-                t_node<T> *newRightNode = cloneNode(org->rightChild);
-                if (copy->rightChild != NULL)
-                    this->_alloc.destroy(copy->rightChild);
-                copy->rightChild = newRightNode;
-                copyTree(org->rightChild, copy->rightChild);
+                dst = new t_node<T>;
+                dst->data = src->data;
+                copyTree(src->leftChild, dst->leftChild);
+                copyTree(src->rightChild, dst->rightChild);
             }
         }
-        public:
         void clearTree(t_node<T> *_node)
         {
             if (_node != NULL)
             {
                 clearTree(_node->leftChild);
                 delete _node;
-                // this->_alloc.deallocate(_node 
+                // this->_alloc.deallocate(_node
                 clearTree(_node->rightChild);
             }
-            _node = NULL;
             this->_size = 0;
         }
-        private:
+
+    public:
+        void clear()
+        {
+            clearTree(this->root);
+            this->_size = 0;
+            this->root = NULL;
+        }
+
+    private:
         t_node<T> *makeNode(const T &key)
         {
-            t_node<T> *_new = this->_alloc.allocate(1);
+            t_node<T> *_new = new t_node<T>;
             _new->color = RED;
             _new->data = key;
             _new->rightChild = NULL;
