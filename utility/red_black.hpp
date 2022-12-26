@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/26 14:20:55 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/26 17:02:25 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,19 @@ namespace ft
     struct t_node
     {
         typedef T value_type;
+        typedef T &reference;
+        typedef const T & const_reference;
+        typedef T * pointer;
+
+        reference operator * ()
+        {
+            return data;
+        }
+        pointer operator -> ()
+        {
+            return &data;
+        }
+        
         bool color;
         t_node *leftChild;
         t_node *rightChild;
@@ -244,7 +257,7 @@ namespace ft
         }
         iterator end()
         {
-            return iterator(findEnd());
+            return iterator(NULL);
         }
         /*
             returns whether the tree is empty (the size is 0)

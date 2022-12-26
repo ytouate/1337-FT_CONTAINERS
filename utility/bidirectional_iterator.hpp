@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 10:55:07 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/26 14:18:40 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/26 17:04:26 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,12 @@ namespace ft
     {
 
     public:
-        // modified
-        typedef std::bidirectional_iterator_tag iterator_category;
-        typedef typename ft::iterator_traits<U *>::difference_type difference_type;
-        typedef typename ft::iterator_traits<U *>::value_type value_type;
+        typedef U &reference;
         typedef U *pointer;
-        // typedef typename ft::iterator_traits<U *>::pointer pointer;
-        typedef typename ft::iterator_traits<U *>::reference reference;
-        typedef U const &const_reference;
+        typedef U value_type;
+        typedef std::ptrdiff_t difference_type;
+        typedef std::bidirectional_iterator_tag iterator_category;
+
         inline bidirectional_iterator() : current(NULL) {}
         inline bidirectional_iterator(bidirectional_iterator const &obj)
         {
@@ -58,11 +56,11 @@ namespace ft
         }
         bool operator==(const bidirectional_iterator &a) { return this->current == a.current; };
         bool operator!=(const bidirectional_iterator &a) { return this->current != a.current; };
-        typename value_type::value_type operator*(void)
+        typename U::reference operator*(void) const
         {
-            return current->data;
+            return *(*current);
         }
-        inline value_type *operator->(void) const { return current; }
+        typename U::pointer operator->(void) const { return current->operator->(); }
         operator bidirectional_iterator() const
         {
             bidirectional_iterator constThis(this->current);
@@ -72,7 +70,7 @@ namespace ft
         inline bidirectional_iterator operator--(int)
         {
             bidirectional_iterator temp = *this;
-            this->current--;
+            --(*this);
             return temp;
         }
 
@@ -130,35 +128,17 @@ namespace ft
         }
         inline bidirectional_iterator &operator--(void)
         {
-            std::cout << current->data << " \n";
             if (this->current == NULL)
+                std::cout << "NULL\n";
+            if (this->current->leftChild)
             {
-                this->current = getRoot(this->current);
-                if (this->current == NULL)
-                    throw std::out_of_range("Over Flow exception");
-                while (this->current->rightChild != NULL)
-                    this->current = this->current->rightChild;
+                this->current = rightMostDescendant(this->current->leftChild);
             }
             else
             {
-                if (this->current->leftChild != NULL)
-                {
-                    this->current = this->current->leftChild;
-                    while (this->current->rightChild != NULL)
-                        this->current = this->current->rightChild;
-                }
-                else
-                {
-                    if (this->current == getRoot(this->current))
-                        puts("hna");
-                    U *p = this->current->parent;
-                    while (p != NULL && this->current == p->leftChild)
-                    {
-                        this->current = p;
-                        p = p->parent;
-                    }
-                    this->current = p;
-                }
+                while (this->current && this->current->parent->leftChild == this->current)
+                    this->current = this->current->parent;
+                this->current = this->current->parent;
             }
             return *this;
         }
@@ -176,13 +156,25 @@ namespace ft
                 {
                     this->current = this->current->parent;
                 }
-                return  this->current->parent;
+                return this->current->parent;
+            }
+        }
+        U *previous()
+        {
+            if (this->current->leftChild)
+                return rightMostDescendant(this->current->leftChild);
+            else
+            {
+                while (this->current && this->current->parent->leftChild == this->current)
+                    this->current = this->current->parent;
+                return this->current->parent;
             }
         }
         bool hasNext() const
         {
             return this->current != NULL;
         }
+
     private:
         U *leftMostDescendant(U *node)
         {
@@ -192,6 +184,8 @@ namespace ft
         }
         U *rightMostDescendant(U *node)
         {
+            if (node == NULL)
+                return NULL;
             while (node->rightChild)
                 node = node->rightChild;
             return node;

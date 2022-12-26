@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/26 14:19:09 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/26 17:04:10 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,16 @@ ft::t_node<T> *next(ft::t_node<T> *current)
         return current->parent;
     }
 }
-
+// std::map<int, int> m;
+// m.insert(std::make_pair<int, int>(10, 10));
+// m.insert(std::make_pair<int, int>(20, 10));
+// m.insert(std::make_pair<int, int>(30, 10));
+// m.insert(std::make_pair<int, int>(40, 10));
+// m.insert(std::make_pair<int, int>(50, 10));
+// m.insert(std::make_pair<int, int>(60, 10));
+// m.insert(std::make_pair<int, int>(70, 10));
+// m.insert(std::make_pair<int, int>(80, 10));
+// m.insert(std::make_pair<int, int>(45, 10));
 int main(void)
 {
     ft::redBlackTree<int, int, std::allocator<int> > tree;
@@ -68,14 +77,13 @@ int main(void)
     tree.insert(45);
 
     ft::redBlackTree<int, int, std::allocator<int> >::iterator it = tree.begin();
+    ft::redBlackTree<int, int, std::allocator<int> >::iterator ite = tree.end();
 
-    // ft::t_node<int> *root = tree.getTree();
-    while (it.hasNext())
-    {
-        std::cout << it->data << std::endl;
-        it = it.next();
-    }
-    // std::cout << it.next()->data << std::endl;
-    // std::cout << it.next().next()->data << std::endl;
-    // std::cout << it.next().next().next()->data << std::endl;
+    *it;
+    std::cout << *it << std::endl;
+    // std::cout << *it << std::endl;
+    it++;
+    std::cout << *it << std::endl;
+    it--;
+    std::cout << *it << std::endl;
 }
