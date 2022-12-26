@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/23 19:19:30 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/26 14:20:55 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,6 @@ namespace ft
                 y->color = z->color;
             }
             delete z;
-            // this->_alloc.destroy(z);
             if (y_original_color == BLACK)
             {
                 deleteFixUP(x);
@@ -264,11 +263,10 @@ namespace ft
         */
         t_node<T> *findBegin()
         {
-            if (this->root == NULL or this->_size == 0)
-                return NULL;
-            while (this->root->leftChild)
-                this->root = this->root->leftChild;
-            return this->root;
+            t_node<T> *_begin = this->root;
+            while (_begin->leftChild)
+                _begin = _begin->leftChild;
+            return _begin;
         }
 
         /*
@@ -318,7 +316,6 @@ namespace ft
             {
                 clearTree(_node->leftChild);
                 delete _node;
-                // this->_alloc.deallocate(_node
                 clearTree(_node->rightChild);
             }
             this->_size = 0;
