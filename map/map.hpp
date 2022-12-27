@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:16:00 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/27 16:24:34 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/27 16:26:10 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,10 @@ namespace ft
         value_compare value_comp() const
         {
             return value_compare(_comp);
+        }
+        size_type count(const key_type& k) const
+        {
+            return _tree.count(k);
         }
     private:
         redBlackTree<t_node<value_type>, Alloc, key_compare> _tree;

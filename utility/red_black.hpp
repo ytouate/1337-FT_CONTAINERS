@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/27 16:17:58 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/27 16:26:42 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,7 @@ namespace ft
             returns the number of matches since the tree cannot have duplicated key
             the return value will always be one or zero
         */
-        size_type count(const Key &k) const
+        size_type count(const _key &k) const
         {
             return search(k) == NULL ? 0 : 1;
         }
