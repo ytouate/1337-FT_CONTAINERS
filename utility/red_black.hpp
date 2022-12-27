@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/27 16:26:42 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/27 16:58:19 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,55 @@ namespace ft
             this->_size++;
         }
 
+        iterator lower_bound(const _key & k)
+        {
+            iterator it = begin();
+            iterator ite = end();
+            while (it != ite)
+            {
+                if (it->first >= k)
+                    return it;
+                ++it;
+            }
+            return ite;
+        }
+
+        ft::pair<iterator, iterator> equal_range(const _key & k)
+        {
+            iterator it = begin();
+            iterator ite = end();
+            while (it != ite)
+            {
+                if (it->first == k)
+                    return ft::make_pair<iterator, iterator>(it, it);
+                ++it;
+            }
+            return ft::make_pair<iterator, iterator>(ite, ite);
+        }
+        iterator find(const _key& k)
+        {
+            iterator it = begin();
+            iterator ite = end();
+            while (it != ite)
+            {
+                if (it->first == k)
+                    return it;
+                ++it;
+            }
+            return ite;
+        }
+        iterator upper_bound(const _key& k)
+        {
+            iterator it = begin();
+            iterator ite = end();
+            while (it != ite)
+            {
+                if (it->first > k)
+                    return it;
+                ++it;
+            }
+            return ite;
+        }
         iterator begin()
         {
             return iterator(leftMostChild());
