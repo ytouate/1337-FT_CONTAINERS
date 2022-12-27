@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/27 16:19:11 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/27 16:24:45 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int main(void)
     ft::map<int, int>::iterator it = map.begin();
     ft::map<int, int>::iterator ite = map.end();
 
+    map.value_comp();
     
     map[10] = 30;
     for (; it != ite; ++it)

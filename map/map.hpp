@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:16:00 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/27 16:16:51 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/27 16:24:34 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,14 @@ namespace ft
             return tmp->data.second;
         }
 
+        key_compare key_comp() const
+        {
+            return _comp;
+        }
+        value_compare value_comp() const
+        {
+            return value_compare(_comp);
+        }
     private:
         redBlackTree<t_node<value_type>, Alloc, key_compare> _tree;
         allocator_type _alloc;
