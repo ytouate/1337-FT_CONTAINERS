@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 15:31:32 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/22 22:09:26 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/27 15:29:19 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ namespace ft
     template <class T, class T2>
     class pair
     {
-        typedef T first_type;
-        typedef T2 second_type;
 
     public:
+        typedef T first_type;
+        typedef T2 second_type;
         T first;
         T2 second;
         pair() : first(), second() {}

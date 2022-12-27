@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 10:55:07 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/27 12:51:55 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/27 14:46:20 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,6 @@
 #define BIDIRECTIONA_ITERATOR_HPP
 
 #include "../inc.hpp"
-
-// namespace ft
-// {
-//     template <class T>
-//     struct t_node
-//     {
-//         bool color;
-//         t_node *leftChild;
-//         t_node *rightChild;
-//         t_node *parent;
-//         T data;
-//     };
-// };
 
 namespace ft
 {
@@ -41,48 +28,25 @@ namespace ft
         typedef std::ptrdiff_t difference_type;
         typedef std::bidirectional_iterator_tag iterator_category;
 
-        inline bidirectional_iterator() : current(NULL) {}
-        inline bidirectional_iterator(bidirectional_iterator const &obj)
-        {
-            this->current = obj.current;
-        }
-        inline bidirectional_iterator(pointer ptr) : current(ptr)
-        {
-        }
-        inline bidirectional_iterator &operator=(bidirectional_iterator const &rhs)
+        bidirectional_iterator() : current(NULL) {}
+        bidirectional_iterator(bidirectional_iterator const &obj) : current(obj.current) {}
+        bidirectional_iterator(pointer ptr) : current(ptr) {}
+        bidirectional_iterator &operator=(bidirectional_iterator const &rhs)
         {
             this->current = rhs.current;
             return *this;
         }
         bool operator==(const bidirectional_iterator &a) { return this->current == a.current; };
         bool operator!=(const bidirectional_iterator &a) { return this->current != a.current; };
-        typename U::reference operator*(void) const
-        {
-            return *(*current);
-        }
+        typename U::reference operator*(void) const { return *(*current); }
         typename U::pointer operator->(void) const { return current->operator->(); }
-        // operator bidirectional_iterator() const
-        // {
-        //     bidirectional_iterator constThis(this->current);
-        //     return constThis;
-        // }
-
-        inline bidirectional_iterator operator--(int)
+        operator bidirectional_iterator() const { return bidirectional_iterator(this->current); }
+        bidirectional_iterator operator--(int)
         {
             bidirectional_iterator temp = *this;
             --(*this);
             return temp;
         }
-
-        U *getRoot(U *_node) const
-        {
-            while (_node->parent)
-            {
-                _node = _node->parent;
-            }
-            return _node;
-        }
-
         inline bidirectional_iterator operator++(int)
         {
             bidirectional_iterator temp(*this);
@@ -96,7 +60,7 @@ namespace ft
                 this->current = this->getRoot(this->current);
                 if (this->current == NULL)
                 {
-                    throw("Under Flow Exception");
+                    throw std::out_of_range("UnderFlowException");
                 }
                 while (this->current->leftChild != NULL)
                 {
@@ -127,9 +91,7 @@ namespace ft
             return *this;
         }
         inline bidirectional_iterator &operator--(void)
-        {
-            if (this->current == NULL)
-                std::cout << "NULL\n";
+        {   
             if (this->current->leftChild)
             {
                 this->current = rightMostDescendant(this->current->leftChild);
@@ -143,39 +105,16 @@ namespace ft
             return *this;
         }
         ~bidirectional_iterator() {}
-        bidirectional_iterator next()
-        {
-            if (this->current->rightChild)
-            {
-                return leftMostDescendant(this->current->rightChild);
-            }
-            else
-            {
-                while (this->current->parent != NULL &&
-                       this->current->parent->rightChild == this->current)
-                {
-                    this->current = this->current->parent;
-                }
-                return this->current->parent;
-            }
-        }
-        U *previous()
-        {
-            if (this->current->leftChild)
-                return rightMostDescendant(this->current->leftChild);
-            else
-            {
-                while (this->current && this->current->parent->leftChild == this->current)
-                    this->current = this->current->parent;
-                return this->current->parent;
-            }
-        }
-        bool hasNext() const
-        {
-            return this->current != NULL;
-        }
 
     private:
+        U *getRoot(U *_node) const
+        {
+            while (_node->parent)
+            {
+                _node = _node->parent;
+            }
+            return _node;
+        }
         U *leftMostDescendant(U *node)
         {
             while (node->leftChild)

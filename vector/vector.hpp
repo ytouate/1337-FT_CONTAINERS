@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/21 19:57:44 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/27 14:59:35 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,11 @@ namespace ft
 
         // capacity
         size_type size() const { return this->len; }
-        size_type max_size() const { return std::min<size_type>(this->_alloc.max_size(), std::numeric_limits<std::ptrdiff_t>::max()); }
+        size_type max_size() const
+        {
+            return std::min<size_type>(this->_alloc.max_size(),
+                                       std::numeric_limits<std::ptrdiff_t>::max());
+        }
         size_type capacity() const { return this->_capacity; }
         bool empty() const { return this->len == 0; }
         void resize(size_type n, T c = T())
@@ -245,9 +249,7 @@ namespace ft
         template <class Iterator>
         void insert(iterator position,
                     Iterator first, Iterator last,
-                    typename ft::enable_if<!ft::is_integral<Iterator>::value
-                    && !std::__is_input_iterator<Iterator>::value
-                    && !std::__is_forward_iterator<Iterator>::value>::type * = 0)
+                    typename ft::enable_if<!ft::is_integral<Iterator>::value && !std::__is_input_iterator<Iterator>::value && !std::__is_forward_iterator<Iterator>::value>::type * = 0)
         {
             long cap = last - first;
             while (first != last)
