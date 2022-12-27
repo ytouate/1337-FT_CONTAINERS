@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/26 17:02:25 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/26 18:02:24 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,18 @@ namespace ft
     {
         typedef T value_type;
         typedef T &reference;
-        typedef const T & const_reference;
-        typedef T * pointer;
+        typedef const T &const_reference;
+        typedef T *pointer;
 
-        reference operator * ()
+        reference operator*()
         {
             return data;
         }
-        pointer operator -> ()
+        pointer operator->()
         {
             return &data;
         }
-        
+
         bool color;
         t_node *leftChild;
         t_node *rightChild;
@@ -73,8 +73,7 @@ namespace ft
 
     template <
         class Key,
-        class Value,
-        class Allocator,
+        class Allocator = std::allocator<Key>,
         class Compare = std::less<Key> >
     class redBlackTree
     {
@@ -106,30 +105,17 @@ namespace ft
         }
 
         /*
-            Destructor which deallocate all the Tree and sets root to point on NULL;
+            Destructor which deallocate all the Tree and
+            sets root to point on NULL;
         */
         ~redBlackTree()
         {
             if (_size == 0)
                 this->root = NULL;
             else
-            {
                 clearTree(this->root);
-            }
             _size = 0;
         }
-
-        /*
-            copy assignment operator which the following operations are done sequentially
-                - check for self assignment ;
-                - clear the tree of (this ) object { the object who called the operator }
-                - clone the root of right handside object to this->root;
-                - clone the other node of rightHandside object into the calling object;
-                - set the size of the calling object to be equal to rhs.size;
-                - copy the allocator of rhs to calling object
-                - return a const_reference to the calling object
-        */
-
 
         const redBlackTree &operator=(const redBlackTree &rhs)
         {
@@ -138,7 +124,6 @@ namespace ft
             this->_size = rhs._size;
         }
 
-        
         void erase(const T &key)
         {
             t_node<T> *z = search(key);
@@ -159,7 +144,7 @@ namespace ft
             }
             else
             {
-                y = minimum(z->rightChild);
+                y = leftMostChild(z->rightChild);
                 y_original_color = y == NULL ? BLACK : y->color;
                 x = y->rightChild;
                 if (y->parent == z)
@@ -214,6 +199,7 @@ namespace ft
         {
             return search(k) == NULL ? 0 : 1;
         }
+        
         void insert(const T &key)
         {
             t_node<T> *node = makeNode(key);
@@ -234,7 +220,6 @@ namespace ft
                 else if (node->data == temp->data)
                 {
                     delete node;
-                    // this->_alloc.destroy(node);
                     return;
                 }
                 else
@@ -253,12 +238,14 @@ namespace ft
 
         iterator begin()
         {
-            return iterator(findBegin());
+            return iterator(leftMostChild());
         }
+
         iterator end()
         {
             return iterator(NULL);
         }
+
         /*
             returns whether the tree is empty (the size is 0)
         */
@@ -266,49 +253,36 @@ namespace ft
         {
             return this->_size == 0;
         }
+    
         /*
             returns the Number of nodes in the Tree
         */
         size_t size() const { return this->_size; }
+
+
+        /*
+            deletes all the nodes of the tree and sets
+            the size of it to 0
+        */
+        void clear()
+        {
+            clearTree(this->root);
+            this->_size = 0;
+            this->root = NULL;
+        }
+
+    private:
         /*
             finds the first node that will be printed if we used
             In Order Traversal on the treee
         */
-        t_node<T> *findBegin()
+        t_node<T> *leftMostChild()
         {
+            if (this->root == NULL) return NULL;
             t_node<T> *_begin = this->root;
             while (_begin->leftChild)
                 _begin = _begin->leftChild;
             return _begin;
-        }
-
-        /*
-            finds the last node that will be printed if we used
-            In Order Traversal on the tree
-        */
-        t_node<T> *findEnd()
-        {
-            if (this->root == NULL or this->_size == 0)
-                return NULL;
-            while (this->root->rightChild)
-                this->root = this->root->rightChild;
-            return this->root->rightChild;
-        }
-
-    private:
-        t_node<T> *cloneNode(t_node<T> *_node)
-        {
-            if (_node != NULL)
-            {
-                t_node<T> *_newNode = new t_node<T>;
-                _newNode->color = _node->color;
-                _newNode->data = _node->data;
-                _newNode->leftChild = _node->leftChild;
-                _newNode->rightChild = _node->rightChild;
-                _newNode->parent = _node->parent;
-                return _newNode;
-            }
-            return NULL;
         }
 
         void copyTree(t_node<T> *src, t_node<T> *&dst)
@@ -323,6 +297,7 @@ namespace ft
                 copyTree(src->rightChild, dst->rightChild);
             }
         }
+
         void clearTree(t_node<T> *_node)
         {
             if (_node != NULL)
@@ -334,15 +309,6 @@ namespace ft
             this->_size = 0;
         }
 
-    public:
-        void clear()
-        {
-            clearTree(this->root);
-            this->_size = 0;
-            this->root = NULL;
-        }
-
-    private:
         t_node<T> *makeNode(const T &key)
         {
             t_node<T> *_new = new t_node<T>;
@@ -439,13 +405,6 @@ namespace ft
                 u->parent = NULL;
             else
                 v->parent = u->parent;
-        }
-
-        t_node<T> *minimum(t_node<T> *node)
-        {
-            while (node->leftChild != NULL)
-                node = node->leftChild;
-            return node;
         }
 
         void fixViolations(t_node<T> *z)
@@ -545,6 +504,7 @@ namespace ft
         t_node<T> *root;
         Allocator _alloc;
         size_t _size;
+        Compare _comp;
     };
 };
 

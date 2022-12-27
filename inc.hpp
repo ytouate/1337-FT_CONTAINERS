@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 17:09:15 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/20 15:06:13 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/26 17:34:27 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 #include "stack/stack.hpp"
 #include "utility/equal.hpp"
 #include "utility/bidirectional_iterator.hpp"
-#include "map/map.hpp"
 #include "utility/red_black.hpp"
+#include "map/map.hpp"
 
 #endif // INC_HPP

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 10:55:07 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/26 17:04:26 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/27 12:51:55 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ namespace ft
             return *(*current);
         }
         typename U::pointer operator->(void) const { return current->operator->(); }
-        operator bidirectional_iterator() const
-        {
-            bidirectional_iterator constThis(this->current);
-            return constThis;
-        }
+        // operator bidirectional_iterator() const
+        // {
+        //     bidirectional_iterator constThis(this->current);
+        //     return constThis;
+        // }
 
         inline bidirectional_iterator operator--(int)
         {
