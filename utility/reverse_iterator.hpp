@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:35:09 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/28 15:48:17 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/28 21:39:44 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ namespace ft
             this->_iter -= n;
             return *this;
         }
-        inline reverse_iterator operator-(difference_type n) const
+        reverse_iterator operator-(difference_type n) const
         {
             reverse_iterator<Iterator> temp(this->base() + n);
             return temp;
@@ -158,8 +158,8 @@ namespace ft
         const ft::reverse_iterator<Iterator> &x,
         const ft::reverse_iterator<Iterator> &y)
     {
-        typename ft::reverse_iterator<Iterator>::difference_type result = y.base() - x.base();
-        return result;
+        //typename ft::reverse_iterator<Iterator>::difference_type result = y.base() - x.base();
+        return y.base() - x.base();
     }
 
     template <class Iterator>

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 16:08:00 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/28 15:43:37 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/28 21:38:03 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,20 @@ namespace ft
             ft::iterator<const T> constThis (this->_ptr);
             return constThis;
         }
-        inline const_reference operator*(void) const { return *_ptr; }
-        inline const_reference operator[](difference_type n) const { return _ptr[n]; }
-        inline iterator() : _ptr(NULL) {}
-        inline iterator(pointer ptr) : _ptr(ptr) {}
-        inline reference const operator*(void) { return *_ptr; }
-        inline pointer operator->(void) const { return _ptr; }
-        bool operator== (const iterator& a) { return this->_ptr == a._ptr; };
-        bool operator!= (const iterator& a) { return this->_ptr != a._ptr; };
+        const_reference operator*(void) const { return *_ptr; }
+        const_reference operator[](difference_type n) const { return _ptr[n]; }
+        iterator() : _ptr(NULL) {}
+        iterator(pointer ptr) : _ptr(ptr) {}
+        reference const operator*(void) { return *_ptr; }
+        pointer operator->(void) const { return _ptr; }
         friend bool operator<= (const iterator& a, const iterator& b) { return a._ptr <= b._ptr; };
         friend bool operator< (const iterator& a, const iterator& b) { return a._ptr < b._ptr; };  
         friend bool operator>= (const iterator& a, const iterator& b) { return a._ptr >= b._ptr; };
         friend bool operator> (const iterator& a, const iterator& b) { return a._ptr > b._ptr; };     
-        inline ptrdiff_t operator-(iterator const &right) const { return this->_ptr - right._ptr; }
-        inline reference operator[](difference_type n) { return _ptr[n]; }
-        inline iterator(iterator const &obj) { this->_ptr = obj._ptr; }
-        inline iterator operator-(difference_type n)
+        
+        reference operator[](difference_type n) { return _ptr[n]; }
+        iterator(iterator const &obj) { this->_ptr = obj._ptr; }
+        iterator operator-(difference_type n)
         {
             pointer oldPtr = _ptr;
             _ptr -= n;
@@ -56,7 +54,7 @@ namespace ft
             return temp;
         }
        
-        inline iterator operator+(difference_type n)
+        iterator operator+(difference_type n)
         {
             pointer oldPtr = _ptr;
             _ptr += n;
@@ -65,41 +63,44 @@ namespace ft
             return temp;
         }
 
-        inline iterator operator+=(difference_type n)
+        iterator operator+=(difference_type n)
         {
             this->_ptr += n;
             return *this;
         }
-        inline iterator operator-=(difference_type n)
+        iterator operator-=(difference_type n)
         {
             this->_ptr -= n;
             return *this;
         }
         
-        inline iterator operator--(int)
+        iterator operator--(int)
         {
             iterator temp = *this;
             this->_ptr--;
             return temp;
         }
-        inline iterator operator++(int)
+        iterator operator++(int)
         {
             iterator temp = *this;
             this->_ptr++;
             return temp;
         }
-        inline iterator & operator++(void)
+        iterator & operator++(void)
         {
             this->_ptr++;
             return *this;
         }
-        inline iterator & operator--(void)
+        iterator & operator--(void)
         {
             this->_ptr--;
             return *this;
         }
-        
-        inline iterator &operator=(iterator const &rhs) 
+        T* base() const
+        {
+            return _ptr;
+        }
+        iterator &operator=(iterator const &rhs) 
         {
             this->_ptr = rhs._ptr;
             return *this;
@@ -112,6 +113,16 @@ namespace ft
             iterator temp(x);
             x._ptr = oldPtr;
             return temp;
+        }
+        template <class Iter, class Iter2>
+        friend bool operator != (const Iter &a, const Iter2 &b)
+        {
+            return a._ptr != b._ptr;
+        }
+        template <class Iter, class Iter2>
+        friend bool operator == (const Iter &a, const Iter2 &b)
+        {
+            return a._ptr == b._ptr;
         }
     private:
         T *_ptr;
