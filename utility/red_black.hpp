@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/27 16:58:19 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/28 16:20:22 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ namespace ft
         typedef typename Allocator::value_type pair_type;
         typedef typename pair_type::first_type _key;
         typedef typename pair_type::second_type _value;
-        typedef bidirectional_iterator<value_type > iterator;
-        typedef r_bidirectional_iterator<iterator > reverse_iterator;
+        typedef bidirectional_iterator<value_type> iterator;
+        typedef r_bidirectional_iterator<iterator> reverse_iterator;
         typedef typename Allocator::size_type size_type;
         value_type *getTree() const { return this->root; }
 
@@ -103,8 +103,7 @@ namespace ft
         */
         redBlackTree(const redBlackTree &tree)
         {
-            this->root = cloneNode(tree.root);
-            copyTree(tree.root, this->root);
+            copyTree(tree.root, &this->root);
             this->_size = tree._size;
         }
 
@@ -114,18 +113,16 @@ namespace ft
         */
         ~redBlackTree()
         {
-            if (_size == 0)
-                this->root = NULL;
-            else
-                clearTree(this->root);
+            this->clear();
             _size = 0;
         }
 
         const redBlackTree &operator=(const redBlackTree &rhs)
         {
             this->clear();
-            copyTree(rhs.root, this->root);
+            copyTree(rhs.root, &this->root);
             this->_size = rhs._size;
+            return *this;
         }
 
         // void erase(const T &key)
@@ -184,7 +181,7 @@ namespace ft
             value_type *current = this->root;
             while (current != NULL)
             {
-                // current->data < key 
+                // current->data < key
                 if (_comp(current->data.first, key))
                     current = current->rightChild;
                 else if (current->data.first > key)
@@ -204,7 +201,7 @@ namespace ft
         {
             return search(k) == NULL ? 0 : 1;
         }
-        
+
         void insert(const pair_type &key)
         {
             value_type *node = makeNode(key);
@@ -241,60 +238,11 @@ namespace ft
             this->_size++;
         }
 
-        iterator lower_bound(const _key & k)
-        {
-            iterator it = begin();
-            iterator ite = end();
-            while (it != ite)
-            {
-                if (it->first >= k)
-                    return it;
-                ++it;
-            }
-            return ite;
-        }
-
-        ft::pair<iterator, iterator> equal_range(const _key & k)
-        {
-            iterator it = begin();
-            iterator ite = end();
-            while (it != ite)
-            {
-                if (it->first == k)
-                    return ft::make_pair<iterator, iterator>(it, it);
-                ++it;
-            }
-            return ft::make_pair<iterator, iterator>(ite, ite);
-        }
-        iterator find(const _key& k)
-        {
-            iterator it = begin();
-            iterator ite = end();
-            while (it != ite)
-            {
-                if (it->first == k)
-                    return it;
-                ++it;
-            }
-            return ite;
-        }
-        iterator upper_bound(const _key& k)
-        {
-            iterator it = begin();
-            iterator ite = end();
-            while (it != ite)
-            {
-                if (it->first > k)
-                    return it;
-                ++it;
-            }
-            return ite;
-        }
         iterator begin()
         {
             return iterator(leftMostChild());
         }
-        
+
         iterator end()
         {
             return iterator(NULL);
@@ -315,12 +263,11 @@ namespace ft
         {
             return this->_size == 0;
         }
-    
+
         /*
             returns the Number of nodes in the Tree
         */
         size_t size() const { return this->_size; }
-
 
         /*
             deletes all the nodes of the tree and sets
@@ -332,52 +279,58 @@ namespace ft
             this->_size = 0;
             this->root = NULL;
         }
+        /*
+            loops throw the entire tree and calls delete on every node and set NULL to it;
+        */
+        void clearTree(value_type *_node)
+        {
+            if ((_node) != NULL)
+            {
+                clearTree((_node)->leftChild);
+                delete (_node);
+                clearTree((_node)->rightChild);
+            }
+            this->_size = 0;
+        }
 
     private:
         /*
             finds the first node that will be printed if we used
             In Order Traversal on the treee
         */
-        value_type *leftMostChild()
+        value_type *leftMostChild() const
         {
-            if (this->root == NULL) return NULL;
+            if (this->root == NULL)
+                return NULL;
             value_type *_begin = this->root;
             while (_begin->leftChild)
                 _begin = _begin->leftChild;
             return _begin;
         }
-        
+
         value_type *rightMostChild()
         {
-            if (this->root == NULL) return NULL;
+            if (this->root == NULL)
+                return NULL;
             value_type *_end = this->root;
             while (_end->rightChild)
                 _end = _end->rightChild;
             return _end;
         }
 
-        void copyTree(value_type *src, value_type *&dst)
+        void copyTree(value_type *src, value_type **dst)
         {
             if (src == NULL)
-                dst = NULL;
+                (*dst) = NULL;
             else
             {
-                dst = new value_type;
-                dst->data = src->data;
-                copyTree(src->leftChild, dst->leftChild);
-                copyTree(src->rightChild, dst->rightChild);
+                (*dst) = new value_type;
+                (*dst)->data = src->data;
+                (*dst)->color = src->color;
+                (*dst)->parent = src->parent;
+                copyTree(src->leftChild, &(*dst)->leftChild);
+                copyTree(src->rightChild, &(*dst)->rightChild);
             }
-        }
-
-        void clearTree(value_type *_node)
-        {
-            if (_node != NULL)
-            {
-                clearTree(_node->leftChild);
-                delete _node;
-                clearTree(_node->rightChild);
-            }
-            this->_size = 0;
         }
 
         value_type *makeNode(const pair_type &key)

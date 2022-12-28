@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/27 14:59:35 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/28 14:50:53 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ namespace ft
 
         template <class InputIterator>
         vector(InputIterator first, InputIterator last, const Allocator &alloc = Allocator(),
-               typename ft::enable_if<!ft::is_integral<InputIterator>::value && std::__is_random_access_iterator<InputIterator>::value>::type * = 0)
+               typename ft::enable_if<!ft::is_integral<InputIterator>::value && std::__is_forward_iterator<InputIterator>::value>::type * = 0)
         {
             difference_type diff = std::distance(first, last);
             this->_alloc = alloc;

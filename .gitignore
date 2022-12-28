@@ -10,4 +10,5 @@ main.cpp
 test.cpp
 ft_containers-terminator
 ft_containers_tests
+containers_test
 *.sh

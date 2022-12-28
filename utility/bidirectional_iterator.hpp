@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 10:55:07 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/27 14:46:20 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/27 21:24:40 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "../inc.hpp"
 
+class t_node;
 namespace ft
 {
     template <class U>
@@ -40,7 +41,7 @@ namespace ft
         bool operator!=(const bidirectional_iterator &a) { return this->current != a.current; };
         typename U::reference operator*(void) const { return *(*current); }
         typename U::pointer operator->(void) const { return current->operator->(); }
-        operator bidirectional_iterator() const { return bidirectional_iterator(this->current); }
+
         bidirectional_iterator operator--(int)
         {
             bidirectional_iterator temp = *this;

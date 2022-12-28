@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:16:00 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/27 16:26:10 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/28 16:20:48 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,17 +83,28 @@ namespace ft
         {
             _tree.clear();
         }
+
         map &operator=(const map &x)
         {
             this->_tree = x._tree;
             this->_alloc = x._alloc;
             this->_comp = x._comp;
+            return *this;
+        }
+
+        void clear()
+        {
+            _tree.clear();
         }
         iterator begin()
         {
             return _tree.begin();
         }
 
+        allocator_type get_allocator() const
+        {
+            return _alloc;
+        }
         iterator end()
         {
             return _tree.end();
@@ -103,22 +114,78 @@ namespace ft
         {
             return _tree.rbegin();
         }
+
         reverse_iterator rend()
         {
             return _tree.rend();
         }
+
         bool empty() const
         {
             return _tree.size() == 0;
         }
+
         size_type size() const
         {
             return _tree.size();
         }
+
         size_type max_size() const
         {
             return std::min<size_type>(this->_alloc.max_size(),
                                        std::numeric_limits<difference_type>::max());
+        }
+
+        iterator lower_bound(const key_type &k)
+        {
+            iterator it = begin();
+            iterator ite = end();
+            while (it != ite)
+            {
+                if (it->first >= k)
+                    return it;
+                ++it;
+            }
+            return ite;
+        }
+
+        ft::pair<iterator, iterator> equal_range(const key_type &k)
+        {
+            iterator it = begin();
+            iterator ite = end();
+            while (it != ite)
+            {
+                if (it->first == k)
+                    return ft::make_pair<iterator, iterator>(it, it);
+                ++it;
+            }
+            return ft::make_pair<iterator, iterator>(ite, ite);
+        }
+
+        iterator find(const key_type &k)
+        {
+            iterator it = begin();
+            iterator ite = end();
+            while (it != ite)
+            {
+                if (it->first == k)
+                    return it;
+                ++it;
+            }
+            return ite;
+        }
+
+        iterator upper_bound(const key_type &k)
+        {
+            iterator it = begin();
+            iterator ite = end();
+            while (it != ite)
+            {
+                if (it->first > k)
+                    return it;
+                ++it;
+            }
+            return ite;
         }
 
         mapped_type &operator[](const key_type &k)
@@ -133,13 +200,19 @@ namespace ft
         {
             return _comp;
         }
+
         value_compare value_comp() const
         {
             return value_compare(_comp);
         }
-        size_type count(const key_type& k) const
+
+        size_type count(const key_type &k) const
         {
             return _tree.count(k);
+        }
+        redBlackTree< t_node<value_type> , Alloc, key_compare> getTree() const
+        {
+            return _tree;
         }
     private:
         redBlackTree<t_node<value_type>, Alloc, key_compare> _tree;
