@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/28 14:50:53 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/29 20:01:09 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,24 +103,58 @@ namespace ft
 
         vector<T, Allocator> &operator=(const vector<T, Allocator> &rhs)
         {
-            assign(rhs.begin(), rhs.end());
+
+            while (!empty())
+                this->_alloc.destroy(&this->vec[--this->len]);
+            size_type i = 0;
+            size_type newSize = rhs.len - this->len;
+            size_type newCapcity = getNewCapacity(newSize);
+            this->reserve(newCapcity);
+            while (this->len != rhs.len)
+            {
+                this->_alloc.construct(&this->vec[i], rhs[i]);
+                this->len++;
+                i++;
+            }
             return *this;
         }
 
         template <class Iterator>
         void assign(Iterator first, Iterator last,
-                    typename ft::enable_if<!ft::is_integral<Iterator>::value>::type * = 0)
+                    typename ft::enable_if<!ft::is_integral<Iterator>::value
+                    && std::__is_input_iterator<Iterator>::value
+                    && !std::__is_forward_iterator<Iterator>::value>::type * = 0)
         {
             while (!empty())
-                pop_back();
-            insert(begin(), first, last);
+                this->_alloc.destroy(&this->vec[--this->len]);
+            while (first != last)
+                this->push_back(*first++);
+        }
+        template <class Iterator>
+        void assign(Iterator first, Iterator last,
+                    typename ft::enable_if<!ft::is_integral<Iterator>::value && std::__is_forward_iterator<Iterator>::value>::type * = 0)
+        {
+            while (!empty())
+                this->_alloc.destroy(&this->vec[--this->len]);
+            size_type newSize = std::distance(first, last);
+            this->reserve(newSize);
+            while (first != last)
+                this->push_back(*first++);
         }
 
         allocator_type get_allocator() const { return this->_alloc; }
         void assign(size_type n, const T &t)
         {
-            erase(begin(), end());
-            insert(begin(), n, t);
+            while (!empty())
+                this->_alloc.destroy(&this->vec[--this->len]);
+            size_type newSize = n;
+            size_type newCapacity = getNewCapacity(newSize);
+            this->reserve(newCapacity);
+            while (this->len != n)
+            {
+                this->_alloc.construct(&this->vec[this->len], t);
+                this->len++;
+            }
         }
 
         // iterators
@@ -162,10 +196,11 @@ namespace ft
         {
             if (n <= this->_capacity)
                 return;
-            T tmp[this->len];
+            size_type tmpLen = this->len;
+            T *tmp = this->_alloc.allocate(tmpLen);
             for (size_type i = 0; i < this->len; ++i)
             {
-                tmp[i] = this->vec[i];
+                this->_alloc.construct(&tmp[i], this->vec[i]);
                 this->_alloc.destroy(&vec[i]);
             }
             if (this->_capacity > 0 && n <= max_size())
@@ -173,7 +208,11 @@ namespace ft
             this->vec = this->_alloc.allocate(n);
             this->_capacity = n;
             for (size_type i = 0; i < this->len; i++)
+            {
                 this->_alloc.construct(&this->vec[i], tmp[i]);
+                this->_alloc.destroy(&tmp[i]);
+            }
+            this->_alloc.deallocate(tmp, tmpLen);
         }
 
         // element access
@@ -199,13 +238,11 @@ namespace ft
         // modifiers
         void push_back(const T &x)
         {
-            size_type n;
             if (this->len == 0)
                 this->reserve(1);
             else if (this->len + 1 > this->_capacity)
             {
-                n = this->_capacity * 2;
-                this->reserve(n);
+                this->reserve(this->_capacity * 2);
             }
             this->_alloc.construct(&this->vec[this->len], x);
             this->len++;
@@ -220,17 +257,66 @@ namespace ft
 
         void insert(iterator position, size_type n, const T &x)
         {
-            if (position == this->begin())
-                addFront(n, x);
-            else
-                insertAfter(position, n, x);
+            int count = 0;
+            iterator ite = end() + 1;
+            iterator it = begin();
+            while (it != ite)
+            {
+                if (position == it)
+                {
+                    std::cout << "hna " << x << std::endl;
+                    this->reserve(getNewCapacity(n));
+                    for (size_t i = 0; i < this->len; i++)
+                        std::cout << this->vec[i] << " ";
+                    std::cout << "\n";
+                    size_t i = this->len + n - 1;
+                    int save = count;
+                    while (i > this->len)
+                    {
+                        std::cout << "hna 2 ==\n";
+                        std::swap(this->vec[i], this->vec[count]);
+                        i--;
+                        count++;
+                    }
+                    count = save;
+                    while (n)
+                    {
+                        // this->vec[count] = x;
+                        this->_alloc.construct(&this->vec[count], x);
+                        this->len++;
+                        count++;
+                        n--;
+                    }       
+                return ;
+                }
+                count++;
+            }
         }
 
         iterator insert(iterator position, const T &x)
         {
-            difference_type diff = position - this->begin();
-            insert(position, 1, x);
-            return (this->begin() + diff);
+            int n = 0;
+            iterator ite = end() + 1;
+            iterator it = begin();
+            while (it != ite)
+            {
+                if (position == it)
+                {
+                    this->push_back(x);
+                    std::swap(this->vec[n], this->vec[len - 1]);
+                    int i = this->len - 1;
+                    while ((i - 1) > n)
+                    {
+                        std::swap(this->vec[i], this->vec[i - 1]);
+                        i--;
+                    }
+                    it = &this->vec[n];
+                    return it;
+                }
+                n++;
+                it++;
+            }
+            return end();
         }
 
         template <class Iterator>
@@ -249,7 +335,9 @@ namespace ft
         template <class Iterator>
         void insert(iterator position,
                     Iterator first, Iterator last,
-                    typename ft::enable_if<!ft::is_integral<Iterator>::value && !std::__is_input_iterator<Iterator>::value && !std::__is_forward_iterator<Iterator>::value>::type * = 0)
+                    typename ft::enable_if<!ft::is_integral<Iterator>::value &&
+                                           !std::__is_input_iterator<Iterator>::value &&
+                                           !std::__is_forward_iterator<Iterator>::value>::type * = 0)
         {
             long cap = last - first;
             while (first != last)
@@ -263,13 +351,14 @@ namespace ft
 
         iterator erase(iterator position)
         {
-            T tmp[this->len - 1];
-            size_type i = 0;
+            vector tmp;
             iterator it = this->begin();
             while (it != this->end())
             {
                 if (it != position)
-                    tmp[i++] = *it;
+                {
+                    tmp.push_back(*it);
+                }
                 it++;
             }
             this->pop_back();
@@ -323,7 +412,6 @@ namespace ft
             size_type newCapacity = getNewCapacity(n);
             iterator it = this->begin();
             vector tmp;
-            // tmp.reserve(this->len + n);
             while (n--)
                 tmp.push_back(x);
             while (it != this->end())
@@ -335,7 +423,6 @@ namespace ft
                     this->_alloc.destroy(&this->vec[i]);
                 this->_alloc.construct(&this->vec[i], tmp[i]);
             }
-            // this->_capacity = newCapacity;
             this->len = tmp.len;
         }
         void insertAfter(iterator position, size_type n, const T &x)
@@ -345,7 +432,6 @@ namespace ft
             size_type newCapacity = getNewCapacity(n);
             iterator it = this->begin();
             vector tmp;
-            tmp.reserve(this->len + n);
             while (it < position)
                 tmp.push_back(*it++);
             while (n--)

@@ -6,42 +6,34 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/28 21:43:07 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/29 19:59:15 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc.hpp"
-
+#include <unistd.h>
+#include <sys/time.h>
 #include "containers_test/srcs/base.hpp"
 #define TESTED_TYPE int
-// #define TESTED_NAMESPACE std
+
+
 int main(void)
 {
-	const int size = 5;
-	ft::vector<TESTED_TYPE> vct(size);
-	ft::vector<TESTED_TYPE>::reverse_iterator it = vct.rbegin();
-	ft::vector<TESTED_TYPE>::const_reverse_iterator ite = vct.rbegin();	
-	ft::vector<std::string>::iterator _it;
-
-	_it.base();
-	for (int i = 0; i < size; ++i)
-		it[i] = (size - i) * 5;
-
-	it = it + 5;
-	it = 1 + it;
-	it = it - 4;
-	std::cout << *(it += 2) << std::endl;
-	std::cout << *(it -= 1) << std::endl;
-
-	*(it -= 2) = 42;
-	*(it += 2) = 21;
-
-	std::cout << "const_ite +=/-=: " << *(ite += 2) << " | " << *(ite -= 2) << std::endl;
-
-	std::cout << "(it == const_it): " << (ite == it) << std::endl;
-	std::cout << "(const_ite - it): " << (ite - it) << std::endl;
-	std::cout << "(ite + 3 == it): " << (ite + 3 == it) << std::endl;
-
-	// printSize(vct, true);
-	return (0);
+    typedef ft::vector<std::string>::iterator iterator;
+    
+    ft::vector<std::string> vec;
+    // vec.push_back(25);
+    // vec.push_back(15);
+    // vec.push_back(20);
+    vec.insert(vec.begin(), 2, "1tW0KWfXxeFO69tByqcE"); 
+    vec.insert(vec.begin(), 2, "OaxJUSm3nYN9Y8Ela7sS");
+    std::cout << vec.capacity() << " " << vec.size() << std::endl;
+    // vec.insert(vec.begin(), 2, "Mq4RRaeLvSAO0z2ibp8Q");
+    // vec.insert(vec.begin() + 1, 20);
+    iterator it = vec.begin();
+    iterator ite = vec.end();
+    // std::cout << *ret << std::endl;
+    while (it != ite)
+        std::cout << *it++ << std::endl;
+    return (0);
 }

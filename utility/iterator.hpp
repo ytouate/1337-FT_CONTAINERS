@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 16:08:00 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/28 21:38:03 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/29 10:25:41 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ namespace ft
         friend bool operator< (const iterator& a, const iterator& b) { return a._ptr < b._ptr; };  
         friend bool operator>= (const iterator& a, const iterator& b) { return a._ptr >= b._ptr; };
         friend bool operator> (const iterator& a, const iterator& b) { return a._ptr > b._ptr; };     
-        
+        difference_type operator-(iterator const &right)  { return this->_ptr - right._ptr; }
         reference operator[](difference_type n) { return _ptr[n]; }
         iterator(iterator const &obj) { this->_ptr = obj._ptr; }
         iterator operator-(difference_type n)
@@ -53,7 +53,7 @@ namespace ft
             _ptr = oldPtr;
             return temp;
         }
-       
+        
         iterator operator+(difference_type n)
         {
             pointer oldPtr = _ptr;
