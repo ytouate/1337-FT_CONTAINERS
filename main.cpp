@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/29 19:59:15 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/30 15:57:06 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,24 @@
 #include "containers_test/srcs/base.hpp"
 #define TESTED_TYPE int
 
-
 int main(void)
 {
-    typedef ft::vector<std::string>::iterator iterator;
-    
-    ft::vector<std::string> vec;
-    // vec.push_back(25);
-    // vec.push_back(15);
-    // vec.push_back(20);
-    vec.insert(vec.begin(), 2, "1tW0KWfXxeFO69tByqcE"); 
-    vec.insert(vec.begin(), 2, "OaxJUSm3nYN9Y8Ela7sS");
-    std::cout << vec.capacity() << " " << vec.size() << std::endl;
-    // vec.insert(vec.begin(), 2, "Mq4RRaeLvSAO0z2ibp8Q");
-    // vec.insert(vec.begin() + 1, 20);
+    typedef ft::vector<int>::iterator iterator;
+
+    ft::vector<int> vec;
+    vec.push_back(10);
+    vec.push_back(20);
+    vec.push_back(30);
+    vec.push_back(40);
+    vec.push_back(50);
+    vec.push_back(60);
+    vec.push_back(70);
+    vec.push_back(80);
+    vec.push_back(90);
+    vec.erase(vec.begin(), vec.begin() + 10);
     iterator it = vec.begin();
-    iterator ite = vec.end();
-    // std::cout << *ret << std::endl;
-    while (it != ite)
-        std::cout << *it++ << std::endl;
+    for (; it != vec.end(); ++it)
+        std::cout << *it << " ";
+    std::cout << std::endl;
     return (0);
 }

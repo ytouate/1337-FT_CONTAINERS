@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/29 20:01:09 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/30 17:51:38 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,9 +121,7 @@ namespace ft
 
         template <class Iterator>
         void assign(Iterator first, Iterator last,
-                    typename ft::enable_if<!ft::is_integral<Iterator>::value
-                    && std::__is_input_iterator<Iterator>::value
-                    && !std::__is_forward_iterator<Iterator>::value>::type * = 0)
+                    typename ft::enable_if<!ft::is_integral<Iterator>::value && std::__is_input_iterator<Iterator>::value && !std::__is_forward_iterator<Iterator>::value>::type * = 0)
         {
             while (!empty())
                 this->_alloc.destroy(&this->vec[--this->len]);
@@ -194,7 +192,9 @@ namespace ft
 
         void reserve(size_type n)
         {
-            if (n <= this->_capacity)
+            if (n > max_size())
+                this->_alloc.allocate(n);
+            else if (n <= this->_capacity)
                 return;
             size_type tmpLen = this->len;
             T *tmp = this->_alloc.allocate(tmpLen);
@@ -257,45 +257,42 @@ namespace ft
 
         void insert(iterator position, size_type n, const T &x)
         {
-            int count = 0;
+            size_t count = 0;
             iterator ite = end() + 1;
             iterator it = begin();
+            if (n == 0)
+                return;
+            else if (n == 1)
+            {
+                insert(position, x);
+                return;
+            }
+            this->reserve(getNewCapacity(n));
             while (it != ite)
             {
                 if (position == it)
                 {
-                    std::cout << "hna " << x << std::endl;
-                    this->reserve(getNewCapacity(n));
-                    for (size_t i = 0; i < this->len; i++)
-                        std::cout << this->vec[i] << " ";
-                    std::cout << "\n";
-                    size_t i = this->len + n - 1;
-                    int save = count;
-                    while (i > this->len)
-                    {
-                        std::cout << "hna 2 ==\n";
-                        std::swap(this->vec[i], this->vec[count]);
-                        i--;
-                        count++;
-                    }
+                    for (size_t i = 0; i < n; i++)
+                        this->_alloc.construct(&this->vec[this->len++], x);
+                    size_t i = this->len - 1;
+                    size_t save = count;
+                    int nbSpaws = n;
+                    while (nbSpaws-- > 0)
+                        std::swap(this->vec[i--], this->vec[count++]);
                     count = save;
-                    while (n)
-                    {
-                        // this->vec[count] = x;
-                        this->_alloc.construct(&this->vec[count], x);
-                        this->len++;
-                        count++;
-                        n--;
-                    }       
-                return ;
+                    while (n--)
+                        this->vec[count++] = x;
+                    return;
                 }
                 count++;
+                it++;
             }
         }
 
         iterator insert(iterator position, const T &x)
         {
             int n = 0;
+            value_type tmp;
             iterator ite = end() + 1;
             iterator it = begin();
             while (it != ite)
@@ -303,11 +300,15 @@ namespace ft
                 if (position == it)
                 {
                     this->push_back(x);
-                    std::swap(this->vec[n], this->vec[len - 1]);
+                    tmp = vec[n];
+                    vec[n] = vec[len - 1];
+                    vec[len - 1] = tmp;
                     int i = this->len - 1;
                     while ((i - 1) > n)
                     {
-                        std::swap(this->vec[i], this->vec[i - 1]);
+                        tmp = vec[i];
+                        vec[i] = vec[i - 1];
+                        vec[i - 1] = tmp;
                         i--;
                     }
                     it = &this->vec[n];
@@ -324,11 +325,42 @@ namespace ft
                     Iterator first, Iterator last,
                     typename ft::enable_if<!ft::is_integral<Iterator>::value>::type * = 0)
         {
-            while (first != last)
+            vector temp(first, last);
+            size_t count = 0;
+            iterator ite = end() + 1;
+            iterator it = begin();
+            if (temp.size() == 0)
+                return;
+            else if (temp.size() == 1)
             {
-                position = insert(position, *first);
-                first++;
-                position++;
+                insert(position, temp.front());
+                return;
+            }
+            this->reserve(getNewCapacity(temp.size()));
+            while (it != ite)
+            {
+                if (position == it)
+                {
+                    for (size_t i = 0; i < temp.size(); i++)
+                    {
+                        this->_alloc.construct(&this->vec[this->len++], temp[i]);
+                        
+                    }
+                    size_t i = this->len - 1;
+                    size_t save = count;
+                    int nbSpaws = temp.size();
+                    while (nbSpaws-- > 0)
+                        std::swap(this->vec[i--], this->vec[count++]);
+                    count = save;
+                    int n = temp.size();
+                    i = 0;
+                    while (n--)
+                        this->vec[count++] = temp[i++];
+                    temp.clear();
+                    return;
+                }
+                count++;
+                it++;
             }
         }
 
@@ -337,47 +369,108 @@ namespace ft
                     Iterator first, Iterator last,
                     typename ft::enable_if<!ft::is_integral<Iterator>::value &&
                                            !std::__is_input_iterator<Iterator>::value &&
-                                           !std::__is_forward_iterator<Iterator>::value>::type * = 0)
+                                           std::__is_forward_iterator<Iterator>::value>::type * = 0)
         {
-            long cap = last - first;
-            while (first != last)
+
+            vector temp(first, last);
+            size_t count = 0;
+            iterator ite = end();
+            iterator it = begin();
+            if (temp.size() == 0)
+                return;
+            else if (temp.size() == 1)
             {
-                position = insert(position, *first);
-                first++;
-                position++;
+                insert(position, temp.front());
+                return;
             }
-            this->_capacity = cap;
+            this->reserve(getNewCapacity(temp.size()));
+            while (it != ite)
+            {
+                if (position == it)
+                {
+                    for (size_t i = 0; i < temp.size(); i++)
+                    {
+                        // this->push_back(temp[i]);
+                        this->_alloc.construct(&this->vec[this->len++], temp[i]);   
+                    }
+                    size_t i = this->len - 1;
+                    size_t save = count;
+                    int nbSpaws = temp.size();
+                    while (--nbSpaws > 0)
+                        std::swap(this->vec[i--], this->vec[count++]);
+                    count = save;
+                    int n = temp.size();
+                    i = 0;
+                    while (n--)
+                        this->vec[count++] = temp[i++];
+                    temp.clear();
+                    return;
+                }
+                count++;
+                it++;
+            }
         }
 
         iterator erase(iterator position)
         {
-            vector tmp;
+            int count = 0;
+            value_type tmp;
             iterator it = this->begin();
-            while (it != this->end())
+            iterator ite = this->end();
+            while (it != ite)
             {
-                if (it != position)
+                if (it == position)
                 {
-                    tmp.push_back(*it);
+                    this->_alloc.destroy(&this->vec[this->len - 1]);
+                    this->len--;
+                    int nbSwaps = this->len - count;
+                    int save = count;
+                    while (nbSwaps > 0)
+                    {
+                        tmp = vec[count];
+                        vec[count] = this->vec[count + 1];
+                        vec[count + 1] = tmp;
+                        nbSwaps--;
+                        count++;
+                    }
+                    it = &this->vec[save];
+                    return it;
                 }
+                count++;
                 it++;
             }
-            this->pop_back();
-            for (size_type j = 0; j < this->len; j++)
-                this->vec[j] = tmp[j];
             return position;
         }
 
         iterator erase(iterator first, iterator last)
         {
-            difference_type diff = last - first;
-            vector v;
-            v.reserve(this->len - diff);
-
+            difference_type distance = std::distance(first, last);
+            if (distance < 0)
+                return first;
+            int count = 0;
             iterator it = begin();
-            while (diff > 0)
+            iterator ite = end();
+            while (it != ite)
             {
-                first = erase(first);
-                diff--;
+                if (it == first)
+                {
+                    size_type _len = this->len;
+                    for (difference_type i = count; i < (count + distance); i++)
+                        this->_alloc.destroy(&vec[--len]);
+                    size_type j = count + distance;
+                    while (j < _len)
+                    {
+                        value_type tmp = this->vec[j];
+                        this->vec[j] = this->vec[count];
+                        this->vec[count] = tmp;
+                        j++;
+                        count++;
+                    }
+                    // first = &this->vec[count];
+                    return first;
+                }
+                it++;
+                count++;
             }
             return first;
         }
@@ -530,18 +623,7 @@ namespace ft
         const ft::vector<T, Alloc> &lhs,
         const ft::vector<T, Alloc> &rhs)
     {
-        if (lhs.size() > rhs.size())
-            return false;
-        else
-        {
-            size_t i = 0;
-            for (; i < lhs.size(); i++)
-            {
-                if (lhs[i] > rhs[i])
-                    return false;
-            }
-            return true;
-        }
+        return (lhs < rhs or lhs == rhs);
     }
 
     template <class T, class Alloc>
