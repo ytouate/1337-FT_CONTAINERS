@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 16:08:00 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/29 10:25:41 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/31 19:38:45 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ namespace ft
         typedef typename ft::iterator_traits<T *>::reference reference;
         typedef ft::iterator<const T> const_iterator;
         typedef T const &const_reference;
-        operator ft::iterator< const T> () const
+        operator ft::iterator<const T>() const
         {
-            ft::iterator<const T> constThis (this->_ptr);
+            ft::iterator<const T> constThis(this->_ptr);
             return constThis;
         }
         const_reference operator*(void) const { return *_ptr; }
@@ -38,11 +38,11 @@ namespace ft
         iterator(pointer ptr) : _ptr(ptr) {}
         reference const operator*(void) { return *_ptr; }
         pointer operator->(void) const { return _ptr; }
-        friend bool operator<= (const iterator& a, const iterator& b) { return a._ptr <= b._ptr; };
-        friend bool operator< (const iterator& a, const iterator& b) { return a._ptr < b._ptr; };  
-        friend bool operator>= (const iterator& a, const iterator& b) { return a._ptr >= b._ptr; };
-        friend bool operator> (const iterator& a, const iterator& b) { return a._ptr > b._ptr; };     
-        difference_type operator-(iterator const &right)  { return this->_ptr - right._ptr; }
+        friend bool operator<=(const iterator &a, const iterator &b) { return a._ptr <= b._ptr; };
+        friend bool operator<(const iterator &a, const iterator &b) { return a._ptr < b._ptr; };
+        friend bool operator>=(const iterator &a, const iterator &b) { return a._ptr >= b._ptr; };
+        friend bool operator>(const iterator &a, const iterator &b) { return a._ptr > b._ptr; };
+
         reference operator[](difference_type n) { return _ptr[n]; }
         iterator(iterator const &obj) { this->_ptr = obj._ptr; }
         iterator operator-(difference_type n)
@@ -53,7 +53,7 @@ namespace ft
             _ptr = oldPtr;
             return temp;
         }
-        
+
         iterator operator+(difference_type n)
         {
             pointer oldPtr = _ptr;
@@ -73,7 +73,7 @@ namespace ft
             this->_ptr -= n;
             return *this;
         }
-        
+
         iterator operator--(int)
         {
             iterator temp = *this;
@@ -86,21 +86,21 @@ namespace ft
             this->_ptr++;
             return temp;
         }
-        iterator & operator++(void)
+        iterator &operator++(void)
         {
             this->_ptr++;
             return *this;
         }
-        iterator & operator--(void)
+        iterator &operator--(void)
         {
             this->_ptr--;
             return *this;
         }
-        T* base() const
+        T *base() const
         {
             return _ptr;
         }
-        iterator &operator=(iterator const &rhs) 
+        iterator &operator=(iterator const &rhs)
         {
             this->_ptr = rhs._ptr;
             return *this;
@@ -115,15 +115,20 @@ namespace ft
             return temp;
         }
         template <class Iter, class Iter2>
-        friend bool operator != (const Iter &a, const Iter2 &b)
+        friend bool operator!=(const Iter &a, const Iter2 &b)
         {
             return a._ptr != b._ptr;
         }
         template <class Iter, class Iter2>
-        friend bool operator == (const Iter &a, const Iter2 &b)
+        friend bool operator==(const Iter &a, const Iter2 &b)
         {
             return a._ptr == b._ptr;
         }
+        difference_type operator - (const iterator &other) const
+        {
+            return _ptr - other._ptr;
+        }
+
     private:
         T *_ptr;
     };

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/30 21:51:52 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/31 18:39:23 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,35 @@
 #include <unistd.h>
 #include <sys/time.h>
 #include "containers_test/srcs/base.hpp"
+// #define TESTED_TYPE std::string
+
 #define TESTED_TYPE int
 
-int main(void)
+int		main(void)
 {
-    typedef ft::vector<int>::iterator iterator;
-    std::vector<int> v;
-    for (int i = 0; i < 10; i++)
-    {
-        v.push_back(i+1);
-    }
-    ft::vector<int> vec;
-    // vec.insert(vec.begin(), v.begin(), v.end());
-    vec.insert(vec.end(), 10, 99);
-    iterator it = vec.begin();
-    for (; it != vec.end(); ++it)
-        std::cout << *it << " ";
-    std::cout << std::endl;
-    return (0);
+	const int size = 5;
+	TESTED_NAMESPACE::vector<TESTED_TYPE> vct(size);
+	TESTED_NAMESPACE::vector<TESTED_TYPE>::reverse_iterator it = vct.rbegin();
+	TESTED_NAMESPACE::vector<TESTED_TYPE>::const_reverse_iterator ite = vct.rbegin();
+
+	for (int i = 0; i < size; ++i)
+		it[i] = (size - i) * 5;
+
+	it = it + 5;
+	it = 1 + it;
+	it = it - 4;
+	std::cout << *(it += 2) << std::endl;
+	std::cout << *(it -= 1) << std::endl;
+
+	*(it -= 2) = 42;
+	*(it += 2) = 21;
+
+	std::cout << "const_ite +=/-=: " << *(ite += 2) << " | " << *(ite -= 2) << std::endl;
+
+	std::cout << "(it == const_it): " << (ite == it) << std::endl;
+	std::cout << "(const_ite - it): " << (ite - it) << std::endl;
+	std::cout << "(ite + 3 == it): " << (ite + 3 == it) << std::endl;
+
+	// printSize(vct, true);
+	return (0);
 }

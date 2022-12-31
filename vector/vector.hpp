@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/30 22:24:23 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/31 19:38:16 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,7 +274,8 @@ namespace ft
                     this->reserve(getNewCapacity(n));
                     int oldSize = this->len ? this->len - 1 : 0;
                     int newSize = (oldSize + n);
-                    if (this->empty()) goto fill;
+                    if (this->empty())
+                        goto fill;
                     while (oldSize >= count)
                     {
                         if ((size_type)newSize >= this->len)
@@ -282,9 +283,9 @@ namespace ft
                         else
                             this->vec[newSize] = this->vec[oldSize];
                         oldSize--;
-                        newSize--;   
+                        newSize--;
                     }
-                    fill:
+                fill:
                     for (size_t t = count; t < count + n; t++)
                     {
                         if (t < this->len)
@@ -336,9 +337,9 @@ namespace ft
                     typename ft::enable_if<!ft::is_integral<Iterator>::value>::type * = 0)
         {
             vector temp(first, last);
-            size_t count = 0;
             iterator ite = end() + 1;
             iterator it = begin();
+            int count = 0;
             if (temp.size() == 0)
                 return;
             else if (temp.size() == 1)
@@ -346,74 +347,33 @@ namespace ft
                 insert(position, temp.front());
                 return;
             }
-            this->reserve(getNewCapacity(temp.size()));
             while (it != ite)
             {
                 if (position == it)
                 {
-                    for (size_t i = 0; i < temp.size(); i++)
+                    this->reserve(getNewCapacity(temp.size()));
+                    int oldSize = this->len ? this->len - 1 : 0;
+                    int newSize = oldSize + temp.size();
+                    if (this->empty())
+                        goto fill;
+                    while (oldSize >= count)
                     {
-                        this->_alloc.construct(&this->vec[this->len++], temp[i]);
-                        
+                        if ((size_type)newSize >= this->len)
+                            this->_alloc.construct(&this->vec[newSize], this->vec[oldSize]);
+                        else
+                            this->vec[newSize] = this->vec[oldSize];
+                        oldSize--;
+                        newSize--;
                     }
-                    size_t i = this->len - 1;
-                    size_t save = count;
-                    int nbSwaps = temp.size();
-                    while (nbSwaps-- > 0)
-                        std::swap(this->vec[i--], this->vec[count++]);
-                    count = save;
-                    int n = temp.size();
-                    i = 0;
-                    while (n--)
-                        this->vec[count++] = temp[i++];
-                    temp.clear();
-                    return;
-                }
-                count++;
-                it++;
-            }
-        }
-
-        template <class Iterator>
-        void insert(iterator position,
-                    Iterator first, Iterator last,
-                    typename ft::enable_if<!ft::is_integral<Iterator>::value &&
-                                           !std::__is_input_iterator<Iterator>::value &&
-                                           std::__is_forward_iterator<Iterator>::value>::type * = 0)
-        {
-
-            vector temp(first, last);
-            size_t count = 0;
-            iterator ite = end();
-            iterator it = begin();
-            if (temp.size() == 0)
-                return;
-            else if (temp.size() == 1)
-            {
-                insert(position, temp.front());
-                return;
-            }
-            this->reserve(getNewCapacity(temp.size()));
-            while (it != ite)
-            {
-                if (position == it)
-                {
-                    for (size_t i = 0; i < temp.size(); i++)
+                fill:
+                    int idx = 0;
+                    for (size_t t = count; t < count + temp.len; t++)
                     {
-                        // this->push_back(temp[i]);
-                        this->_alloc.construct(&this->vec[this->len++], temp[i]);   
+                        if (t < this->len)
+                            this->_alloc.destroy(&this->vec[t]);
+                        this->_alloc.construct(&this->vec[t], temp[idx++]);
                     }
-                    size_t i = this->len - 1;
-                    size_t save = count;
-                    int nbSwaps = temp.size();
-                    while (--nbSwaps > 0)
-                        std::swap(this->vec[i--], this->vec[count++]);
-                    count = save;
-                    int n = temp.size();
-                    i = 0;
-                    while (n--)
-                        this->vec[count++] = temp[i++];
-                    temp.clear();
+                    this->len += temp.size();
                     return;
                 }
                 count++;
@@ -476,7 +436,6 @@ namespace ft
                         j++;
                         count++;
                     }
-                    // first = &this->vec[count];
                     return first;
                 }
                 it++;
@@ -550,7 +509,7 @@ namespace ft
             }
             this->len = tmp.len;
         }
-        size_type getNewCapacity(size_type n) // n is the number of elements to be added
+        size_type getNewCapacity(size_type n)
         {
             // capacity > this->len + n;
             // capacity < this->len + n;
@@ -587,37 +546,14 @@ namespace ft
     bool operator==(const ft::vector<T, Alloc> &lhs, const ft::vector<T, Alloc> &rhs)
     {
         if (lhs.size() == rhs.size())
-        {
-            size_t i = 0;
-            for (; i < lhs.size(); i++)
-            {
-                if (lhs[i] != rhs[i])
-                    return false;
-            }
-            return true;
-        }
+            return ft::equal(lhs.begin(), lhs.end(), rhs.begin());
         return false;
     }
 
     template <class T, class Alloc>
     bool operator<(const ft::vector<T, Alloc> &lhs, const ft::vector<T, Alloc> &rhs)
     {
-        if (lhs.size() < rhs.size())
-            return true;
-        else if (lhs.size() > rhs.size())
-            return false;
-        else
-        {
-            size_t i = 0;
-            for (; i < lhs.size(); i++)
-            {
-                if (lhs[i] < rhs[i])
-                    return true;
-                else if (lhs[i] < rhs[i])
-                    return false;
-            }
-            return false;
-        }
+        return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
     }
 
     template <class T, class Alloc>
@@ -641,14 +577,14 @@ namespace ft
         const ft::vector<T, Alloc> &lhs,
         const ft::vector<T, Alloc> &rhs)
     {
-        return (!(lhs <= rhs));
+        return !(lhs <= rhs);
     }
     template <class T, class Alloc>
     bool operator>=(
         const ft::vector<T, Alloc> &lhs,
         const ft::vector<T, Alloc> &rhs)
     {
-        return lhs == rhs or lhs > rhs;
+        return !(lhs < rhs);
     }
 
     // specialized algorithms:

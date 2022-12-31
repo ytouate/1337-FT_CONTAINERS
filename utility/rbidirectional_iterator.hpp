@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 14:08:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/27 14:43:27 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/31 19:39:42 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,9 @@ namespace ft
         typedef typename bIter::value_type value_type;
         typedef std::ptrdiff_t difference_type;
         typedef std::bidirectional_iterator_tag iterator_category;
-        r_bidirectional_iterator(bIter x) : _iter(x)
-        {
-        }
+        r_bidirectional_iterator(bIter x) : _iter(x) {}
         template <class U>
-        r_bidirectional_iterator(const r_bidirectional_iterator<U> &u) : _iter(u._iter)
-        {
-        }
+        r_bidirectional_iterator(const r_bidirectional_iterator<U> &u) : _iter(u._iter) {}
         typename value_type::reference operator*(void) const { return *_iter; }
         typename value_type::pointer operator->(void) const { return _iter.operator->(); }
         r_bidirectional_iterator &operator=(r_bidirectional_iterator const &rhs)
@@ -63,6 +59,7 @@ namespace ft
             ++this->_iter;
             return *this;
         }
+
     private:
         bIter _iter;
     };
