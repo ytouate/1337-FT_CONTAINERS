@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/30 17:51:38 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/30 22:24:23 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,7 +257,7 @@ namespace ft
 
         void insert(iterator position, size_type n, const T &x)
         {
-            size_t count = 0;
+            int count = 0;
             iterator ite = end() + 1;
             iterator it = begin();
             if (n == 0)
@@ -267,21 +267,31 @@ namespace ft
                 insert(position, x);
                 return;
             }
-            this->reserve(getNewCapacity(n));
             while (it != ite)
             {
                 if (position == it)
                 {
-                    for (size_t i = 0; i < n; i++)
-                        this->_alloc.construct(&this->vec[this->len++], x);
-                    size_t i = this->len - 1;
-                    size_t save = count;
-                    int nbSpaws = n;
-                    while (nbSpaws-- > 0)
-                        std::swap(this->vec[i--], this->vec[count++]);
-                    count = save;
-                    while (n--)
-                        this->vec[count++] = x;
+                    this->reserve(getNewCapacity(n));
+                    int oldSize = this->len ? this->len - 1 : 0;
+                    int newSize = (oldSize + n);
+                    if (this->empty()) goto fill;
+                    while (oldSize >= count)
+                    {
+                        if ((size_type)newSize >= this->len)
+                            this->_alloc.construct(&this->vec[newSize], this->vec[oldSize]);
+                        else
+                            this->vec[newSize] = this->vec[oldSize];
+                        oldSize--;
+                        newSize--;   
+                    }
+                    fill:
+                    for (size_t t = count; t < count + n; t++)
+                    {
+                        if (t < this->len)
+                            this->_alloc.destroy(&this->vec[t]);
+                        this->_alloc.construct(&this->vec[t], x);
+                    }
+                    this->len += n;
                     return;
                 }
                 count++;
@@ -348,8 +358,8 @@ namespace ft
                     }
                     size_t i = this->len - 1;
                     size_t save = count;
-                    int nbSpaws = temp.size();
-                    while (nbSpaws-- > 0)
+                    int nbSwaps = temp.size();
+                    while (nbSwaps-- > 0)
                         std::swap(this->vec[i--], this->vec[count++]);
                     count = save;
                     int n = temp.size();
@@ -395,8 +405,8 @@ namespace ft
                     }
                     size_t i = this->len - 1;
                     size_t save = count;
-                    int nbSpaws = temp.size();
-                    while (--nbSpaws > 0)
+                    int nbSwaps = temp.size();
+                    while (--nbSwaps > 0)
                         std::swap(this->vec[i--], this->vec[count++]);
                     count = save;
                     int n = temp.size();

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/30 15:57:06 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/30 21:51:52 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,14 @@
 int main(void)
 {
     typedef ft::vector<int>::iterator iterator;
-
+    std::vector<int> v;
+    for (int i = 0; i < 10; i++)
+    {
+        v.push_back(i+1);
+    }
     ft::vector<int> vec;
-    vec.push_back(10);
-    vec.push_back(20);
-    vec.push_back(30);
-    vec.push_back(40);
-    vec.push_back(50);
-    vec.push_back(60);
-    vec.push_back(70);
-    vec.push_back(80);
-    vec.push_back(90);
-    vec.erase(vec.begin(), vec.begin() + 10);
+    // vec.insert(vec.begin(), v.begin(), v.end());
+    vec.insert(vec.end(), 10, 99);
     iterator it = vec.begin();
     for (; it != vec.end(); ++it)
         std::cout << *it << " ";
