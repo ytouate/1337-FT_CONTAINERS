@@ -6,7 +6,7 @@
 #    By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/03 12:47:40 by ytouate           #+#    #+#              #
-#    Updated: 2022/12/29 16:05:04 by ytouate          ###   ########.fr        #
+#    Updated: 2022/12/31 22:24:52 by ytouate          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,7 @@ FILE = \
 
 NAME = CONTAINERS.out
 
-CPPFLAGS = -std=c++98 -Wall -Wextra -Werror #-fsanitize=address -g
-# -Wall -Wextra -Werror 
+CPPFLAGS = -std=c++98 #-Wall -Wextra -Werror #-fsanitize=address -g
 O_FILE = $(FILE:.cpp=.o)
 
 all: $(NAME)

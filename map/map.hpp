@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:16:00 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/28 16:20:48 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/31 23:30:46 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,19 +201,83 @@ namespace ft
             return _comp;
         }
 
+        pair<iterator, bool> insert(const value_type &val)
+        {
+            bool isInserted = !count(val.first);
+            _tree.insert(val);
+            iterator res;
+            res = iterator(_tree.search(val.first));
+            return ft::make_pair(res, isInserted);
+        }
+        mapped_type & at(const key_type &k)
+        {
+            t_node<value_type> *node = _tree.search(k);
+            if (node == NULL)
+                throw std::out_of_range("key not in map");
+            else
+                return node->data.second;
+        }
+        const mapped_type & at(const key_type &k) const
+        {
+            t_node<value_type> *node = _tree.search(k);
+            if (node == NULL)
+                throw std::out_of_range("key not in map");
+            else
+                return node->data.second;
+        }
+        void erase(iterator position)
+        {
+            iterator it = begin();
+            iterator ite = end();
+            while (it != ite)
+            {
+                if (it == position)
+                    _tree.erase(*it);
+                it++;
+            }
+        }
+        void erase(iterator first, iterator last)
+        {
+            (void)first;
+            (void)last;
+            return ;
+        }
+        size_type erase(const key_type &k)
+        {
+            (void)k;
+            return 0;
+        }
+        iterator insert(iterator position, const value_type &val)
+        {
+            (void)position;
+            iterator res;
+            _tree.insert(val);
+            res = iterator(_tree.search(val.first));
+            return res;
+        }
+
         value_compare value_comp() const
         {
             return value_compare(_comp);
         }
-
+        template <class InputIterator>
+        void insert(InputIterator first, InputIterator last)
+        {
+            while (first != last)
+            {
+                _tree.insert(*first);
+                first++;
+            }
+        }
         size_type count(const key_type &k) const
         {
             return _tree.count(k);
         }
-        redBlackTree< t_node<value_type> , Alloc, key_compare> getTree() const
+        redBlackTree<t_node<value_type>, Alloc, key_compare> getTree() const
         {
             return _tree;
         }
+
     private:
         redBlackTree<t_node<value_type>, Alloc, key_compare> _tree;
         allocator_type _alloc;

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/28 16:20:22 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/12/31 23:19:40 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,51 +125,52 @@ namespace ft
             return *this;
         }
 
-        // void erase(const T &key)
-        // {
-        //     value_type *z = search(key);
-        //     if (z == NULL)
-        //         return;
-        //     value_type *y = z;
-        //     value_type *x = NULL;
-        //     bool y_original_color = y == NULL ? BLACK : y->color;
-        //     if (z->leftChild == NULL)
-        //     {
-        //         x = z->rightChild;
-        //         transplant(z, z->rightChild);
-        //     }
-        //     else if (z->rightChild == NULL)
-        //     {
-        //         x = z->leftChild;
-        //         transplant(z, z->leftChild);
-        //     }
-        //     else
-        //     {
-        //         y = leftMostChild(z->rightChild);
-        //         y_original_color = y == NULL ? BLACK : y->color;
-        //         x = y->rightChild;
-        //         if (y->parent == z)
-        //         {
-        //             if (x)
-        //                 x->parent = y;
-        //         }
-        //         else
-        //         {
-        //             transplant(y, y->rightChild);
-        //             y->rightChild = z->rightChild;
-        //             y->rightChild->parent = y;
-        //         }
-        //         transplant(z, y);
-        //         y->leftChild = z->leftChild;
-        //         y->leftChild->parent = y;
-        //         y->color = z->color;
-        //     }
-        //     delete z;
-        //     if (y_original_color == BLACK)
-        //     {
-        //         deleteFixUP(x);
-        //     }
-        // }
+        void erase(const pair_type &val)
+        {
+            value_type *z = search(val.first);
+            if (z == NULL)
+                return;
+            value_type *y = z;
+            value_type *x = NULL;
+            bool y_original_color = y == NULL ? BLACK : y->color;
+            if (z->leftChild == NULL)
+            {
+                x = z->rightChild;
+                transplant(z, z->rightChild);
+            }
+            else if (z->rightChild == NULL)
+            {
+                x = z->leftChild;
+                transplant(z, z->leftChild);
+            }
+            else
+            {
+                y = leftMostChild(z->rightChild);
+                y_original_color = y == NULL ? BLACK : y->color;
+                x = y->rightChild;
+                if (y->parent == z)
+                {
+                    if (x)
+                        x->parent = y;
+                }
+                else
+                {
+                    transplant(y, y->rightChild);
+                    y->rightChild = z->rightChild;
+                    y->rightChild->parent = y;
+                }
+                transplant(z, y);
+                y->leftChild = z->leftChild;
+                y->leftChild->parent = y;
+                y->color = z->color;
+            }
+            delete z;
+            if (y_original_color == BLACK)
+            {
+                deleteFixUP(x);
+            }
+            this->_size--;
+        }
 
         /*
             search method which look for the given key in the tree
@@ -182,7 +183,7 @@ namespace ft
             while (current != NULL)
             {
                 // current->data < key
-                if (_comp(current->data.first, key))
+                if (current->data.first < key)
                     current = current->rightChild;
                 else if (current->data.first > key)
                     current = current->leftChild;
@@ -202,7 +203,7 @@ namespace ft
             return search(k) == NULL ? 0 : 1;
         }
 
-        void insert(const pair_type &key)
+        iterator insert(const pair_type &key)
         {
             value_type *node = makeNode(key);
             if (this->root == NULL)
@@ -210,7 +211,7 @@ namespace ft
                 this->root = node;
                 this->root->color = BLACK;
                 this->_size++;
-                return;
+                return iterator(this->root);
             }
             value_type *prev = NULL;
             value_type *temp = this->root;
@@ -222,7 +223,7 @@ namespace ft
                 else if (node->data == temp->data)
                 {
                     delete node;
-                    return;
+                    return iterator(temp);
                 }
                 else
                     temp = temp->rightChild;
@@ -236,11 +237,12 @@ namespace ft
                 prev->rightChild = node;
             fixViolations(node);
             this->_size++;
+            return iterator(node);
         }
 
         iterator begin()
         {
-            return iterator(leftMostChild());
+            return iterator(leftMostChild(this->root));
         }
 
         iterator end()
@@ -298,11 +300,11 @@ namespace ft
             finds the first node that will be printed if we used
             In Order Traversal on the treee
         */
-        value_type *leftMostChild() const
+        value_type *leftMostChild(value_type *_node) const
         {
-            if (this->root == NULL)
+            if (_node == NULL)
                 return NULL;
-            value_type *_begin = this->root;
+            value_type *_begin = _node;
             while (_begin->leftChild)
                 _begin = _begin->leftChild;
             return _begin;
