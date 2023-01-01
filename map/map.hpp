@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:16:00 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/01 19:27:00 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/01 20:00:22 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,11 +221,15 @@ namespace ft
         {
             iterator it = begin();
             iterator ite = end();
+            iterator temp;
             while (it != ite)
             {
                 if (it == position)
+                {
                     _tree.erase(*it);
-                it++;
+                    return ;
+                }
+                ++it;
             }
         }
         void erase(iterator first, iterator last)

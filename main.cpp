@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/01 19:29:19 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/01 19:59:58 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,28 @@ int main()
     typedef NAMESPACE::pair<int, std::string> pair;
     typedef NAMESPACE::map<int, std::string>::iterator iterator;
     typedef NAMESPACE::map<int, std::string> map;
-    
-    map m;
-    m.insert(NAMESPACE::make_pair(34, "seiurhg8347wo83twerw"));
-    m.insert(NAMESPACE::make_pair(2, "dsghesrzarherheat43"));
-    // m.insert(NAMESPACE::make_pair(9, "awgfawe4t3A4YSDFGAS"));
-    // m.insert(NAMESPACE::make_pair(3, "dzfg45yrthsdfgshju"));
-    // m.insert(NAMESPACE::make_pair(22, "j564wedfshgj6ee5yegrs"));
-    // m.insert(NAMESPACE::make_pair(10, "cfngcvcx56;oiliuee"));
-    iterator ite = m.end();
+    typedef NAMESPACE::vector<pair> vector;
+
+    vector v;
+    for (vector::size_type i = 0; i < 25; ++i)
+        v.push_back(NAMESPACE::make_pair(10 + i, "Hello"));
+    map m(v.begin(), v.end());
+    iterator _it = m.begin();
+    m.erase(_it);
+    _it = m.begin();
+    std::advance(_it, 21);
+    m.erase(_it);
+    _it = m.end();
+    std::advance(_it, -10);
+    m.erase(_it);
+    _it = m.end();
+    std::advance(_it, -3);
+    m.erase(_it);
     iterator it = m.begin();
-    --ite;
-    std::cout << ite->first << std::endl;
+    iterator ite = m.end();
+
+    for (; it != ite; it = m.begin())
+    {
+        m.erase(it);
+    }
 }

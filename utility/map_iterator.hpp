@@ -33,7 +33,7 @@ namespace ft
         map_iterator(map_iterator const &obj)
         {
             this->current = obj.current;
-            // this->root = obj.root;
+            this->root = obj.root;
         }
 
         map_iterator(pointer ptr, pointer _root)
@@ -45,7 +45,7 @@ namespace ft
         map_iterator &operator=(map_iterator const &rhs)
         {
             this->current = rhs.current;
-            // this->root = rhs.root;
+            this->root = rhs.root;
             return *this;
         }
         bool operator==(const map_iterator &a)
@@ -78,7 +78,7 @@ namespace ft
         {
             if (this->current == NULL)
             {
-                this->current = this->getRoot(this->current);
+                this->current = this->root;
                 if (this->current == NULL)
                 {
                     throw std::out_of_range("UnderFlowException");
