@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 10:55:07 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/27 21:24:40 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/01 13:51:09 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,19 @@ namespace ft
             this->current = rhs.current;
             return *this;
         }
-        bool operator==(const bidirectional_iterator &a) { return this->current == a.current; };
-        bool operator!=(const bidirectional_iterator &a) { return this->current != a.current; };
+        bool operator==(const bidirectional_iterator &a)
+        {
+            return this->current == a.current;
+        }
+        bool operator!=(const bidirectional_iterator &a)
+        {
+            return this->current != a.current;
+        }
         typename U::reference operator*(void) const { return *(*current); }
-        typename U::pointer operator->(void) const { return current->operator->(); }
+        typename U::pointer operator->(void) const
+        {
+            return current->operator->();
+        }
 
         bidirectional_iterator operator--(int)
         {
@@ -92,7 +101,7 @@ namespace ft
             return *this;
         }
         inline bidirectional_iterator &operator--(void)
-        {   
+        {
             if (this->current->leftChild)
             {
                 this->current = rightMostDescendant(this->current->leftChild);

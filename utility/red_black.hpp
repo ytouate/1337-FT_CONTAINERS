@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/31 23:19:40 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/01 15:11:52 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ namespace ft
         */
         redBlackTree(const redBlackTree &tree)
         {
-            copyTree(tree.root, &this->root);
+            root = deepCopy(tree.root, nullptr);
             this->_size = tree._size;
         }
 
@@ -120,11 +120,22 @@ namespace ft
         const redBlackTree &operator=(const redBlackTree &rhs)
         {
             this->clear();
-            copyTree(rhs.root, &this->root);
+            root = deepCopy(rhs.root, NULL);
             this->_size = rhs._size;
             return *this;
         }
 
+        value_type *deepCopy(value_type *root, value_type *parent)
+        {
+            if (!root) return NULL;
+            value_type *newRoot = new value_type;
+            newRoot->color = root->color;
+            newRoot->data = root->data;
+            newRoot->parent = parent;
+            newRoot->leftChild = deepCopy(root->leftChild, newRoot);
+            newRoot->rightChild = deepCopy(root->rightChild, newRoot);
+            return newRoot;
+        }
         void erase(const pair_type &val)
         {
             value_type *z = search(val.first);
@@ -289,8 +300,8 @@ namespace ft
             if ((_node) != NULL)
             {
                 clearTree((_node)->leftChild);
-                delete (_node);
                 clearTree((_node)->rightChild);
+                delete (_node);
             }
             this->_size = 0;
         }
@@ -319,22 +330,7 @@ namespace ft
                 _end = _end->rightChild;
             return _end;
         }
-
-        void copyTree(value_type *src, value_type **dst)
-        {
-            if (src == NULL)
-                (*dst) = NULL;
-            else
-            {
-                (*dst) = new value_type;
-                (*dst)->data = src->data;
-                (*dst)->color = src->color;
-                (*dst)->parent = src->parent;
-                copyTree(src->leftChild, &(*dst)->leftChild);
-                copyTree(src->rightChild, &(*dst)->rightChild);
-            }
-        }
-
+        
         value_type *makeNode(const pair_type &key)
         {
             value_type *_new = new value_type;
