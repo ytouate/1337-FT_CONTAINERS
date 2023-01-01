@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:16:00 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/01 15:03:38 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/01 16:23:26 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,13 +203,13 @@ namespace ft
 
         pair<iterator, bool> insert(const value_type &val)
         {
-            bool isInserted = !count(val.first);
-            _tree.insert(val);
             iterator res;
-            res = iterator(_tree.search(val.first));
-            return ft::make_pair(res, isInserted);
+            t_node <value_type> * node = _tree.search(val.first);
+            if (node != NULL)
+                return ft::make_pair(iterator(node), false);
+            return ft::make_pair(_tree.insert(val), true);
         }
-        mapped_type & at(const key_type &k)
+        mapped_type &at(const key_type &k)
         {
             t_node<value_type> *node = _tree.search(k);
             if (node == NULL)
@@ -217,7 +217,7 @@ namespace ft
             else
                 return node->data.second;
         }
-        const mapped_type & at(const key_type &k) const
+        const mapped_type &at(const key_type &k) const
         {
             t_node<value_type> *node = _tree.search(k);
             if (node == NULL)
@@ -238,17 +238,20 @@ namespace ft
         }
         void erase(iterator first, iterator last)
         {
-            (void)first;
-            (void)last;
-            return ;
+            while (first != last)
+                _tree.erase(*first++);
         }
         size_type erase(const key_type &k)
         {
-            (void)k;
-            return 0;
+            t_node<value_type> *node = _tree.search(k);
+            if (node == NULL)
+                return 0;
+            _tree.erase(node->data);
+            return 1;
         }
         iterator insert(iterator position, const value_type &val)
         {
+            
             (void)position;
             iterator res;
             _tree.insert(val);
@@ -283,6 +286,24 @@ namespace ft
         allocator_type _alloc;
         key_compare _comp;
     };
+    template <class Key, class T, class Compare, class Alloc>
+    bool operator==(const map<Key, T, Compare, Alloc> &lhs,
+                    const map<Key, T, Compare, Alloc> &rhs);
+    template <class Key, class T, class Compare, class Alloc>
+    bool operator!=(const map<Key, T, Compare, Alloc> &lhs,
+                    const map<Key, T, Compare, Alloc> &rhs);
+    template <class Key, class T, class Compare, class Alloc>
+    bool operator<(const map<Key, T, Compare, Alloc> &lhs,
+                   const map<Key, T, Compare, Alloc> &rhs);
+    template <class Key, class T, class Compare, class Alloc>
+    bool operator<=(const map<Key, T, Compare, Alloc> &lhs,
+                    const map<Key, T, Compare, Alloc> &rhs);
+    template <class Key, class T, class Compare, class Alloc>
+    bool operator>(const map<Key, T, Compare, Alloc> &lhs,
+                   const map<Key, T, Compare, Alloc> &rhs);
+    template <class Key, class T, class Compare, class Alloc>
+    bool operator>=(const map<Key, T, Compare, Alloc> &lhs,
+                    const map<Key, T, Compare, Alloc> &rhs);
 }
 
 #endif // MAP_HPP
