@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/01 19:21:46 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/01 19:27:50 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ namespace ft
         typedef typename pair_type::second_type _value;
         typedef map_iterator<value_type> iterator;
         typedef typename Allocator::size_type size_type;
-        value_type *getTree() const { return this->root; }
+        value_type *getRoot() const { return this->root; }
 
         /*
             Default Constructor of The Tree which
@@ -227,7 +227,7 @@ namespace ft
                 this->root = node;
                 this->root->color = BLACK;
                 this->_size++;
-                return iterator(this->root);
+                return iterator(this->root, this->root);
             }
             value_type *prev = NULL;
             value_type *temp = this->root;
@@ -239,7 +239,7 @@ namespace ft
                 else if (node->data == temp->data)
                 {
                     delete node;
-                    return iterator(temp);
+                    return iterator(temp, this->root);
                 }
                 else
                     temp = temp->rightChild;
@@ -253,17 +253,17 @@ namespace ft
                 prev->rightChild = node;
             fixViolations(node);
             this->_size++;
-            return iterator(node);
+            return iterator(node, this->root);
         }
 
         iterator begin()
         {
-            return iterator(leftMostChild(this->root));
+            return iterator(leftMostChild(this->root), this->root);
         }
 
         iterator end()
         {
-            return iterator(NULL);
+            return iterator(NULL, this->root);
         }
         /*
             returns whether the tree is empty (the size is 0)
@@ -317,11 +317,11 @@ namespace ft
             return _begin;
         }
 
-        value_type *rightMostChild()
+        value_type *rightMostChild(value_type *node)
         {
-            if (this->root == NULL)
+            if (node == NULL)
                 return NULL;
-            value_type *_end = this->root;
+            value_type *_end = node;
             while (_end->rightChild)
                 _end = _end->rightChild;
             return _end;

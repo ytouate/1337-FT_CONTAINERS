@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/01 18:01:24 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/01 19:29:19 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int main()
     // m.insert(NAMESPACE::make_pair(3, "dzfg45yrthsdfgshju"));
     // m.insert(NAMESPACE::make_pair(22, "j564wedfshgj6ee5yegrs"));
     // m.insert(NAMESPACE::make_pair(10, "cfngcvcx56;oiliuee"));
-    iterator ite = m.begin();
-    iterator it = m.end();
+    iterator ite = m.end();
+    iterator it = m.begin();
+    --ite;
     std::cout << ite->first << std::endl;
 }

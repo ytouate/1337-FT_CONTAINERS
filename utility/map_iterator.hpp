@@ -36,11 +36,11 @@ namespace ft
             // this->root = obj.root;
         }
 
-        map_iterator(pointer ptr)
+        map_iterator(pointer ptr, pointer _root)
         {
             // (void)_root;
             this->current = ptr;
-            // this->root = _root;
+            this->root = _root;
         }
         map_iterator &operator=(map_iterator const &rhs)
         {
@@ -113,7 +113,9 @@ namespace ft
         }
         inline map_iterator &operator--(void)
         {
-            if (this->current->leftChild)
+            if (this->current == NULL)
+                this->current = rightMostDescendant(this->root);
+            else if (this->current->leftChild)
             {
                 this->current = rightMostDescendant(this->current->leftChild);
             }

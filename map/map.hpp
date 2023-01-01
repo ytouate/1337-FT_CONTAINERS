@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:16:00 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/01 19:21:30 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/01 19:27:00 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,7 @@ namespace ft
             iterator res;
             t_node<value_type> *node = _tree.search(val.first);
             if (node != NULL)
-                return ft::make_pair(iterator(node), false);
+                return ft::make_pair(iterator(node, _tree.getRoot()), false);
             return ft::make_pair(_tree.insert(val), true);
         }
         mapped_type &at(const key_type &k)
@@ -241,13 +241,14 @@ namespace ft
             _tree.erase(node->data);
             return 1;
         }
+
         iterator insert(iterator position, const value_type &val)
         {
 
             (void)position;
             iterator res;
             _tree.insert(val);
-            res = iterator(_tree.search(val.first));
+            res = iterator(_tree.search(val.first), _tree.getRoot());
             return res;
         }
 
