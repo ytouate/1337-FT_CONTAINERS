@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/31 19:38:16 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/01 16:39:47 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@
 
 namespace ft
 {
+    template <class U>
+    void ftSwap(U &a, U &b)
+    {
+        U c = a;
+        a = b;
+        b = c;
+    }
     template <class T, class Allocator = std::allocator<T> >
     class vector
     {
@@ -462,13 +469,6 @@ namespace ft
         }
 
     private:
-        template <class U>
-        void ftSwap(U &a, U &b)
-        {
-            U c = a;
-            a = b;
-            b = c;
-        }
         void addFront(size_type n, const T &x)
         {
             size_type newCapacity = getNewCapacity(n);

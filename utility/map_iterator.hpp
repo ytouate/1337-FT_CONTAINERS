@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bidirectional_iterator.hpp                         :+:      :+:    :+:   */
+/*   map_iterator.hpp                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 10:55:07 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/01 13:51:09 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/01 18:01:39 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ class t_node;
 namespace ft
 {
     template <class U>
-    class bidirectional_iterator
+    class map_iterator
     {
 
     public:
@@ -29,19 +29,30 @@ namespace ft
         typedef std::ptrdiff_t difference_type;
         typedef std::bidirectional_iterator_tag iterator_category;
 
-        bidirectional_iterator() : current(NULL) {}
-        bidirectional_iterator(bidirectional_iterator const &obj) : current(obj.current) {}
-        bidirectional_iterator(pointer ptr) : current(ptr) {}
-        bidirectional_iterator &operator=(bidirectional_iterator const &rhs)
+        map_iterator() : current(NULL), root(NULL) {}
+        map_iterator(map_iterator const &obj)
+        {
+            this->current = obj.current;
+            // this->root = obj.root;
+        }
+
+        map_iterator(pointer ptr)
+        {
+            // (void)_root;
+            this->current = ptr;
+            // this->root = _root;
+        }
+        map_iterator &operator=(map_iterator const &rhs)
         {
             this->current = rhs.current;
+            // this->root = rhs.root;
             return *this;
         }
-        bool operator==(const bidirectional_iterator &a)
+        bool operator==(const map_iterator &a)
         {
             return this->current == a.current;
         }
-        bool operator!=(const bidirectional_iterator &a)
+        bool operator!=(const map_iterator &a)
         {
             return this->current != a.current;
         }
@@ -51,19 +62,19 @@ namespace ft
             return current->operator->();
         }
 
-        bidirectional_iterator operator--(int)
+        map_iterator operator--(int)
         {
-            bidirectional_iterator temp = *this;
+            map_iterator temp = *this;
             --(*this);
             return temp;
         }
-        inline bidirectional_iterator operator++(int)
+        inline map_iterator operator++(int)
         {
-            bidirectional_iterator temp(*this);
+            map_iterator temp(*this);
             ++(*this);
             return temp;
         }
-        inline bidirectional_iterator &operator++(void)
+        inline map_iterator &operator++(void)
         {
             if (this->current == NULL)
             {
@@ -100,7 +111,7 @@ namespace ft
             }
             return *this;
         }
-        inline bidirectional_iterator &operator--(void)
+        inline map_iterator &operator--(void)
         {
             if (this->current->leftChild)
             {
@@ -114,7 +125,7 @@ namespace ft
             }
             return *this;
         }
-        ~bidirectional_iterator() {}
+        ~map_iterator() {}
 
     private:
         U *getRoot(U *_node) const
@@ -140,8 +151,9 @@ namespace ft
             return node;
         }
         U *current;
+        U *root;
     };
 
 }
 
-#endif // bidirectional_iterator
+#endif // map_iterator

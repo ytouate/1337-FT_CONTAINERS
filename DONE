@@ -1,1 +1,1 @@
-assignment ctor ctor_copy ctor_range insert insert_range insert_hint clear at erase count erase_key erase_range
+assignment ctor ctor_copy ctor_range insert insert_range insert_hint clear at erase count erase_key erase_range key_comp

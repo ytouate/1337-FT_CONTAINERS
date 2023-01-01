@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/01 15:11:52 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/01 19:21:46 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,7 @@ namespace ft
         typedef typename Allocator::value_type pair_type;
         typedef typename pair_type::first_type _key;
         typedef typename pair_type::second_type _value;
-        typedef bidirectional_iterator<value_type> iterator;
-        typedef r_bidirectional_iterator<iterator> reverse_iterator;
+        typedef map_iterator<value_type> iterator;
         typedef typename Allocator::size_type size_type;
         value_type *getTree() const { return this->root; }
 
@@ -116,7 +115,13 @@ namespace ft
             this->clear();
             _size = 0;
         }
-
+        void swap(redBlackTree &x)
+        {
+            value_type *tmp(*this);
+            *this = x;
+            // this->_size = x._size;
+            x = *tmp;
+        }
         const redBlackTree &operator=(const redBlackTree &rhs)
         {
             this->clear();
@@ -259,15 +264,6 @@ namespace ft
         iterator end()
         {
             return iterator(NULL);
-        }
-
-        reverse_iterator rbegin()
-        {
-            return reverse_iterator(iterator(rightMostChild()));
-        }
-        reverse_iterator rend()
-        {
-            return reverse_iterator(iterator(NULL));
         }
         /*
             returns whether the tree is empty (the size is 0)

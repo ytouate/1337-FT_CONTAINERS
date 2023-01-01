@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:16:00 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/01 16:23:26 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/01 19:21:30 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ namespace ft
               class Alloc = std::allocator<ft::pair<Key, Value> > >
     class map
     {
-
     public:
         typedef Key key_type;
         typedef Value mapped_type;
@@ -34,10 +33,9 @@ namespace ft
         typedef typename Alloc::pointer pointer;
         typedef typename Alloc::const_reference const_reference;
         typedef typename Alloc::const_pointer const_pointer;
-        typedef ft::bidirectional_iterator<t_node<value_type> > iterator;
-        typedef ft::r_bidirectional_iterator<iterator> reverse_iterator;
+        typedef ft::map_iterator<t_node<value_type> > iterator;
 
-        typedef typename ft::bidirectional_iterator<t_node<value_type> >::difference_type difference_type;
+        typedef typename iterator::difference_type difference_type;
         typedef size_t size_type;
 
         class value_compare
@@ -110,21 +108,15 @@ namespace ft
             return _tree.end();
         }
 
-        reverse_iterator rbegin()
-        {
-            return _tree.rbegin();
-        }
-
-        reverse_iterator rend()
-        {
-            return _tree.rend();
-        }
-
         bool empty() const
         {
             return _tree.size() == 0;
         }
 
+        void swap(map &x)
+        {
+            ft::ftSwap(x._tree, x._tree);
+        }
         size_type size() const
         {
             return _tree.size();
@@ -136,7 +128,7 @@ namespace ft
                                        std::numeric_limits<difference_type>::max());
         }
 
-        iterator lower_bound(const key_type &k)
+        iterator lower_bound(const key_type &k) const
         {
             iterator it = begin();
             iterator ite = end();
@@ -204,7 +196,7 @@ namespace ft
         pair<iterator, bool> insert(const value_type &val)
         {
             iterator res;
-            t_node <value_type> * node = _tree.search(val.first);
+            t_node<value_type> *node = _tree.search(val.first);
             if (node != NULL)
                 return ft::make_pair(iterator(node), false);
             return ft::make_pair(_tree.insert(val), true);
@@ -251,7 +243,7 @@ namespace ft
         }
         iterator insert(iterator position, const value_type &val)
         {
-            
+
             (void)position;
             iterator res;
             _tree.insert(val);
@@ -287,8 +279,29 @@ namespace ft
         key_compare _comp;
     };
     template <class Key, class T, class Compare, class Alloc>
+    void swap(map<Key, T, Compare, Alloc> &x, map<Key, T, Compare, Alloc> &y)
+    {
+        x.swap(y);
+    }
+    template <class Key, class T, class Compare, class Alloc>
     bool operator==(const map<Key, T, Compare, Alloc> &lhs,
-                    const map<Key, T, Compare, Alloc> &rhs);
+                    const map<Key, T, Compare, Alloc> &rhs)
+    {
+        if (lhs.size() == rhs.size())
+        {
+            typedef typename ft::map<Key, T, Compare, Alloc>::iterator iterator;
+            iterator it = lhs.begin();
+            iterator ite = lhs.end();
+            iterator _it = rhs.begin();
+            while (it != ite)
+            {
+                if (*it != *_it)
+                    return false;
+                ++it;
+            }
+            return true;
+        }
+    }
     template <class Key, class T, class Compare, class Alloc>
     bool operator!=(const map<Key, T, Compare, Alloc> &lhs,
                     const map<Key, T, Compare, Alloc> &rhs);
