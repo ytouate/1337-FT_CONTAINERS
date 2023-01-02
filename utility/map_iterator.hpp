@@ -18,6 +18,33 @@
 class t_node;
 namespace ft
 {
+    template <class T>
+    struct t_node
+    {
+        typedef T value_type;
+        typedef T &reference;
+        typedef const T &const_reference;
+        typedef T *pointer;
+
+        operator const T() const
+        {
+            return data;
+        }
+        reference operator*()
+        {
+            return data;
+        }
+        pointer operator->()
+        {
+            return &data;
+        }
+
+        bool color;
+        t_node *leftChild;
+        t_node *rightChild;
+        t_node *parent;
+        T data;
+    };
     template <class U>
     class map_iterator
     {
@@ -26,6 +53,7 @@ namespace ft
         typedef U &reference;
         typedef U *pointer;
         typedef U value_type;
+        typedef typename U::value_type pair_type;
         typedef std::ptrdiff_t difference_type;
         typedef std::bidirectional_iterator_tag iterator_category;
 
@@ -38,7 +66,6 @@ namespace ft
 
         map_iterator(pointer ptr, pointer _root)
         {
-            // (void)_root;
             this->current = ptr;
             this->root = _root;
         }

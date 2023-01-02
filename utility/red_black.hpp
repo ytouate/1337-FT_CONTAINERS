@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/01 19:56:55 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/02 17:39:27 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,29 +47,7 @@
 */
 namespace ft
 {
-    template <class T>
-    struct t_node
-    {
-        typedef T value_type;
-        typedef T &reference;
-        typedef const T &const_reference;
-        typedef T *pointer;
-
-        reference operator*()
-        {
-            return data;
-        }
-        pointer operator->()
-        {
-            return &data;
-        }
-
-        bool color;
-        t_node *leftChild;
-        t_node *rightChild;
-        t_node *parent;
-        T data;
-    };
+    
 
     template <
         class Key,
@@ -83,6 +61,7 @@ namespace ft
         typedef typename pair_type::first_type _key;
         typedef typename pair_type::second_type _value;
         typedef map_iterator<value_type> iterator;
+        typedef map_iterator<t_node<const pair_type> > const_iterator;
         typedef typename Allocator::size_type size_type;
         value_type *getRoot() const { return this->root; }
 
@@ -132,7 +111,8 @@ namespace ft
 
         value_type *deepCopy(value_type *root, value_type *parent)
         {
-            if (!root) return NULL;
+            if (!root)
+                return NULL;
             value_type *newRoot = new value_type;
             newRoot->color = root->color;
             newRoot->data = root->data;
@@ -255,12 +235,19 @@ namespace ft
             this->_size++;
             return iterator(node, this->root);
         }
-
+        // operator const_iterator () const 
+        // {
+        //     return ft::map_iterator<t_node<const pair_type> >(this->root, this->root);
+        // }
         iterator begin()
         {
             return iterator(leftMostChild(this->root), this->root);
         }
-
+        const_iterator begin() const
+        {
+            t_node<const pair_type> *node = leftMostChild(this->root);
+            return iterator(node, this->root);
+        }
         iterator end()
         {
             return iterator(NULL, this->root);
@@ -326,7 +313,7 @@ namespace ft
                 _end = _end->rightChild;
             return _end;
         }
-        
+
         value_type *makeNode(const pair_type &key)
         {
             value_type *_new = new value_type;
@@ -353,24 +340,26 @@ namespace ft
                         leftRotate(x->parent);
                         w = x->parent->rightChild;
                     }
-                    if (w->leftChild->color == BLACK and w->rightChild->color == BLACK)
+                    if ((w->leftChild == NULL or w->leftChild->color == BLACK) and
+                        (w->rightChild == NULL or w->rightChild->color == BLACK))
                     {
                         w->color = RED;
                         x = x->parent;
                     }
                     else
                     {
-
-                        if (w->rightChild->color == BLACK)
+                        if (w->rightChild or w->rightChild->color == BLACK)
                         {
-                            w->leftChild->color = BLACK;
+                            if (w->leftChild)
+                                w->leftChild->color = BLACK;
                             w->color = RED;
                             rightRotate(w);
                             w = x->parent->rightChild;
                         }
                         w->color = x->parent->color;
                         x->parent->color = BLACK;
-                        w->rightChild->color = BLACK;
+                        if (w->rightChild)
+                            w->rightChild->color = BLACK;
                         leftRotate(x->parent);
                         x = this->root;
                     }
@@ -378,14 +367,15 @@ namespace ft
                 else
                 {
                     w = x->parent->leftChild;
-                    if (w->color == RED)
+                    if (w and w->color == RED)
                     {
                         w->color = BLACK;
                         x->parent->color = RED;
                         leftRotate(x->parent);
                         w = x->parent->leftChild;
                     }
-                    if (w->rightChild->color == BLACK and w->leftChild->color == BLACK)
+                    if ((w->rightChild == NULL or w->rightChild->color == BLACK) and
+                        (w->leftChild == NULL or w->leftChild->color == BLACK))
                     {
                         w->color = RED;
                         x = x->parent;

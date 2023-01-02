@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:16:00 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/01 20:00:22 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/02 17:42:53 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ namespace ft
         typedef typename Alloc::const_reference const_reference;
         typedef typename Alloc::const_pointer const_pointer;
         typedef ft::map_iterator<t_node<value_type> > iterator;
+        typedef ft::map_iterator<t_node<const value_type> > const_iterator;
 
         typedef typename iterator::difference_type difference_type;
         typedef size_t size_type;
@@ -99,6 +100,10 @@ namespace ft
             return _tree.begin();
         }
 
+        const_iterator begin() const
+        {
+            return _tree.begin();
+        }
         allocator_type get_allocator() const
         {
             return _alloc;
@@ -182,10 +187,7 @@ namespace ft
 
         mapped_type &operator[](const key_type &k)
         {
-            t_node<value_type> *tmp = _tree.search(k);
-            if (tmp == NULL)
-                throw std::invalid_argument("Not found Key");
-            return tmp->data.second;
+            return (*((insert(ft::make_pair(k, mapped_type()))).first)).second;
         }
 
         key_compare key_comp() const
