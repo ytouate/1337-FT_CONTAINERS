@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/03 12:49:49 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/03 16:54:33 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -310,7 +310,7 @@ namespace ft
 
         value_type *makeNode(const pair_type &key) const
         {
-            value_type *_new = new value_type;
+            value_type *_new = new value_type();
             _new->color = RED;
             _new->data = key;
             _new->rightChild = NULL;

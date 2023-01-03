@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 15:31:32 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/27 15:29:19 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/03 15:07:57 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ namespace ft
         pair() : first(), second() {}
 
         template <class U, class V>
-        pair(const pair<U, V> &pr): first(pr.first), second(pr.second) {}
+        pair(const pair<U, V> &pr) : first(pr.first), second(pr.second) {}
 
         pair(const first_type &a, const second_type &b) : first(a), second(b) {}
 
@@ -84,12 +84,11 @@ namespace ft
         return !(lhs < rhs);
     }
 
-    template <class T1, class T2>  void swap (ft::pair<T1,T2>& x, ft::pair<T1,T2>& y) throw()
+    template <class T1, class T2>
+    void swap(ft::pair<T1, T2> &x, ft::pair<T1, T2> &y) throw()
     {
         x.swap(y);
     }
 };
-
-
 
 #endif // PAIR

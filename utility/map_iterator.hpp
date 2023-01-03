@@ -26,15 +26,28 @@ namespace ft
         typedef const T &const_reference;
         typedef T *pointer;
 
-        operator const T() const
-        {
-            return data;
-        }
+        // operator const t_node<const T> *() const
+        // {
+        //     const t_node<const T> *_new = new t_node(*this->current);
+        //     return _new;
+        // }
+        // t_node(const t_node &x)
+        // {
+        //     this->color = x.color;
+        //     this->data = x.data;
+        //     this->leftChild = x.leftChild;
+        //     this->parent = x.parent;
+        //     this->rightChild = x.rightChild;
+        // }
         reference operator*()
         {
             return data;
         }
         pointer operator->()
+        {
+            return &data;
+        }
+        const pointer operator->() const
         {
             return &data;
         }
@@ -57,6 +70,20 @@ namespace ft
         typedef std::ptrdiff_t difference_type;
         typedef std::bidirectional_iterator_tag iterator_category;
 
+        /*
+            conversion operator for the const_iterator;
+        */
+        template <class V>
+        void setCurrent(V *_current)
+        {
+            this->current = _current;
+        }
+        operator map_iterator<const t_node<const pair_type> >() const
+        {
+            map_iterator<const t_node<const pair_type> > it;
+            it.setCurrent(this->current);
+            return it;
+        }
         map_iterator() : current(NULL), root(NULL) {}
         map_iterator(map_iterator const &obj)
         {
@@ -84,11 +111,14 @@ namespace ft
             return this->current != a.current;
         }
         typename U::reference operator*(void) const { return *(*current); }
-        typename U::pointer operator->(void) const
+        typename U::pointer operator->(void)
         {
             return current->operator->();
         }
-
+        const typename U::pointer operator->(void) const
+        {
+            return current->operator->();
+        }
         map_iterator operator--(int)
         {
             map_iterator temp = *this;

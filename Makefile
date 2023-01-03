@@ -6,7 +6,7 @@
 #    By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/03 12:47:40 by ytouate           #+#    #+#              #
-#    Updated: 2023/01/02 14:22:52 by ytouate          ###   ########.fr        #
+#    Updated: 2023/01/03 14:14:08 by ytouate          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ FILE = \
 
 NAME = CONTAINERS.out
 
-CPPFLAGS = -std=c++98 -Wall -Wextra -Werror 
+CPPFLAGS = -std=c++98
 O_FILE = $(FILE:.cpp=.o)
 
 all: $(NAME)

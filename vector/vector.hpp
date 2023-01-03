@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/01 16:39:47 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/03 14:12:44 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ namespace ft
 
         template <class InputIterator>
         vector(InputIterator first, InputIterator last, const Allocator &alloc = Allocator(),
-               typename ft::enable_if<std::__is_input_iterator<InputIterator>::value && !std::__is_forward_iterator<InputIterator>::value && !ft::is_integral<InputIterator>::value>::type * = 0)
+               typename ft::enable_if<std::__is_input_iterator<InputIterator>::value &&
+                                      !std::__is_forward_iterator<InputIterator>::value &&
+                                      !ft::is_integral<InputIterator>::value>::type * = 0)
         {
             this->_alloc = alloc;
             this->len = 0;
@@ -75,7 +77,8 @@ namespace ft
 
         template <class InputIterator>
         vector(InputIterator first, InputIterator last, const Allocator &alloc = Allocator(),
-               typename ft::enable_if<!ft::is_integral<InputIterator>::value && std::__is_forward_iterator<InputIterator>::value>::type * = 0)
+               typename ft::enable_if<!ft::is_integral<InputIterator>::value &&
+                                      std::__is_forward_iterator<InputIterator>::value>::type * = 0)
         {
             difference_type diff = std::distance(first, last);
             this->_alloc = alloc;
@@ -128,7 +131,9 @@ namespace ft
 
         template <class Iterator>
         void assign(Iterator first, Iterator last,
-                    typename ft::enable_if<!ft::is_integral<Iterator>::value && std::__is_input_iterator<Iterator>::value && !std::__is_forward_iterator<Iterator>::value>::type * = 0)
+                    typename ft::enable_if<!ft::is_integral<Iterator>::value &&
+                                           std::__is_input_iterator<Iterator>::value &&
+                                           !std::__is_forward_iterator<Iterator>::value>::type * = 0)
         {
             while (!empty())
                 this->_alloc.destroy(&this->vec[--this->len]);
@@ -137,7 +142,8 @@ namespace ft
         }
         template <class Iterator>
         void assign(Iterator first, Iterator last,
-                    typename ft::enable_if<!ft::is_integral<Iterator>::value && std::__is_forward_iterator<Iterator>::value>::type * = 0)
+                    typename ft::enable_if<!ft::is_integral<Iterator>::value &&
+                                           std::__is_forward_iterator<Iterator>::value>::type * = 0)
         {
             while (!empty())
                 this->_alloc.destroy(&this->vec[--this->len]);
