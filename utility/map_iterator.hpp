@@ -26,19 +26,6 @@ namespace ft
         typedef const T &const_reference;
         typedef T *pointer;
 
-        // operator const t_node<const T> *() const
-        // {
-        //     const t_node<const T> *_new = new t_node(*this->current);
-        //     return _new;
-        // }
-        // t_node(const t_node &x)
-        // {
-        //     this->color = x.color;
-        //     this->data = x.data;
-        //     this->leftChild = x.leftChild;
-        //     this->parent = x.parent;
-        //     this->rightChild = x.rightChild;
-        // }
         reference operator*()
         {
             return data;
@@ -133,28 +120,20 @@ namespace ft
         }
         inline map_iterator &operator++(void)
         {
-            if (this->current == NULL)
+            if (this->current->rightChild != NULL)
             {
-                this->current = this->root;
+                this->current = this->current->rightChild;
                 this->current = leftMostDescendant(this->current);
             }
             else
             {
-                if (this->current->rightChild != NULL)
+                U *p = this->current->parent;
+                while (p != NULL and this->current == p->rightChild)
                 {
-                    this->current = this->current->rightChild;
-                    this->current = leftMostDescendant(this->current);
-                }
-                else
-                {
-                    U *p = this->current->parent;
-                    while (p != NULL and this->current == p->rightChild)
-                    {
-                        this->current = p;
-                        p = p->parent;
-                    }
                     this->current = p;
+                    p = p->parent;
                 }
+                this->current = p;
             }
             return *this;
         }

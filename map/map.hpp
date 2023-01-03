@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:16:00 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/03 16:53:48 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/03 21:11:14 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ namespace ft
     template <class Key,
               class Value,
               class Compare = std::less<Key>,
-              class Alloc = std::allocator<ft::pair<Key, Value> > >
+              class Alloc = std::allocator<ft::pair<const Key, Value> > >
     class map
     {
     public:
@@ -28,7 +28,7 @@ namespace ft
         typedef Value mapped_type;
         typedef Compare key_compare;
         typedef Alloc allocator_type;
-        typedef ft::pair<Key, Value> value_type;
+        typedef ft::pair<const Key, Value> value_type;
         typedef typename Alloc::reference reference;
         typedef typename Alloc::pointer pointer;
         typedef typename Alloc::const_reference const_reference;
@@ -236,6 +236,8 @@ namespace ft
         }
         void erase(iterator first, iterator last)
         {
+            if (first == begin() and last == end())
+                return clear();
             while (first != last)
                 _tree.erase(*first++);
         }
