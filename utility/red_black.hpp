@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/02 17:39:27 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/03 12:49:49 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@
 */
 namespace ft
 {
-    
 
     template <
         class Key,
@@ -98,7 +97,6 @@ namespace ft
         {
             value_type *tmp(*this);
             *this = x;
-            // this->_size = x._size;
             x = *tmp;
         }
         const redBlackTree &operator=(const redBlackTree &rhs)
@@ -109,18 +107,6 @@ namespace ft
             return *this;
         }
 
-        value_type *deepCopy(value_type *root, value_type *parent)
-        {
-            if (!root)
-                return NULL;
-            value_type *newRoot = new value_type;
-            newRoot->color = root->color;
-            newRoot->data = root->data;
-            newRoot->parent = parent;
-            newRoot->leftChild = deepCopy(root->leftChild, newRoot);
-            newRoot->rightChild = deepCopy(root->rightChild, newRoot);
-            return newRoot;
-        }
         void erase(const pair_type &val)
         {
             value_type *z = search(val.first);
@@ -178,13 +164,12 @@ namespace ft
             value_type *current = this->root;
             while (current != NULL)
             {
-                // current->data < key
-                if (current->data.first < key)
+                if (_comp(current->data.first, key))
                     current = current->rightChild;
-                else if (current->data.first > key)
-                    current = current->leftChild;
-                else
+                else if (current->data.first == key)
                     return current;
+                else
+                    current = current->leftChild;
             }
             return NULL;
         }
@@ -214,7 +199,7 @@ namespace ft
             while (temp != NULL)
             {
                 prev = temp;
-                if (node->data < temp->data)
+                if (_comp(node->data.first, temp->data.first))
                     temp = temp->leftChild;
                 else if (node->data == temp->data)
                 {
@@ -227,7 +212,7 @@ namespace ft
             node->parent = prev;
             if (prev == NULL)
                 this->root = node;
-            else if (node->data < prev->data)
+            else if (_comp(node->data.first, prev->data.first))
                 prev->leftChild = node;
             else
                 prev->rightChild = node;
@@ -235,10 +220,7 @@ namespace ft
             this->_size++;
             return iterator(node, this->root);
         }
-        // operator const_iterator () const 
-        // {
-        //     return ft::map_iterator<t_node<const pair_type> >(this->root, this->root);
-        // }
+
         iterator begin()
         {
             return iterator(leftMostChild(this->root), this->root);
@@ -275,6 +257,8 @@ namespace ft
             this->_size = 0;
             this->root = NULL;
         }
+
+    private:
         /*
             loops throw the entire tree and calls delete on every node and set NULL to it;
         */
@@ -288,8 +272,18 @@ namespace ft
             }
             this->_size = 0;
         }
-
-    private:
+        value_type *deepCopy(value_type *root, value_type *parent)
+        {
+            if (!root)
+                return NULL;
+            value_type *newRoot = new value_type;
+            newRoot->color = root->color;
+            newRoot->data = root->data;
+            newRoot->parent = parent;
+            newRoot->leftChild = deepCopy(root->leftChild, newRoot);
+            newRoot->rightChild = deepCopy(root->rightChild, newRoot);
+            return newRoot;
+        }
         /*
             finds the first node that will be printed if we used
             In Order Traversal on the treee
@@ -314,7 +308,7 @@ namespace ft
             return _end;
         }
 
-        value_type *makeNode(const pair_type &key)
+        value_type *makeNode(const pair_type &key) const
         {
             value_type *_new = new value_type;
             _new->color = RED;

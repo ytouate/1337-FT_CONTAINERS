@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/02 17:44:47 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/03 12:39:46 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int main()
         v.push_back(NAMESPACE::make_pair(10 + i, "Hello"));
     map m(v.begin(), v.end());
     iterator it = m.begin();
+    m.insert(ft::make_pair(43, "hello"));
     // const_iterator cit = m.begin();
     while (!m.empty())
     {

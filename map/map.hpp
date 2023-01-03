@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:16:00 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/02 17:42:53 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/03 12:51:26 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ namespace ft
             iterator ite = end();
             while (it != ite)
             {
-                if (it->first > k)
+                if (!_comp(it->first, k))
                     return it;
                 ++it;
             }

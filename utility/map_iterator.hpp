@@ -106,24 +106,14 @@ namespace ft
             if (this->current == NULL)
             {
                 this->current = this->root;
-                if (this->current == NULL)
-                {
-                    throw std::out_of_range("UnderFlowException");
-                }
-                while (this->current->leftChild != NULL)
-                {
-                    this->current = this->current->leftChild;
-                }
+                this->current = leftMostDescendant(this->current);
             }
             else
             {
                 if (this->current->rightChild != NULL)
                 {
                     this->current = this->current->rightChild;
-                    while (this->current->leftChild != NULL)
-                    {
-                        this->current = this->current->leftChild;
-                    }
+                    this->current = leftMostDescendant(this->current);
                 }
                 else
                 {
@@ -157,16 +147,10 @@ namespace ft
         ~map_iterator() {}
 
     private:
-        U *getRoot(U *_node) const
-        {
-            while (_node->parent)
-            {
-                _node = _node->parent;
-            }
-            return _node;
-        }
         U *leftMostDescendant(U *node)
         {
+            if (node == NULL)
+                return NULL;
             while (node->leftChild)
                 node = node->leftChild;
             return node;
