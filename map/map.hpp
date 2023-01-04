@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:16:00 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/04 19:18:30 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/04 19:43:30 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ namespace ft
         typedef typename Alloc::pointer pointer;
         typedef typename Alloc::const_reference const_reference;
         typedef typename Alloc::const_pointer const_pointer;
-        typedef ft::map_iterator<value_type, allocator_type>  iterator;
-        typedef ft::map_iterator<value_type, allocator_type>  const_iterator;
+        typedef ft::map_iterator<value_type, allocator_type> iterator;
+        typedef ft::map_iterator<value_type, allocator_type> const_iterator;
 
         typedef typename iterator::difference_type difference_type;
         typedef size_t size_type;
@@ -112,7 +112,7 @@ namespace ft
         {
             return _tree.end();
         }
-    
+
         allocator_type get_allocator() const
         {
             return _alloc;
@@ -165,6 +165,18 @@ namespace ft
         }
 
         iterator find(const key_type &k)
+        {
+            iterator it = begin();
+            iterator ite = end();
+            while (it != ite)
+            {
+                if (it->first == k)
+                    return it;
+                ++it;
+            }
+            return ite;
+        }
+        iterator find(const key_type &k) const
         {
             iterator it = begin();
             iterator ite = end();
@@ -234,7 +246,7 @@ namespace ft
                 if (it == position)
                 {
                     _tree.erase(*it);
-                    return ;
+                    return;
                 }
                 ++it;
             }
@@ -317,7 +329,7 @@ namespace ft
     bool operator<(const map<Key, T, Compare, Alloc> &lhs,
                    const map<Key, T, Compare, Alloc> &rhs)
     {
-        return ft::lexicographical_compare(lhs.begin(),lhs.end(), rhs.begin(), rhs.end() );
+        return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
     }
     template <class Key, class T, class Compare, class Alloc>
     bool operator<=(const map<Key, T, Compare, Alloc> &lhs,
