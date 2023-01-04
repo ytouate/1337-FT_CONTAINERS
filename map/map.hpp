@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:16:00 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/03 21:11:14 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/04 15:59:41 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ namespace ft
         typedef typename Alloc::pointer pointer;
         typedef typename Alloc::const_reference const_reference;
         typedef typename Alloc::const_pointer const_pointer;
-        typedef ft::map_iterator<t_node<value_type> > iterator;
-        typedef ft::map_iterator<t_node<const value_type> > const_iterator;
+        typedef ft::map_iterator<value_type, allocator_type>  iterator;
+        typedef ft::map_iterator<const value_type, allocator_type>  const_iterator;
 
         typedef typename iterator::difference_type difference_type;
         typedef size_t size_type;
@@ -198,14 +198,14 @@ namespace ft
         pair<iterator, bool> insert(const value_type &val)
         {
             iterator res;
-            t_node<value_type> *node = _tree.search(val.first);
+            t_node<value_type, allocator_type> *node = _tree.search(val.first);
             if (node != NULL)
                 return ft::make_pair(iterator(node, _tree.getRoot()), false);
             return ft::make_pair(_tree.insert(val), true);
         }
         mapped_type &at(const key_type &k)
         {
-            t_node<value_type> *node = _tree.search(k);
+            t_node<value_type, allocator_type> *node = _tree.search(k);
             if (node == NULL)
                 throw std::out_of_range("key not in map");
             else
@@ -213,7 +213,7 @@ namespace ft
         }
         const mapped_type &at(const key_type &k) const
         {
-            t_node<value_type> *node = _tree.search(k);
+            t_node<value_type, allocator_type> *node = _tree.search(k);
             if (node == NULL)
                 throw std::out_of_range("key not in map");
             else
@@ -243,7 +243,7 @@ namespace ft
         }
         size_type erase(const key_type &k)
         {
-            t_node<value_type> *node = _tree.search(k);
+            t_node<value_type, allocator_type> *node = _tree.search(k);
             if (node == NULL)
                 return 0;
             _tree.erase(node->data);
@@ -277,13 +277,13 @@ namespace ft
         {
             return _tree.count(k);
         }
-        redBlackTree<t_node<value_type>, Alloc, key_compare> getTree() const
+        redBlackTree<t_node<value_type, allocator_type>, Alloc, key_compare> getTree() const
         {
             return _tree;
         }
 
     private:
-        redBlackTree<t_node<value_type>, Alloc, key_compare> _tree;
+        redBlackTree<t_node<value_type, allocator_type>, Alloc, key_compare> _tree;
         allocator_type _alloc;
         key_compare _comp;
     };

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/03 16:54:33 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/04 16:05:27 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,7 @@ namespace ft
         typedef typename Allocator::value_type pair_type;
         typedef typename pair_type::first_type _key;
         typedef typename pair_type::second_type _value;
-        typedef map_iterator<value_type> iterator;
-        typedef map_iterator<t_node<const pair_type> > const_iterator;
+        typedef map_iterator<typename value_type::value_type> iterator;
         typedef typename Allocator::size_type size_type;
         value_type *getRoot() const { return this->root; }
 
@@ -225,11 +224,7 @@ namespace ft
         {
             return iterator(leftMostChild(this->root), this->root);
         }
-        const_iterator begin() const
-        {
-            t_node<const pair_type> *node = leftMostChild(this->root);
-            return iterator(node, this->root);
-        }
+
         iterator end()
         {
             return iterator(NULL, this->root);

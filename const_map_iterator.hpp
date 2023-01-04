@@ -1,106 +1,77 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_iterator.hpp                         :+:      :+:    :+:   */
+/*   const_const_map_iterator.hpp                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/20 10:55:07 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/01 18:01:39 by ytouate          ###   ########.fr       */
+/*   Created: 2023/01/04 10:51:44 by ytouate           #+#    #+#             */
+/*   Updated: 2023/01/04 10:51:47 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#if !defined(BIDIRECTIONA_ITERATOR_HPP)
-#define BIDIRECTIONA_ITERATOR_HPP
-
-#include "../inc.hpp"
-
-class t_node;
-namespace ft
-{
-    template <class T, class Allocator = std::allocator<T> >
-    struct t_node
-    {
-        typedef T value_type;
-        typedef T &reference;
-        typedef const T &const_reference;
-        typedef T *pointer;
-
-        reference operator*()
-        {
-            return data;
-        }
-        pointer operator->()
-        {
-            return &data;
-        }
-        const pointer operator->() const
-        {
-            return &data;
-        }
-
-        bool color;
-        t_node<T, Allocator> *leftChild;
-        t_node<T, Allocator> *rightChild;
-        t_node<T, Allocator> *parent;
-        T data;
-    };
-    template <class T, class Allocator = std::allocator<T> >
-    class map_iterator
+template <class Pair>
+    class const_map_iterator
     {
 
     public:
-        typedef t_node<T> *treeNode;
-        typedef T &reference;
-        typedef T *pointer;
-        typedef T value_type;
+        typedef t_node<Pair> U;
+        typedef U &reference;
+        typedef U *pointer;
+        typedef U value_type;
+        typedef typename U::value_type pair_type;
         typedef std::ptrdiff_t difference_type;
         typedef std::bidirectional_iterator_tag iterator_category;
 
-        map_iterator() : current(NULL), root(NULL) {}
-        map_iterator(map_iterator const &obj)
+        const_map_iterator() : current(NULL), root(NULL) {}
+        const_map_iterator(const_map_iterator const &obj): current(obj.current), root(obj.root)
         {
-            this->current = obj.current;
-            this->root = obj.root;
         }
 
-        map_iterator(treeNode ptr, treeNode _root)
+        const_map_iterator(pointer ptr, pointer _root) : current(ptr), root(_root)
         {
-            this->current = ptr;
-            this->root = _root;
         }
-        map_iterator &operator=(map_iterator const &rhs)
+        const_map_iterator(const t_node<const Pair> *ptr, const t_node<const Pair> * _root)
+            : current(ptr), root(_root)
+        {
+
+        }
+        const_map_iterator &operator=(const_map_iterator const &rhs)
         {
             this->current = rhs.current;
             this->root = rhs.root;
             return *this;
         }
-        bool operator==(const map_iterator &a)
+        bool operator==(const const_map_iterator &a)
         {
             return this->current == a.current;
         }
-        bool operator!=(const map_iterator &a)
+        bool operator!=(const const_map_iterator &a)
         {
             return this->current != a.current;
         }
-        typename pair_type * operator*(void) const { return *(*current); }
-        const pair_type * operator->(void) const
+        typename U::reference operator*(void) const { return *(*current); }
+        typename U::pointer operator->()
         {
             return current->operator->();
         }
-        map_iterator operator--(int)
+        const typename U::pointer operator->(void) const
         {
-            map_iterator temp = *this;
+            return current->operator->();
+        }
+        const_map_iterator operator--(int)
+        {
+            const_map_iterator temp = *this;
             --(*this);
             return temp;
         }
-        inline map_iterator operator++(int)
+        inline const_map_iterator operator++(int)
         {
-            map_iterator temp(*this);
+            const_map_iterator temp(*this);
             ++(*this);
             return temp;
         }
-        inline map_iterator &operator++(void)
+        inline const_map_iterator &operator++(void)
         {
             if (this->current->rightChild != NULL)
             {
@@ -109,7 +80,7 @@ namespace ft
             }
             else
             {
-                treeNode p = this->current->parent;
+                pointer p = this->current->parent;
                 while (p != NULL and this->current == p->rightChild)
                 {
                     this->current = p;
@@ -119,7 +90,7 @@ namespace ft
             }
             return *this;
         }
-        inline map_iterator &operator--(void)
+        inline const_map_iterator &operator--(void)
         {
             if (this->current == NULL)
                 this->current = rightMostDescendant(this->root);
@@ -135,10 +106,10 @@ namespace ft
             }
             return *this;
         }
-        ~map_iterator() {}
+        ~const_map_iterator() {}
 
     private:
-        treeNode leftMostDescendant(treeNode node)
+        pointer leftMostDescendant(pointer node)
         {
             if (node == NULL)
                 return NULL;
@@ -146,7 +117,7 @@ namespace ft
                 node = node->leftChild;
             return node;
         }
-        treeNode rightMostDescendant(treeNode node)
+        pointer rightMostDescendant(pointer node)
         {
             if (node == NULL)
                 return NULL;
@@ -154,10 +125,6 @@ namespace ft
                 node = node->rightChild;
             return node;
         }
-        treeNode current;
-        treeNode root;
+        pointer current;
+        pointer root;
     };
-
-}
-
-#endif // map_iterator
