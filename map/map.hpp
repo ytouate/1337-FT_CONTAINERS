@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:16:00 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/04 15:59:41 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/04 19:18:30 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ namespace ft
         typedef typename Alloc::const_reference const_reference;
         typedef typename Alloc::const_pointer const_pointer;
         typedef ft::map_iterator<value_type, allocator_type>  iterator;
-        typedef ft::map_iterator<const value_type, allocator_type>  const_iterator;
+        typedef ft::map_iterator<value_type, allocator_type>  const_iterator;
 
         typedef typename iterator::difference_type difference_type;
         typedef size_t size_type;
@@ -99,18 +99,23 @@ namespace ft
         {
             return _tree.begin();
         }
+        iterator end()
+        {
+            return _tree.end();
+        }
 
         const_iterator begin() const
         {
             return _tree.begin();
         }
+        const_iterator end() const
+        {
+            return _tree.end();
+        }
+    
         allocator_type get_allocator() const
         {
             return _alloc;
-        }
-        iterator end()
-        {
-            return _tree.end();
         }
 
         bool empty() const
@@ -172,13 +177,13 @@ namespace ft
             return ite;
         }
 
-        iterator upper_bound(const key_type &k)
+        iterator upper_bound(const key_type &k) const
         {
             iterator it = begin();
             iterator ite = end();
             while (it != ite)
             {
-                if (!_comp(it->first, k))
+                if (!_comp(it->first, k) and it->first != k)
                     return it;
                 ++it;
             }
@@ -277,13 +282,13 @@ namespace ft
         {
             return _tree.count(k);
         }
-        redBlackTree<t_node<value_type, allocator_type>, Alloc, key_compare> getTree() const
+        redBlackTree<value_type, allocator_type, key_compare> getTree() const
         {
             return _tree;
         }
 
     private:
-        redBlackTree<t_node<value_type, allocator_type>, Alloc, key_compare> _tree;
+        redBlackTree<value_type, allocator_type, key_compare> _tree;
         allocator_type _alloc;
         key_compare _comp;
     };
@@ -298,34 +303,40 @@ namespace ft
     {
         if (lhs.size() == rhs.size())
         {
-            typedef typename ft::map<Key, T, Compare, Alloc>::iterator iterator;
-            iterator it = lhs.begin();
-            iterator ite = lhs.end();
-            iterator _it = rhs.begin();
-            while (it != ite)
-            {
-                if (*it != *_it)
-                    return false;
-                ++it;
-            }
-            return true;
+            return ft::equal(lhs.begin(), lhs.end(), rhs.begin());
         }
+        return false;
     }
     template <class Key, class T, class Compare, class Alloc>
     bool operator!=(const map<Key, T, Compare, Alloc> &lhs,
-                    const map<Key, T, Compare, Alloc> &rhs);
+                    const map<Key, T, Compare, Alloc> &rhs)
+    {
+        return !(lhs == rhs);
+    }
     template <class Key, class T, class Compare, class Alloc>
     bool operator<(const map<Key, T, Compare, Alloc> &lhs,
-                   const map<Key, T, Compare, Alloc> &rhs);
+                   const map<Key, T, Compare, Alloc> &rhs)
+    {
+        return ft::lexicographical_compare(lhs.begin(),lhs.end(), rhs.begin(), rhs.end() );
+    }
     template <class Key, class T, class Compare, class Alloc>
     bool operator<=(const map<Key, T, Compare, Alloc> &lhs,
-                    const map<Key, T, Compare, Alloc> &rhs);
+                    const map<Key, T, Compare, Alloc> &rhs)
+    {
+        return !(rhs < lhs);
+    }
     template <class Key, class T, class Compare, class Alloc>
     bool operator>(const map<Key, T, Compare, Alloc> &lhs,
-                   const map<Key, T, Compare, Alloc> &rhs);
+                   const map<Key, T, Compare, Alloc> &rhs)
+    {
+        return rhs < lhs;
+    }
     template <class Key, class T, class Compare, class Alloc>
     bool operator>=(const map<Key, T, Compare, Alloc> &lhs,
-                    const map<Key, T, Compare, Alloc> &rhs);
+                    const map<Key, T, Compare, Alloc> &rhs)
+    {
+        return !(lhs < rhs);
+    }
 }
 
 #endif // MAP_HPP

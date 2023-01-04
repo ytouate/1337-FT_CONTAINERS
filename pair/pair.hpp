@@ -6,15 +6,15 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 15:31:32 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/03 21:03:20 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/04 18:15:03 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #if !defined(PAIR)
 #define PAIR
 
-#include "../inc.hpp"
-
+// #include "../inc.hpp"
+#include <iostream>
 namespace ft
 {
     template <class T, class T2>

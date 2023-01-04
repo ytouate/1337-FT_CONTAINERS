@@ -6,14 +6,18 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/04 16:05:27 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/04 19:08:11 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #if !defined(RED_BLACK_HPP)
 #define RED_BLACK_HPP
 
-#include "../inc.hpp"
+#include "../pair/pair.hpp"
+#include "node.hpp"
+#include "map_iterator.hpp"
+
+#include <iostream>
 #define RED 0
 #define BLACK 1
 
@@ -49,19 +53,21 @@ namespace ft
 {
 
     template <
-        class Key,
-        class Allocator = std::allocator<Key>,
-        class Compare = std::less<Key> >
+        class T,
+        class Allocator = std::allocator<T>,
+        class Compare = std::less<typename T::first_type> >
     class redBlackTree
     {
     public:
-        typedef Key value_type;
-        typedef typename Allocator::value_type pair_type;
-        typedef typename pair_type::first_type _key;
-        typedef typename pair_type::second_type _value;
-        typedef map_iterator<typename value_type::value_type> iterator;
-        typedef typename Allocator::size_type size_type;
-        value_type *getRoot() const { return this->root; }
+        typedef typename T::first_type key_type;
+        typedef typename T::second_type mapped_type;
+        typedef T value_type;
+        typedef Allocator allocator_type;
+        typedef t_node<T, allocator_type> node_type;
+        typedef size_t size_type;
+        typedef map_iterator<T, allocator_type> iterator;
+        typedef map_iterator<T, allocator_type> const_iterator;
+        node_type *getRoot() const { return this->root; }
 
         /*
             Default Constructor of The Tree which
@@ -94,10 +100,11 @@ namespace ft
         }
         void swap(redBlackTree &x)
         {
-            value_type *tmp(*this);
+            redBlackTree tmp(*this);
             *this = x;
-            x = *tmp;
+            x = tmp;
         }
+        
         const redBlackTree &operator=(const redBlackTree &rhs)
         {
             this->clear();
@@ -106,13 +113,13 @@ namespace ft
             return *this;
         }
 
-        void erase(const pair_type &val)
+        void erase(const value_type &val)
         {
-            value_type *z = search(val.first);
+            node_type *z = search(val.first);
             if (z == NULL)
                 return;
-            value_type *y = z;
-            value_type *x = NULL;
+            node_type *y = z;
+            node_type *x = NULL;
             bool y_original_color = y == NULL ? BLACK : y->color;
             if (z->leftChild == NULL)
             {
@@ -158,9 +165,9 @@ namespace ft
             if the element is found it returns a pointer to the node containing the element
             else it returns NULL to indicate that the element not found;
         */
-        value_type *search(const _key &key) const
+        node_type *search(const key_type &key) const
         {
-            value_type *current = this->root;
+            node_type *current = this->root;
             while (current != NULL)
             {
                 if (_comp(current->data.first, key))
@@ -178,14 +185,14 @@ namespace ft
             returns the number of matches since the tree cannot have duplicated key
             the return value will always be one or zero
         */
-        size_type count(const _key &k) const
+        size_type count(const key_type &k) const
         {
             return search(k) == NULL ? 0 : 1;
         }
 
-        iterator insert(const pair_type &key)
+        iterator insert(const value_type &key)
         {
-            value_type *node = makeNode(key);
+            node_type *node = makeNode(key);
             if (this->root == NULL)
             {
                 this->root = node;
@@ -193,8 +200,8 @@ namespace ft
                 this->_size++;
                 return iterator(this->root, this->root);
             }
-            value_type *prev = NULL;
-            value_type *temp = this->root;
+            node_type *prev = NULL;
+            node_type *temp = this->root;
             while (temp != NULL)
             {
                 prev = temp;
@@ -229,6 +236,15 @@ namespace ft
         {
             return iterator(NULL, this->root);
         }
+        iterator begin() const
+        {
+            return iterator(leftMostChild(this->root), this->root);
+        }
+
+        iterator end() const
+        {
+            return iterator(NULL, this->root);
+        }
         /*
             returns whether the tree is empty (the size is 0)
         */
@@ -257,7 +273,7 @@ namespace ft
         /*
             loops throw the entire tree and calls delete on every node and set NULL to it;
         */
-        void clearTree(value_type *_node)
+        void clearTree(node_type *_node)
         {
             if ((_node) != NULL)
             {
@@ -267,11 +283,11 @@ namespace ft
             }
             this->_size = 0;
         }
-        value_type *deepCopy(value_type *root, value_type *parent)
+        node_type *deepCopy(node_type *root, node_type *parent)
         {
             if (!root)
                 return NULL;
-            value_type *newRoot = new value_type;
+            node_type *newRoot = new node_type;
             newRoot->color = root->color;
             newRoot->data = root->data;
             newRoot->parent = parent;
@@ -283,29 +299,29 @@ namespace ft
             finds the first node that will be printed if we used
             In Order Traversal on the treee
         */
-        value_type *leftMostChild(value_type *_node) const
+        node_type *leftMostChild(node_type *_node) const
         {
             if (_node == NULL)
                 return NULL;
-            value_type *_begin = _node;
+            node_type *_begin = _node;
             while (_begin->leftChild)
                 _begin = _begin->leftChild;
             return _begin;
         }
 
-        value_type *rightMostChild(value_type *node)
+        node_type *rightMostChild(node_type *node)
         {
             if (node == NULL)
                 return NULL;
-            value_type *_end = node;
+            node_type *_end = node;
             while (_end->rightChild)
                 _end = _end->rightChild;
             return _end;
         }
 
-        value_type *makeNode(const pair_type &key) const
+        node_type *makeNode(const value_type &key) const
         {
-            value_type *_new = new value_type();
+            node_type *_new = new node_type();
             _new->color = RED;
             _new->data = key;
             _new->rightChild = NULL;
@@ -314,9 +330,9 @@ namespace ft
             return _new;
         }
 
-        void deleteFixUP(value_type *x)
+        void deleteFixUP(node_type *x)
         {
-            value_type *w = NULL;
+            node_type *w = NULL;
             while (x and x != this->root and x->color == BLACK)
             {
                 if (x == x->parent->leftChild)
@@ -390,7 +406,7 @@ namespace ft
                 x->color = BLACK;
         }
 
-        void transplant(value_type *u, value_type *v)
+        void transplant(node_type *u, node_type *v)
         {
             if (u->parent == NULL)
                 this->root = v;
@@ -404,14 +420,14 @@ namespace ft
                 v->parent = u->parent;
         }
 
-        void fixViolations(value_type *z)
+        void fixViolations(node_type *z)
         {
             bool isRed;
             while (z->parent && z->parent->color == RED)
             {
                 if (z->parent == z->parent->parent->leftChild)
                 {
-                    value_type *y = z->parent->parent->rightChild;
+                    node_type *y = z->parent->parent->rightChild;
                     isRed = y != NULL and y->color == RED;
                     if (isRed)
                     {
@@ -435,7 +451,7 @@ namespace ft
                 }
                 else
                 {
-                    value_type *y = z->parent->parent->leftChild;
+                    node_type *y = z->parent->parent->leftChild;
                     isRed = y != NULL && y->color == RED;
                     if (isRed)
                     {
@@ -460,9 +476,9 @@ namespace ft
             this->root->color = BLACK;
         }
 
-        void leftRotate(value_type *x)
+        void leftRotate(node_type *x)
         {
-            value_type *y = (x)->rightChild;
+            node_type *y = (x)->rightChild;
             (x)->rightChild = y->leftChild;
             if (y->leftChild != NULL)
             {
@@ -479,9 +495,9 @@ namespace ft
             (x)->parent = y;
         }
 
-        void rightRotate(value_type *x)
+        void rightRotate(node_type *x)
         {
-            value_type *y = (x)->leftChild;
+            node_type *y = (x)->leftChild;
             (x)->leftChild = y->rightChild;
             if (y->rightChild)
             {
@@ -498,8 +514,8 @@ namespace ft
             (x)->parent = y;
         }
 
-        value_type *root;
-        Allocator _alloc;
+        node_type *root;
+        allocator_type _alloc;
         size_t _size;
         Compare _comp;
     };

@@ -6,14 +6,14 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 11:16:21 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/04 15:10:37 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/04 18:22:43 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #if !defined(NODE_HPP)
 #define NODE_HPP
 
-#include "../inc.hpp"
+// #include "../inc.hpp"
 
 namespace ft
 {
@@ -39,6 +39,14 @@ namespace ft
         }
         t_node(): color(0), leftChild(NULL), rightChild(NULL), parent(NULL)
         {
+        }
+        t_node (const T &_data)
+        {
+            color = 0;
+            data = _data;
+            leftChild = NULL;
+            rightChild = NULL;
+            parent = NULL;
         }
         t_node(t_node<T, Allocator> *x)
         {

@@ -13,58 +13,38 @@
 #if !defined(BIDIRECTIONA_ITERATOR_HPP)
 #define BIDIRECTIONA_ITERATOR_HPP
 
-#include "../inc.hpp"
+// #include "../inc.hpp"
+#include "./node.hpp"
 
-class t_node;
 namespace ft
 {
-    template <class T, class Allocator = std::allocator<T> >
-    struct t_node
-    {
-        typedef T value_type;
-        typedef T &reference;
-        typedef const T &const_reference;
-        typedef T *pointer;
-
-        reference operator*()
-        {
-            return data;
-        }
-        pointer operator->()
-        {
-            return &data;
-        }
-        const pointer operator->() const
-        {
-            return &data;
-        }
-
-        bool color;
-        t_node<T, Allocator> *leftChild;
-        t_node<T, Allocator> *rightChild;
-        t_node<T, Allocator> *parent;
-        T data;
-    };
     template <class T, class Allocator = std::allocator<T> >
     class map_iterator
     {
 
+        typedef map_iterator<const T, Allocator> const_iterator;
+
     public:
-        typedef t_node<T> *treeNode;
+        typedef t_node<T, Allocator> treeNode;
         typedef T &reference;
         typedef T *pointer;
         typedef T value_type;
         typedef std::ptrdiff_t difference_type;
         typedef std::bidirectional_iterator_tag iterator_category;
 
-        map_iterator() : current(NULL), root(NULL) {}
+
+        operator const_iterator() const 
+        {
+            return const_iterator(this->current, this->root);
+        }
+        map_iterator() : current(), root() {}
         map_iterator(map_iterator const &obj)
         {
             this->current = obj.current;
             this->root = obj.root;
         }
 
-        map_iterator(treeNode ptr, treeNode _root)
+        map_iterator(treeNode * ptr, treeNode * _root)
         {
             this->current = ptr;
             this->root = _root;
@@ -83,8 +63,8 @@ namespace ft
         {
             return this->current != a.current;
         }
-        typename pair_type * operator*(void) const { return *(*current); }
-        const pair_type * operator->(void) const
+        value_type operator*(void) const { return *(*current); }
+        const value_type *operator->(void) const
         {
             return current->operator->();
         }
@@ -109,7 +89,7 @@ namespace ft
             }
             else
             {
-                treeNode p = this->current->parent;
+                treeNode * p = this->current->parent;
                 while (p != NULL and this->current == p->rightChild)
                 {
                     this->current = p;
@@ -138,7 +118,7 @@ namespace ft
         ~map_iterator() {}
 
     private:
-        treeNode leftMostDescendant(treeNode node)
+        treeNode* leftMostDescendant(treeNode * node)
         {
             if (node == NULL)
                 return NULL;
@@ -146,7 +126,7 @@ namespace ft
                 node = node->leftChild;
             return node;
         }
-        treeNode rightMostDescendant(treeNode node)
+        treeNode* rightMostDescendant(treeNode * node)
         {
             if (node == NULL)
                 return NULL;
@@ -154,8 +134,8 @@ namespace ft
                 node = node->rightChild;
             return node;
         }
-        treeNode current;
-        treeNode root;
+        treeNode* current;
+        treeNode* root;
     };
 
 }
