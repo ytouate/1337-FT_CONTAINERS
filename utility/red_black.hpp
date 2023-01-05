@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/05 12:30:29 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/05 19:49:01 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ namespace ft
         typedef T value_type;
         typedef Allocator allocator_type;
         typedef t_node<T, allocator_type> node_type;
+        typedef std::allocator<node_type > node_allocator_type;
         typedef size_t size_type;
         typedef map_iterator<T, allocator_type> iterator;
         typedef map_iterator<T, allocator_type> const_iterator;
@@ -80,7 +81,7 @@ namespace ft
             Default Constructor of The Tree which
             sets the size to 0 and sets the root to poin on NULL
         */
-        redBlackTree()
+        redBlackTree(): _comp()
         {
             this->_size = 0;
             this->root = NULL;
@@ -105,9 +106,10 @@ namespace ft
             this->clear();
             _size = 0;
         }
+        
         void swap(redBlackTree &x)
         {
-            std::swap(x._size, this->size);
+            ft::ftSwap(x._size, this->size);
             redBlackTree temp(*this);
             *this = x;
             x = temp;
@@ -160,7 +162,7 @@ namespace ft
                 y->leftChild->parent = y;
                 y->color = z->color;
             }
-            delete z;
+            node_allocator.deallocate(z, 1);
             if (y_original_color == BLACK)
             {
                 deleteFixUP(x);
@@ -186,6 +188,19 @@ namespace ft
                     current = current->leftChild;
             }
             return NULL;
+        }
+
+        iterator lower_bound(const key_type &k) const
+        {
+            node_type *current = this->root;
+            while (current != NULL)
+            {
+                if (current->data.first >= k)
+                    return iterator(current, this->root);
+                else
+                    current = current->rightChild;
+            }
+            return iterator(current, this->root);
         }
 
         /*
@@ -217,7 +232,7 @@ namespace ft
                     temp = temp->leftChild;
                 else if (node->data == temp->data)
                 {
-                    delete node;
+                    node_allocator.deallocate(node, 1);
                     return iterator(temp, this->root);
                 }
                 else
@@ -239,6 +254,7 @@ namespace ft
         {
             return iterator(leftMostChild(this->root), this->root);
         }
+
         iterator end()
         {
             return iterator(NULL, this->root);
@@ -248,14 +264,17 @@ namespace ft
         {
             return reverse_iterator(end());
         }
+
         reverse_iterator rend()
         {
             return reverse_iterator(begin());
         }
+
         reverse_iterator rbegin() const
         {
             return reverse_iterator(end());
         }
+
         reverse_iterator rend() const
         {
             return reverse_iterator(begin());
@@ -270,8 +289,9 @@ namespace ft
         {
             return iterator(NULL, this->root);
         }
+
         /*
-            returns whether the tree is empty (the size is 0)
+            returns a boolean indicating whether the tree is empty (the size is 0)
         */
         bool empty() const
         {
@@ -304,22 +324,24 @@ namespace ft
             {
                 clearTree((_node)->leftChild);
                 clearTree((_node)->rightChild);
-                delete (_node);
+                node_allocator.deallocate(_node, 1);
             }
             this->_size = 0;
         }
+
         node_type *deepCopy(node_type *root, node_type *parent)
         {
             if (!root)
                 return NULL;
-            node_type *newRoot = new node_type;
-            newRoot->color = root->color;
-            newRoot->data = root->data;
-            newRoot->parent = parent;
-            newRoot->leftChild = deepCopy(root->leftChild, newRoot);
-            newRoot->rightChild = deepCopy(root->rightChild, newRoot);
-            return newRoot;
+            node_type *dst = new node_type;
+            dst->color = root->color;
+            dst->data = root->data;
+            dst->parent = parent;
+            dst->leftChild = deepCopy(root->leftChild, dst);
+            dst->rightChild = deepCopy(root->rightChild, dst);
+            return dst;
         }
+
         /*
             finds the first node that will be printed if we used
             In Order Traversal on the treee
@@ -344,15 +366,15 @@ namespace ft
             return _end;
         }
 
-        node_type *makeNode(const value_type &key) const
+        node_type *makeNode(const value_type &key)
         {
-            node_type *_new = new node_type();
-            _new->color = RED;
-            _new->data = key;
-            _new->rightChild = NULL;
-            _new->leftChild = NULL;
-            _new->parent = NULL;
-            return _new;
+            node_type *node = new node_type;
+            node->color = RED;
+            node->data = key;
+            node->rightChild = NULL;
+            node->leftChild = NULL;
+            node->parent = NULL;
+            return node;
         }
 
         void deleteFixUP(node_type *x)
@@ -539,6 +561,8 @@ namespace ft
             (x)->parent = y;
         }
 
+        // typename allocator_type::template rebind<node_type>::other node_allocator;
+        node_allocator_type node_allocator;
         node_type *root;
         allocator_type _alloc;
         size_t _size;

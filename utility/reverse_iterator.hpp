@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:35:09 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/31 19:40:14 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/05 19:45:55 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ namespace ft
         {
             return &(operator*());
         }
-        reverse_iterator() : _iter(NULL) {}
+        reverse_iterator() : _iter() {}
 
         inline reverse_iterator operator++(int)
         {

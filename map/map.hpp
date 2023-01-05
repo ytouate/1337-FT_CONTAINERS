@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:16:00 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/05 12:29:59 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/05 20:19:26 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,9 +144,9 @@ namespace ft
 
         void swap(map &x)
         {
-            std::swap(x._alloc, this->_alloc);
-            std::swap(x._comp, this->_comp);
-            std::swap(x._tree, this->_tree);
+            ft::ftSwap(x._alloc, this->_alloc);
+            ft::ftSwap(x._comp, this->_comp);
+            ft::ftSwap(x._tree, this->_tree);
         }
         size_type size() const
         {
@@ -159,47 +159,25 @@ namespace ft
                                        std::numeric_limits<difference_type>::max());
         }
 
+
+
+        iterator find(const key_type &k)
+        {
+            t_node<value_type, allocator_type> *n = _tree.search(k);
+            return iterator(n, _tree.getRoot());
+        }
+        const_iterator find(const key_type &k) const
+        {
+            t_node<value_type, allocator_type> *n = _tree.search(k);
+            return const_iterator(n, _tree.getRoot());
+        }
         iterator lower_bound(const key_type &k) const
         {
             iterator it = begin();
             iterator ite = end();
             while (it != ite)
             {
-                if (it->first >= k)
-                    return it;
-                ++it;
-            }
-            return ite;
-        }
-
-        ft::pair<iterator, iterator> equal_range(const key_type &k)
-        {
-            return ft::make_pair(lower_bound(k), upper_bound(k));
-        }
-        ft::pair<const_iterator, const_iterator> equal_range(const key_type &k) const
-        {
-            return ft::make_pair(lower_bound(k), upper_bound(k));
-        }
-
-        iterator find(const key_type &k)
-        {
-            iterator it = begin();
-            iterator ite = end();
-            while (it != ite)
-            {
-                if (it->first == k)
-                    return it;
-                ++it;
-            }
-            return ite;
-        }
-        iterator find(const key_type &k) const
-        {
-            iterator it = begin();
-            iterator ite = end();
-            while (it != ite)
-            {
-                if (it->first == k)
+                if (!_comp(it->first, k))
                     return it;
                 ++it;
             }
@@ -217,6 +195,14 @@ namespace ft
                 ++it;
             }
             return ite;
+        }
+        ft::pair<iterator, iterator> equal_range(const key_type &k)
+        {
+            return ft::make_pair(lower_bound(k), upper_bound(k));
+        }
+        ft::pair<const_iterator, const_iterator> equal_range(const key_type &k) const
+        {
+            return ft::make_pair(lower_bound(k), upper_bound(k));
         }
 
         mapped_type &operator[](const key_type &k)
@@ -289,7 +275,6 @@ namespace ft
 
         iterator insert(iterator position, const value_type &val)
         {
-
             (void)position;
             iterator res;
             _tree.insert(val);
