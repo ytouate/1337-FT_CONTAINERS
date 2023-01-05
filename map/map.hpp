@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:16:00 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/04 19:43:30 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/05 11:39:34 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,15 +153,11 @@ namespace ft
 
         ft::pair<iterator, iterator> equal_range(const key_type &k)
         {
-            iterator it = begin();
-            iterator ite = end();
-            while (it != ite)
-            {
-                if (it->first == k)
-                    return ft::make_pair<iterator, iterator>(it, it);
-                ++it;
-            }
-            return ft::make_pair<iterator, iterator>(ite, ite);
+            return ft::make_pair(lower_bound(k), upper_bound(k));
+        }
+        ft::pair<const_iterator, const_iterator> equal_range(const key_type &k) const
+        {
+            return ft::make_pair(lower_bound(k), upper_bound(k));
         }
 
         iterator find(const key_type &k)
@@ -204,7 +200,9 @@ namespace ft
 
         mapped_type &operator[](const key_type &k)
         {
-            return (*((insert(ft::make_pair(k, mapped_type()))).first)).second;
+            this->insert(ft::make_pair(k, mapped_type()));
+            t_node<value_type, allocator_type>*node = _tree.search(k);
+            return node->data.second;
         }
 
         key_compare key_comp() const
@@ -220,6 +218,7 @@ namespace ft
                 return ft::make_pair(iterator(node, _tree.getRoot()), false);
             return ft::make_pair(_tree.insert(val), true);
         }
+
         mapped_type &at(const key_type &k)
         {
             t_node<value_type, allocator_type> *node = _tree.search(k);
