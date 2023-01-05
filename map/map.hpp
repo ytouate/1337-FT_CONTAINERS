@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:16:00 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/05 11:39:34 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/05 12:29:59 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ namespace ft
         typedef typename Alloc::const_pointer const_pointer;
         typedef ft::map_iterator<value_type, allocator_type> iterator;
         typedef ft::map_iterator<value_type, allocator_type> const_iterator;
+        typedef ft::rmap_iterator<iterator> reverse_iterator;
+        typedef ft::rmap_iterator<const_iterator> const_reverse_iterator;
 
         typedef typename iterator::difference_type difference_type;
         typedef size_t size_type;
@@ -103,6 +105,23 @@ namespace ft
         {
             return _tree.end();
         }
+        reverse_iterator rbegin()
+        {
+            return _tree.rbegin();
+        }
+        reverse_iterator rend()
+        {
+            return _tree.rend();
+        }
+        reverse_iterator rbegin() const
+        {
+            return _tree.rbegin();
+        }
+        reverse_iterator rend() const
+        {
+            return _tree.rend();
+        }
+        
 
         const_iterator begin() const
         {
@@ -125,7 +144,9 @@ namespace ft
 
         void swap(map &x)
         {
-            ft::ftSwap(x._tree, x._tree);
+            std::swap(x._alloc, this->_alloc);
+            std::swap(x._comp, this->_comp);
+            std::swap(x._tree, this->_tree);
         }
         size_type size() const
         {

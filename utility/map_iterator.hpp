@@ -63,8 +63,8 @@ namespace ft
         {
             return this->current != a.current;
         }
-        value_type operator*(void) const { return *(*current); }
-        const value_type *operator->(void) const
+        value_type &operator*(void) const { return *(*current); }
+        value_type *operator->(void) const
         {
             return current->operator->();
         }
@@ -102,7 +102,9 @@ namespace ft
         inline map_iterator &operator--(void)
         {
             if (this->current == NULL)
+            {
                 this->current = rightMostDescendant(this->root);
+            }
             else if (this->current->leftChild)
             {
                 this->current = rightMostDescendant(this->current->leftChild);

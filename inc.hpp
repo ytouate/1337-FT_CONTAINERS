@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 17:09:15 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/01 18:05:19 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/05 11:52:32 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 #include "vector/vector.hpp"
 #include "stack/stack.hpp"
 #include "utility/map_iterator.hpp"
+#include "utility/rmap_iterator.hpp"
 #include "utility/red_black.hpp"
 #include "map/map.hpp"
 

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/04 19:08:11 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/05 12:30:29 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,13 @@ namespace ft
         typedef size_t size_type;
         typedef map_iterator<T, allocator_type> iterator;
         typedef map_iterator<T, allocator_type> const_iterator;
+        typedef ft::rmap_iterator<iterator> reverse_iterator;
+        typedef ft::rmap_iterator<const_iterator> const_reverse_iterator;
+
+
+        /*
+            a getter for the tree root;
+        */
         node_type *getRoot() const { return this->root; }
 
         /*
@@ -100,9 +107,10 @@ namespace ft
         }
         void swap(redBlackTree &x)
         {
-            redBlackTree tmp(*this);
+            std::swap(x._size, this->size);
+            redBlackTree temp(*this);
             *this = x;
-            x = tmp;
+            x = temp;
         }
         
         const redBlackTree &operator=(const redBlackTree &rhs)
@@ -231,11 +239,28 @@ namespace ft
         {
             return iterator(leftMostChild(this->root), this->root);
         }
-
         iterator end()
         {
             return iterator(NULL, this->root);
         }
+        
+        reverse_iterator rbegin()
+        {
+            return reverse_iterator(end());
+        }
+        reverse_iterator rend()
+        {
+            return reverse_iterator(begin());
+        }
+        reverse_iterator rbegin() const
+        {
+            return reverse_iterator(end());
+        }
+        reverse_iterator rend() const
+        {
+            return reverse_iterator(begin());
+        }
+
         iterator begin() const
         {
             return iterator(leftMostChild(this->root), this->root);
