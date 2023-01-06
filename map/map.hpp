@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:16:00 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/06 14:43:49 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/06 15:15:57 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,11 +289,8 @@ namespace ft
         template <class InputIterator>
         void insert(InputIterator first, InputIterator last)
         {
-            while (first != last)
-            {
+            for (; first != last; ++first)
                 _tree.insert(*first);
-                first++;
-            }
         }
         size_type count(const key_type &k) const
         {

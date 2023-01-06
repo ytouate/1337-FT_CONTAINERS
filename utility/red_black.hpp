@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/06 15:00:46 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/06 15:17:58 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ namespace ft
             }
             pair_allocator.destroy(z->data);
             pair_allocator.deallocate(z->data, 1);
-            delete z;
+            node_allocator.deallocate(z, 1);
             if (y_original_color == BLACK)
             {
                 deleteFixUP(x);
@@ -231,11 +231,11 @@ namespace ft
                 prev = temp;
                 if (_comp(node->data->first, temp->data->first))
                     temp = temp->leftChild;
-                else if (node->data == temp->data)
+                else if (node->data->first == temp->data->first)
                 {
                     pair_allocator.destroy(node->data);
                     pair_allocator.deallocate(node->data, 1);
-                    delete node;
+                    node_allocator.deallocate(node, 1);
                     return iterator(temp, this->root);
                 }
                 else
