@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 11:16:21 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/04 18:22:43 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/06 14:41:32 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,50 +27,26 @@ namespace ft
 
         reference operator*()
         {
-            return data;
+            return *data;
+        }
+        const_reference operator*() const
+        {
+            return *data;
         }
         pointer operator->()
         {
-            return &data;
+            return data;
         }
         const pointer operator->() const
         {
-            return &data;
+            return data;
         }
-        t_node(): color(0), leftChild(NULL), rightChild(NULL), parent(NULL)
-        {
-        }
-        t_node (const T &_data)
-        {
-            color = 0;
-            data = _data;
-            leftChild = NULL;
-            rightChild = NULL;
-            parent = NULL;
-        }
-        t_node(t_node<T, Allocator> *x)
-        {
-            this->leftChild = x->leftChild;
-            this->rightChild = x->rightChild;
-            this->parent = x->parent;
-            this->color = x->color;
-        }
-        void setData(T _data)
-        {
-            data = _data;
-        }
-        t_node(t_node &x) : data(x.data), color(x.color),
-                            leftChild(x.leftChild),
-                            rightChild(x.rightChild),
-                            parent(x.parent)
-        {
-        }
-
         bool color;
+        Allocator _alloc;
         t_node<T, Allocator> *leftChild;
         t_node<T, Allocator> *rightChild;
         t_node<T, Allocator> *parent;
-        T data;
+        T *data;
     };
 }
 

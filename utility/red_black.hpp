@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/05 19:49:01 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/06 14:58:21 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,11 @@ namespace ft
         typedef T value_type;
         typedef Allocator allocator_type;
         typedef t_node<T, allocator_type> node_type;
-        typedef std::allocator<node_type > node_allocator_type;
         typedef size_t size_type;
         typedef map_iterator<T, allocator_type> iterator;
         typedef map_iterator<T, allocator_type> const_iterator;
-        typedef ft::rmap_iterator<iterator> reverse_iterator;
-        typedef ft::rmap_iterator<const_iterator> const_reverse_iterator;
+        typedef ft::reverse_iterator<iterator> reverse_iterator;
+        typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 
 
         /*
@@ -162,7 +161,9 @@ namespace ft
                 y->leftChild->parent = y;
                 y->color = z->color;
             }
-            node_allocator.deallocate(z, 1);
+            pair_allocator.destroy(z->data);
+            pair_allocator.deallocate(z->data, 1);
+            delete z;
             if (y_original_color == BLACK)
             {
                 deleteFixUP(x);
@@ -180,9 +181,9 @@ namespace ft
             node_type *current = this->root;
             while (current != NULL)
             {
-                if (_comp(current->data.first, key))
+                if (_comp(current->data->first, key))
                     current = current->rightChild;
-                else if (current->data.first == key)
+                else if (current->data->first == key)
                     return current;
                 else
                     current = current->leftChild;
@@ -195,7 +196,7 @@ namespace ft
             node_type *current = this->root;
             while (current != NULL)
             {
-                if (current->data.first >= k)
+                if (current->data->first >= k)
                     return iterator(current, this->root);
                 else
                     current = current->rightChild;
@@ -228,11 +229,13 @@ namespace ft
             while (temp != NULL)
             {
                 prev = temp;
-                if (_comp(node->data.first, temp->data.first))
+                if (_comp(node->data->first, temp->data->first))
                     temp = temp->leftChild;
                 else if (node->data == temp->data)
                 {
-                    node_allocator.deallocate(node, 1);
+                    pair_allocator.destroy(node->data);
+                    pair_allocator.deallocate(node->data, 1);
+                    delete node;
                     return iterator(temp, this->root);
                 }
                 else
@@ -241,7 +244,7 @@ namespace ft
             node->parent = prev;
             if (prev == NULL)
                 this->root = node;
-            else if (_comp(node->data.first, prev->data.first))
+            else if (_comp(node->data->first, prev->data->first))
                 prev->leftChild = node;
             else
                 prev->rightChild = node;
@@ -324,6 +327,8 @@ namespace ft
             {
                 clearTree((_node)->leftChild);
                 clearTree((_node)->rightChild);
+                // pair_allocator.destroy(_node->data);
+                pair_allocator.deallocate(_node->data, 1);
                 node_allocator.deallocate(_node, 1);
             }
             this->_size = 0;
@@ -335,7 +340,8 @@ namespace ft
                 return NULL;
             node_type *dst = new node_type;
             dst->color = root->color;
-            dst->data = root->data;
+            dst->data = pair_allocator.allocate(1);
+            pair_allocator.construct(dst->data, *root->data);
             dst->parent = parent;
             dst->leftChild = deepCopy(root->leftChild, dst);
             dst->rightChild = deepCopy(root->rightChild, dst);
@@ -370,7 +376,8 @@ namespace ft
         {
             node_type *node = new node_type;
             node->color = RED;
-            node->data = key;
+            node->data = pair_allocator.allocate(1);
+            pair_allocator.construct(node->data, key);
             node->rightChild = NULL;
             node->leftChild = NULL;
             node->parent = NULL;
@@ -560,9 +567,8 @@ namespace ft
             y->rightChild = (x);
             (x)->parent = y;
         }
-
-        // typename allocator_type::template rebind<node_type>::other node_allocator;
-        node_allocator_type node_allocator;
+        allocator_type pair_allocator;
+        typename allocator_type::template rebind<node_type>::other node_allocator;
         node_type *root;
         allocator_type _alloc;
         size_t _size;

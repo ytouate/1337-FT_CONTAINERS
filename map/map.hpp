@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:16:00 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/05 20:19:26 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/06 14:43:49 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ namespace ft
         typedef typename Alloc::const_pointer const_pointer;
         typedef ft::map_iterator<value_type, allocator_type> iterator;
         typedef ft::map_iterator<value_type, allocator_type> const_iterator;
-        typedef ft::rmap_iterator<iterator> reverse_iterator;
-        typedef ft::rmap_iterator<const_iterator> const_reverse_iterator;
+        typedef ft::reverse_iterator<iterator> reverse_iterator;
+        typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 
         typedef typename iterator::difference_type difference_type;
         typedef size_t size_type;
@@ -209,7 +209,7 @@ namespace ft
         {
             this->insert(ft::make_pair(k, mapped_type()));
             t_node<value_type, allocator_type>*node = _tree.search(k);
-            return node->data.second;
+            return node->data->second;
         }
 
         key_compare key_comp() const
@@ -232,7 +232,7 @@ namespace ft
             if (node == NULL)
                 throw std::out_of_range("key not in map");
             else
-                return node->data.second;
+                return node->data->second;
         }
         const mapped_type &at(const key_type &k) const
         {
@@ -240,7 +240,7 @@ namespace ft
             if (node == NULL)
                 throw std::out_of_range("key not in map");
             else
-                return node->data.second;
+                return node->data->second;
         }
         void erase(iterator position)
         {
@@ -269,7 +269,7 @@ namespace ft
             t_node<value_type, allocator_type> *node = _tree.search(k);
             if (node == NULL)
                 return 0;
-            _tree.erase(node->data);
+            _tree.erase(*node->data);
             return 1;
         }
 
