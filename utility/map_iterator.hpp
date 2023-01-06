@@ -29,6 +29,7 @@ namespace ft
         typedef T &reference;
         typedef T *pointer;
         typedef T value_type;
+        typedef size_t size_type;
         typedef std::ptrdiff_t difference_type;
         typedef std::bidirectional_iterator_tag iterator_category;
 

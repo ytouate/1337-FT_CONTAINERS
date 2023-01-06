@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:16:00 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/06 15:15:57 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/06 19:06:15 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ namespace ft
         };
 
         explicit map(const key_compare &comp = key_compare(),
-                     const allocator_type &alloc = allocator_type()) : _alloc(alloc), _comp(comp) {}
+                     const allocator_type &alloc = allocator_type())
+            : _alloc(alloc), _comp(comp) {}
 
         template <class InputIterator>
         map(InputIterator first, InputIterator last,
@@ -121,7 +122,6 @@ namespace ft
         {
             return _tree.rend();
         }
-        
 
         const_iterator begin() const
         {
@@ -158,8 +158,6 @@ namespace ft
             return std::min<size_type>(this->_alloc.max_size(),
                                        std::numeric_limits<difference_type>::max());
         }
-
-
 
         iterator find(const key_type &k)
         {
@@ -208,7 +206,7 @@ namespace ft
         mapped_type &operator[](const key_type &k)
         {
             this->insert(ft::make_pair(k, mapped_type()));
-            t_node<value_type, allocator_type>*node = _tree.search(k);
+            t_node<value_type, allocator_type> *node = _tree.search(k);
             return node->data->second;
         }
 
