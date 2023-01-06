@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/06 14:58:21 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/06 15:00:46 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,7 +327,7 @@ namespace ft
             {
                 clearTree((_node)->leftChild);
                 clearTree((_node)->rightChild);
-                // pair_allocator.destroy(_node->data);
+                pair_allocator.destroy(_node->data);
                 pair_allocator.deallocate(_node->data, 1);
                 node_allocator.deallocate(_node, 1);
             }
@@ -338,7 +338,7 @@ namespace ft
         {
             if (!root)
                 return NULL;
-            node_type *dst = new node_type;
+            node_type *dst = node_allocator.allocate(1);
             dst->color = root->color;
             dst->data = pair_allocator.allocate(1);
             pair_allocator.construct(dst->data, *root->data);
@@ -374,7 +374,7 @@ namespace ft
 
         node_type *makeNode(const value_type &key)
         {
-            node_type *node = new node_type;
+            node_type *node = node_allocator.allocate(1);
             node->color = RED;
             node->data = pair_allocator.allocate(1);
             pair_allocator.construct(node->data, key);
