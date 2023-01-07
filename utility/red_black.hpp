@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/06 15:17:58 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/07 21:36:13 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,10 @@ namespace ft
         void swap(redBlackTree &x)
         {
             ft::ftSwap(x._size, this->size);
-            redBlackTree temp(*this);
-            *this = x;
-            x = temp;
+            ft::ftSwap(x.root, this->root);
+            // redBlackTree temp(*this);
+            // *this = x;
+            // x = temp;
         }
         
         const redBlackTree &operator=(const redBlackTree &rhs)

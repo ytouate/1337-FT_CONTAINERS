@@ -73,9 +73,10 @@ namespace ft
         void swap(s_redBlackTree &x)
         {
             ft::ftSwap(x._size, this->_size);
-            s_redBlackTree temp(*this);
-            *this = x;
-            x = temp;
+            ft::ftSwap(this->root, x.root);
+            // s_redBlackTree temp(*this);
+            // *this = x;
+            // x = temp;
         }
 
         const s_redBlackTree &operator=(const s_redBlackTree &rhs)
@@ -390,6 +391,7 @@ namespace ft
                 }
                 else
                 {
+                    break;
                     w = x->parent->leftChild;
                     if (w and w->color == RED)
                     {
@@ -457,7 +459,6 @@ namespace ft
                     }
                     else
                     {
-
                         if (z == z->parent->rightChild)
                         {
                             z = z->parent;
@@ -497,21 +498,19 @@ namespace ft
 
         void leftRotate(node_type *x)
         {
-            node_type *y = (x)->rightChild;
-            (x)->rightChild = y->leftChild;
+            node_type *y = x->rightChild;
+            x->rightChild = y->leftChild;
             if (y->leftChild != NULL)
-            {
-                y->leftChild->parent = (x);
-            }
-            y->parent = (x)->parent;
-            if ((x)->parent == NULL)
+                y->leftChild->parent = x;
+            y->parent = x->parent;
+            if (x == this->root)
                 this->root = y;
-            else if ((x) == (x)->parent->leftChild)
-                (x)->parent->leftChild = y;
+            else if (x == x->parent->leftChild)
+                x->parent->leftChild = y;
             else
-                (x)->parent->rightChild = y;
+                x->parent->rightChild = y;
             y->leftChild = (x);
-            (x)->parent = y;
+            x->parent = y;
         }
 
         void rightRotate(node_type *x)
@@ -523,7 +522,7 @@ namespace ft
                 y->rightChild->parent = x;
             }
             y->parent = x->parent;
-            if (x->parent == NULL)
+            if (x == this->root)
                 this->root = y;
             else if (x == x->parent->leftChild)
                 x->parent->leftChild = y;
