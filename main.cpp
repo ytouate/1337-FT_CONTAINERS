@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/06 19:58:19 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/07 19:30:58 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,20 @@
 int		main(void)
 {
 	ft::set<int> set;
-	set.insert(set.begin(), 10);
-	set.insert(20);
-	ft::set<int> b(set);
-	b.insert(set.begin(), set.end());
-	std::cout << set.count(10) << std::endl;
+	srand(time(0));
+	for (int i = 0; i < 100; i++)
+	{
+		set.insert(rand());
+	}
+	set.insert(10);
+	std::cout << set.size() << std::endl;
+	ft::set<int>::iterator it = set.begin();
+	ft::set<int>::iterator ite(it);
+	it = set.begin();
+	ite = it;
+	std::advance(it, 34);
+	std::advance(ite, 55);
+	set.erase(it, ite);
+	
+	
 }

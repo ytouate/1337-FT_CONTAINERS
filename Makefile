@@ -6,7 +6,7 @@
 #    By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/03 12:47:40 by ytouate           #+#    #+#              #
-#    Updated: 2023/01/06 13:21:26 by ytouate          ###   ########.fr        #
+#    Updated: 2023/01/07 19:30:48 by ytouate          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,13 @@ FILE = \
 
 NAME = CONTAINERS.out
 
-CPPFLAGS = -std=c++98
+CPPFLAGS = -std=c++98 -Wall -Wextra -Werror  -fsanitize=address -g3
 O_FILE = $(FILE:.cpp=.o)
 
 all: $(NAME)
 
 $(NAME) : $(O_FILE)
-	@c++ -std=c++98  $(O_FILE) -o $(NAME)
+	@c++ -std=c++98 -fsanitize=address -g3 $(O_FILE) -o $(NAME)
 
 clean:
 	@rm -rf *.o

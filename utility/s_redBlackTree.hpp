@@ -44,7 +44,7 @@ namespace ft
             Default Constructor of The Tree which
             sets the size to 0 and sets the root to poin on NULL
         */
-        s_redBlackTree() : _comp()
+        s_redBlackTree()
         {
             this->_size = 0;
             this->root = NULL;
@@ -125,8 +125,8 @@ namespace ft
                 y->leftChild->parent = y;
                 y->color = z->color;
             }
-            pair_allocator.destroy(z->data);
-            pair_allocator.deallocate(z->data, 1);
+            _alloc.destroy(z->data);
+            _alloc.deallocate(z->data, 1);
             node_allocator.deallocate(z, 1);
             if (y_original_color == BLACK)
             {
@@ -197,8 +197,8 @@ namespace ft
                     temp = temp->leftChild;
                 else if (*node->data == *temp->data)
                 {
-                    pair_allocator.destroy(node->data);
-                    pair_allocator.deallocate(node->data, 1);
+                    _alloc.destroy(node->data);
+                    _alloc.deallocate(node->data, 1);
                     node_allocator.deallocate(node, 1);
                     return iterator(temp, this->root);
                 }
@@ -206,6 +206,7 @@ namespace ft
                     temp = temp->rightChild;
             }
             node->parent = prev;
+
             if (prev == NULL)
                 this->root = node;
             else if (_comp(*node->data, *prev->data))
@@ -291,8 +292,8 @@ namespace ft
             {
                 clearTree((_node)->leftChild);
                 clearTree((_node)->rightChild);
-                pair_allocator.destroy(_node->data);
-                pair_allocator.deallocate(_node->data, 1);
+                _alloc.destroy(_node->data);
+                _alloc.deallocate(_node->data, 1);
                 node_allocator.deallocate(_node, 1);
             }
             this->_size = 0;
@@ -304,8 +305,8 @@ namespace ft
                 return NULL;
             node_type *dst = node_allocator.allocate(1);
             dst->color = root->color;
-            dst->data = pair_allocator.allocate(1);
-            pair_allocator.construct(dst->data, *root->data);
+            dst->data = _alloc.allocate(1);
+            _alloc.construct(dst->data, *root->data);
             dst->parent = parent;
             dst->leftChild = deepCopy(root->leftChild, dst);
             dst->rightChild = deepCopy(root->rightChild, dst);
@@ -340,8 +341,8 @@ namespace ft
         {
             node_type *node = node_allocator.allocate(1);
             node->color = RED;
-            node->data = pair_allocator.allocate(1);
-            pair_allocator.construct(node->data, key);
+            node->data = _alloc.allocate(1);
+            _alloc.construct(node->data, key);
             node->rightChild = NULL;
             node->leftChild = NULL;
             node->parent = NULL;
@@ -515,23 +516,22 @@ namespace ft
 
         void rightRotate(node_type *x)
         {
-            node_type *y = (x)->leftChild;
-            (x)->leftChild = y->rightChild;
+            node_type *y = x->leftChild;
+            x->leftChild = y->rightChild;
             if (y->rightChild)
             {
-                y->rightChild->parent = (x);
+                y->rightChild->parent = x;
             }
-            y->parent = (x)->parent;
-            if ((x)->parent == NULL)
+            y->parent = x->parent;
+            if (x->parent == NULL)
                 this->root = y;
-            else if ((x) == (x)->parent->leftChild)
-                (x)->parent->leftChild = y;
+            else if (x == x->parent->leftChild)
+                x->parent->leftChild = y;
             else
-                (x)->parent->rightChild = y;
-            y->rightChild = (x);
-            (x)->parent = y;
+                x->parent->rightChild = y;
+            y->rightChild = x;
+            x->parent = y;
         }
-        allocator_type pair_allocator;
         typename allocator_type::template rebind<node_type>::other node_allocator;
         node_type *root;
         allocator_type _alloc;
