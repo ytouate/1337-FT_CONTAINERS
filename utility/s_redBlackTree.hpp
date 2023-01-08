@@ -36,7 +36,8 @@ namespace ft
         typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 
         /*
-            a getter for the tree root;
+            returns s_redBlackTree::node_type pointer
+            which point to the root of the tree;
         */
         node_type *getRoot() const { return this->root; }
 
@@ -52,7 +53,7 @@ namespace ft
 
         /*
             copy constructor which copies the right handside tree object to
-            left handside object (this) all the copy coping is deep copy
+            left handside object (this) all the copying is deep copy
         */
         s_redBlackTree(const s_redBlackTree &tree)
         {
@@ -64,27 +65,36 @@ namespace ft
             Destructor which deallocate all the Tree and
             sets root to point on NULL;
         */
-        ~s_redBlackTree()
-        {
-            this->clear();
-            _size = 0;
-        }
+        ~s_redBlackTree() { this->clear(); }
 
+        /*
+            swaps the private attributes of the calling object
+            with the private attributes of x
+        */
         void swap(s_redBlackTree &x)
         {
             ft::ftSwap(x._size, this->_size);
-            
+
             ft::ftSwap(this->root, x.root);
         }
 
+        /*
+            copy assignment operator which clears the left hand-side object
+            before copying the content of rhs to it;
+        */
         const s_redBlackTree &operator=(const s_redBlackTree &rhs)
         {
             this->clear();
             root = deepCopy(rhs.root, NULL);
-            this->_size = rhs._size;
+            this->_size = rhs._size; 
             return *this;
         }
 
+        /*
+            delete the node in the tree which has a data equal to val;
+            notice: the tree is balanced and all the violations caused by
+            the call to this method are fixed
+        */
         void erase(const value_type &val)
         {
             node_type *z = search(val);
@@ -154,19 +164,6 @@ namespace ft
             return NULL;
         }
 
-        iterator lower_bound(const key_type &k) const
-        {
-            node_type *current = this->root;
-            while (current != NULL)
-            {
-                if (*current->data >= k)
-                    return iterator(current, this->root);
-                else
-                    current = current->rightChild;
-            }
-            return iterator(current, this->root);
-        }
-
         /*
             searches the tree for element with key equivalent to k and
             returns the number of matches since the tree cannot have duplicated key
@@ -177,6 +174,11 @@ namespace ft
             return search(k) == NULL ? 0 : 1;
         }
 
+        /*
+            insert a node with the data of the node sat to key
+            in its right position keeping the tree sorted when 
+            traversed inOrder
+        */
         iterator insert(const value_type &key)
         {
             node_type *node = makeNode(key);
@@ -217,21 +219,29 @@ namespace ft
             return iterator(node, this->root);
         }
 
+        /*
+            returns an iterator pointing to the left most node of the tree
+        */
         iterator begin()
         {
             return iterator(leftMostChild(this->root), this->root);
         }
 
+        /*
+            returns an iterator indicating the end of the tree
+        */
         iterator end()
         {
             return iterator(NULL, this->root);
         }
 
+        /*
+            returns a reverse_iterator to the tree
+        */
         reverse_iterator rbegin()
         {
             return reverse_iterator(end());
         }
-
         reverse_iterator rend()
         {
             return reverse_iterator(begin());
@@ -247,12 +257,12 @@ namespace ft
             return reverse_iterator(begin());
         }
 
-        iterator begin() const
+        const_iterator begin() const
         {
             return iterator(leftMostChild(this->root), this->root);
         }
 
-        iterator end() const
+        const_iterator end() const
         {
             return iterator(NULL, this->root);
         }
@@ -298,6 +308,10 @@ namespace ft
             this->_size = 0;
         }
 
+        /*
+            creates a new tree which its content is the same as root
+            and returns a pointer to its root;
+        */
         node_type *deepCopy(node_type *root, node_type *parent)
         {
             if (!root)
@@ -326,6 +340,11 @@ namespace ft
             return _begin;
         }
 
+        /*
+            returns the largest element in tree
+            which will be the last element printed
+            inOrderTraversal
+        */
         node_type *rightMostChild(node_type *node)
         {
             if (node == NULL)
@@ -336,6 +355,10 @@ namespace ft
             return _end;
         }
 
+        /*
+            returns a pointer to a newly created node
+            the allocation is done using the given allocator
+        */
         node_type *makeNode(const value_type &key)
         {
             node_type *node = node_allocator.allocate(1);
@@ -348,6 +371,10 @@ namespace ft
             return node;
         }
 
+
+        /*
+            Fix the violations caused by the erase method
+        */
         void deleteFixUP(node_type *x)
         {
             node_type *w = NULL;
@@ -425,6 +452,10 @@ namespace ft
                 x->color = BLACK;
         }
 
+        /*
+            insert the v node to its right position
+            after the node u
+        */
         void transplant(node_type *u, node_type *v)
         {
             if (u->parent == NULL)
@@ -439,6 +470,9 @@ namespace ft
                 v->parent = u->parent;
         }
 
+        /*
+            fix the violations caused by the insert method;
+        */
         void fixViolations(node_type *z)
         {
             bool isRed;
@@ -494,6 +528,9 @@ namespace ft
             this->root->color = BLACK;
         }
 
+        /*
+            applies left rotation on the given node
+        */
         void leftRotate(node_type *x)
         {
             node_type *y = x->rightChild;
@@ -511,6 +548,9 @@ namespace ft
             x->parent = y;
         }
 
+        /*
+            applies right rotation on the given node
+        */
         void rightRotate(node_type *x)
         {
             node_type *y = x->leftChild;

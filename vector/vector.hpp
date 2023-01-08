@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/03 14:12:44 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/08 19:43:46 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,10 @@ namespace ft
         typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 
         // construct - copy - destroy
+        /*
+            default constructor initializes the private attributes
+            to default values
+        */
         explicit vector(const Allocator &alloc = Allocator())
         {
             this->len = 0;
@@ -51,6 +55,10 @@ namespace ft
             this->_alloc = alloc;
         }
 
+        /*
+            parametrize constructor allocate n for the vector and constructs the 
+            allocated memory with <value>
+        */
         explicit vector(size_type n, const T &value = T(), const Allocator &alloc = Allocator())
         {
             len = n;
@@ -62,6 +70,10 @@ namespace ft
                 this->_alloc.construct(&this->vec[i], value);
         }
 
+        /*
+            range constructor will fill the container with the values is
+            in the range [first, last)
+        */
         template <class InputIterator>
         vector(InputIterator first, InputIterator last, const Allocator &alloc = Allocator(),
                typename ft::enable_if<std::__is_input_iterator<InputIterator>::value &&
@@ -92,6 +104,11 @@ namespace ft
                 first++;
             }
         }
+
+        /*
+            copy constructor copies the content of x
+            to the calling object (this)
+        */
         vector(const vector<T, Allocator> &x)
         {
             this->len = x.size();
@@ -102,6 +119,9 @@ namespace ft
                 this->_alloc.construct(&this->vec[i], x[i]);
         }
 
+        /*
+            Destructor will call the clear() method on the conatainer
+        */
         ~vector()
         {
             this->clear();
@@ -111,6 +131,10 @@ namespace ft
             this->len = 0;
         }
 
+        /*
+            assignment operator will copy the content of rhs to the calling object
+            after clearing the calling object
+        */
         vector<T, Allocator> &operator=(const vector<T, Allocator> &rhs)
         {
 
@@ -129,6 +153,10 @@ namespace ft
             return *this;
         }
 
+        /*
+            clears the calling object before assigning the content of [first, last)
+            to it the allocator remain unchanged
+        */
         template <class Iterator>
         void assign(Iterator first, Iterator last,
                     typename ft::enable_if<!ft::is_integral<Iterator>::value &&
@@ -140,6 +168,11 @@ namespace ft
             while (first != last)
                 this->push_back(*first++);
         }
+        
+        /*
+            slightly optimized than the assign method that takes input iterator
+            because all the allocations is done before the assignment
+        */
         template <class Iterator>
         void assign(Iterator first, Iterator last,
                     typename ft::enable_if<!ft::is_integral<Iterator>::value &&
@@ -153,7 +186,10 @@ namespace ft
                 this->push_back(*first++);
         }
 
-        allocator_type get_allocator() const { return this->_alloc; }
+        /*
+            clears the calling object and resizes it to hold n
+            elements initizialized with t
+        */
         void assign(size_type n, const T &t)
         {
             while (!empty())
@@ -168,6 +204,11 @@ namespace ft
             }
         }
 
+        /*
+            returns the container's allocator
+        */
+        allocator_type get_allocator() const { return this->_alloc; }
+
         // iterators
         iterator begin() { return ft::iterator<T>(vec); }
         const_iterator begin() const { return ft::iterator<T>(vec); }
@@ -179,7 +220,15 @@ namespace ft
         const_reverse_iterator rend() const { return ft::reverse_iterator<ft::iterator<const T> >(vec); }
 
         // capacity
+
+        /*
+            returns the size of the vector;
+        */
         size_type size() const { return this->len; }
+
+        /*
+            
+        */
         size_type max_size() const
         {
             return std::min<size_type>(this->_alloc.max_size(),

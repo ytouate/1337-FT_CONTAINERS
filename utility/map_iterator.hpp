@@ -33,10 +33,9 @@ namespace ft
         typedef std::ptrdiff_t difference_type;
         typedef std::bidirectional_iterator_tag iterator_category;
 
-
-        operator const_iterator() const 
+        operator const_iterator() const
         {
-            return const_iterator(this->current, this->root);
+            return const_iterator(*this);
         }
         map_iterator() : current(), root() {}
         map_iterator(map_iterator const &obj)
@@ -45,7 +44,7 @@ namespace ft
             this->root = obj.root;
         }
 
-        map_iterator(treeNode * ptr, treeNode * _root)
+        map_iterator(treeNode *ptr, treeNode *_root)
         {
             this->current = ptr;
             this->root = _root;
@@ -65,10 +64,7 @@ namespace ft
             return this->current != a.current;
         }
         value_type &operator*(void) const { return *(*current); }
-        value_type *operator->(void) const
-        {
-            return current->operator->();
-        }
+        value_type *operator->(void) const { return current->operator->(); }
         map_iterator operator--(int)
         {
             map_iterator temp = *this;
@@ -90,7 +86,7 @@ namespace ft
             }
             else
             {
-                treeNode * p = this->current->parent;
+                treeNode *p = this->current->parent;
                 while (p != NULL and this->current == p->rightChild)
                 {
                     this->current = p;
@@ -121,7 +117,7 @@ namespace ft
         ~map_iterator() {}
 
     private:
-        treeNode* leftMostDescendant(treeNode * node)
+        treeNode *leftMostDescendant(treeNode *node)
         {
             if (node == NULL)
                 return NULL;
@@ -129,7 +125,7 @@ namespace ft
                 node = node->leftChild;
             return node;
         }
-        treeNode* rightMostDescendant(treeNode * node)
+        treeNode *rightMostDescendant(treeNode *node)
         {
             if (node == NULL)
                 return NULL;
@@ -137,8 +133,8 @@ namespace ft
                 node = node->rightChild;
             return node;
         }
-        treeNode* current;
-        treeNode* root;
+        treeNode *current;
+        treeNode *root;
     };
 
 }
