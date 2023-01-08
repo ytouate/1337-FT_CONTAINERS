@@ -73,10 +73,8 @@ namespace ft
         void swap(s_redBlackTree &x)
         {
             ft::ftSwap(x._size, this->_size);
+            
             ft::ftSwap(this->root, x.root);
-            // s_redBlackTree temp(*this);
-            // *this = x;
-            // x = temp;
         }
 
         const s_redBlackTree &operator=(const s_redBlackTree &rhs)

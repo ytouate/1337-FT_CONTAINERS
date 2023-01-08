@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 15:52:16 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/07 21:21:13 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/08 13:25:20 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ namespace ft
         {
             ft::ftSwap(x._alloc, this->_alloc);
             ft::ftSwap(x._comp, this->_comp);
-            std::swap(x._tree, this->_tree);
+            ft::ftSwap(x._tree, this->_tree);
         }
 
         void clear() { _tree.clear(); }
