@@ -6,31 +6,36 @@
 #    By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/03 12:47:40 by ytouate           #+#    #+#              #
-#    Updated: 2023/01/07 19:30:48 by ytouate          ###   ########.fr        #
+#    Updated: 2023/01/09 16:19:19 by ytouate          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FILE = \
-	./main.cpp	\
+MAP = ./map/map.cpp
+VECTOR = ./vector/vector.cpp
 
-NAME = CONTAINERS.out
+CPPFLAGS = -std=c++98 -Wall -Wextra -Werror
 
-CPPFLAGS = -std=c++98 -Wall -Wextra -Werror  -fsanitize=address -g3
-O_FILE = $(FILE:.cpp=.o)
+O_VECTOR = $(VECTOR:.cpp=.o)
+O_MAP = $(MAP:.cpp=.o)
 
-all: $(NAME)
+all: map vector
+map: map.out
+vector: vector.out
 
-$(NAME) : $(O_FILE)
-	@c++ -std=c++98 -fsanitize=address -g3 $(O_FILE) -o $(NAME)
+map.out : $(O_MAP)
+	@c++ $(CPPFLAGS) $(MAP) -o map.out
+	@rm ./map/map.o
+	@./map.out
+
+vector.out : $(O_VECTOR)
+	@c++ $(CPPFLAGS) $(VECTOR) -o vector.out
+	@rm ./vector/vector.o
+	@./vector.out
 
 clean:
-	@rm -rf *.o
-	@rm -rf *.gch
+	@rm -f map.out
+	@rm -f vector.out
 
 fclean: clean
-	@rm -rf $(NAME)
 
 re: fclean all
-
-run: re
-	@./$(NAME)
