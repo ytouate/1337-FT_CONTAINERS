@@ -12,6 +12,7 @@
 
 ## About The Project
 <!-- Screenshot -->
+<img width="1493" alt="Screen Shot 2023-01-09 at 7 55 16 PM" src="https://user-images.githubusercontent.com/95024105/211392347-18383a82-28c4-4171-b54b-08e60833c0dd.png">
 
 **FT_CONTAINERS is a project I've worked on during my studies at 1337 the purpose of the project is to reimplement three of the most used CPlusPlus STL containers (or four if you want to do the bonus part).**
 
