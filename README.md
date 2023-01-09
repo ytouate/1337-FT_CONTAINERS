@@ -14,9 +14,7 @@
     </ol>
 </details>
 
-<br></br>
 # About The Project
-
 <!-- Screenshot -->
 
 **FT_CONTAINERS is a project i've worked on during my studies at 1337 the purpose of the project is to reimplement three of the most used CPlusPlus STL containers (or four if you want to do the bonus part).**
