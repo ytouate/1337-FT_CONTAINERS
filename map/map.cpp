@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 16:07:07 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/09 16:13:10 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/10 16:07:58 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -370,6 +370,6 @@ int start(void)
 int main()
 {
     start();
-    system("leaks map.out");
+    // system("leaks map.out");
     return 0;
 }

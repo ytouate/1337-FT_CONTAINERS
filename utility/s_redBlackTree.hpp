@@ -86,7 +86,7 @@ namespace ft
         {
             this->clear();
             root = deepCopy(rhs.root, NULL);
-            this->_size = rhs._size; 
+            this->_size = rhs._size;
             return *this;
         }
 
@@ -176,7 +176,7 @@ namespace ft
 
         /*
             insert a node with the data of the node sat to key
-            in its right position keeping the tree sorted when 
+            in its right position keeping the tree sorted when
             traversed inOrder
         */
         iterator insert(const value_type &key)
@@ -219,53 +219,14 @@ namespace ft
             return iterator(node, this->root);
         }
 
-        /*
-            returns an iterator pointing to the left most node of the tree
-        */
-        iterator begin()
-        {
-            return iterator(leftMostChild(this->root), this->root);
-        }
-
-        /*
-            returns an iterator indicating the end of the tree
-        */
-        iterator end()
-        {
-            return iterator(NULL, this->root);
-        }
-
-        /*
-            returns a reverse_iterator to the tree
-        */
-        reverse_iterator rbegin()
-        {
-            return reverse_iterator(end());
-        }
-        reverse_iterator rend()
-        {
-            return reverse_iterator(begin());
-        }
-
-        reverse_iterator rbegin() const
-        {
-            return reverse_iterator(end());
-        }
-
-        reverse_iterator rend() const
-        {
-            return reverse_iterator(begin());
-        }
-
-        const_iterator begin() const
-        {
-            return iterator(leftMostChild(this->root), this->root);
-        }
-
-        const_iterator end() const
-        {
-            return iterator(NULL, this->root);
-        }
+        iterator begin() { return iterator(leftMostChild(this->root), this->root); }
+        iterator end() { return iterator(NULL, this->root); }
+        reverse_iterator rbegin() { return reverse_iterator(end()); }
+        reverse_iterator rend() { return reverse_iterator(begin()); }
+        const_reverse_iterator rbegin() const { return reverse_iterator(end()); }
+        const_reverse_iterator rend() const { return reverse_iterator(begin()); }
+        const_iterator begin() const { return iterator(leftMostChild(this->root), this->root); }
+        const_iterator end() const { return iterator(NULL, this->root); }
 
         /*
             returns a boolean indicating whether the tree is empty (the size is 0)
@@ -370,7 +331,6 @@ namespace ft
             node->parent = NULL;
             return node;
         }
-
 
         /*
             Fix the violations caused by the erase method

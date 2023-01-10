@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/07 21:36:13 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/09 19:45:02 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,22 +274,22 @@ namespace ft
             return reverse_iterator(begin());
         }
 
-        reverse_iterator rbegin() const
+        const_reverse_iterator rbegin() const
         {
             return reverse_iterator(end());
         }
 
-        reverse_iterator rend() const
+        const_reverse_iterator rend() const
         {
             return reverse_iterator(begin());
         }
 
-        iterator begin() const
+        const_iterator begin() const
         {
             return iterator(leftMostChild(this->root), this->root);
         }
 
-        iterator end() const
+        const_iterator end() const
         {
             return iterator(NULL, this->root);
         }
