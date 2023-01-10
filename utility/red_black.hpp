@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/09 19:45:02 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/10 17:27:07 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,15 +194,43 @@ namespace ft
 
         iterator lower_bound(const key_type &k) const
         {
-            node_type *current = this->root;
-            while (current != NULL)
+            iterator it = begin();
+            while (it != end())
             {
-                if (current->data->first >= k)
-                    return iterator(current, this->root);
-                else
-                    current = current->rightChild;
+                if (it->first >= k)
+                    return it;
+                ++it;
             }
-            return iterator(current, this->root);
+            return end();
+        }
+
+        iterator upper_bound(const key_type &k) const
+        {
+            iterator it = begin();
+            while (it != end())
+            {
+                if (it->first > k)
+                    return it;
+                ++it;
+            }
+            return end();
+        }
+        
+        ft::pair<iterator, iterator> equal_range(const key_type &k) const
+        {
+            iterator it = begin();
+            ft::pair<iterator, iterator> res(it, it);
+            while (it != end())
+            {
+                if (it->first == k)
+                {
+                    res.first = it;
+                }
+                else if (it->first > k)
+                    res.second = it;
+                ++it;
+            }
+            return res;
         }
 
         /*

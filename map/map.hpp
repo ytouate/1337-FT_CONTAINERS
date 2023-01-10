@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:16:00 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/07 15:10:59 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/10 18:33:40 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,27 +169,11 @@ namespace ft
 
         iterator lower_bound(const key_type &k) const
         {
-            iterator it = begin();
-            iterator ite = end();
-            while (it != ite)
-            {
-                if (!_comp(it->first, k))
-                    return it;
-                ++it;
-            }
-            return ite;
+            return _tree.lower_bound(k);
         }
         iterator upper_bound(const key_type &k) const
         {
-            iterator it = begin();
-            iterator ite = end();
-            while (it != ite)
-            {
-                if (!_comp(it->first, k) and it->first != k)
-                    return it;
-                ++it;
-            }
-            return ite;
+            return _tree.upper_bound(k);
         }
         ft::pair<iterator, iterator> equal_range(const key_type &k)
         {
