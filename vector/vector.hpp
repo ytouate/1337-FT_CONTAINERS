@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:54:33 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/08 19:43:46 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/11 23:43:36 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,6 +252,10 @@ namespace ft
             this->len = n;
         }
 
+        /*
+            reserves n for the vector if n is less than the vector capacity
+            no change will occure
+        */
         void reserve(size_type n)
         {
             if (n > max_size())
@@ -278,8 +282,15 @@ namespace ft
         }
 
         // element access
+        /* 
+            returns the elements at n;
+        */
         reference operator[](size_type n) { return this->vec[n]; }
         const_reference operator[](size_type n) const { return this->vec[n]; }
+        
+        /*
+            returns the element at n if the n is out of range an exception is thrown 
+        */
         reference at(size_type n)
         {
             if (n >= this->len)
@@ -292,12 +303,22 @@ namespace ft
                 throw std::out_of_range("Index out of Range");
             return this->vec[n];
         }
+        /*
+            returns the first element at the vector vec[0]
+        */
         reference front() { return this->vec[0]; }
         const_reference front() const { return this->vec[0]; }
+
+        /*
+            returns the last element in the vector vec[len - 1]
+        */
         reference back() { return this->vec[this->len - 1]; }
         const_reference back() const { return this->vec[this->len - 1]; }
 
         // modifiers
+        /*
+            add the given element at the back of the vector
+        */
         void push_back(const T &x)
         {
             if (this->len == 0)
@@ -310,6 +331,9 @@ namespace ft
             this->len++;
         }
 
+        /*
+            removes the last element of the vector
+        */
         void pop_back(void)
         {
             if (this->empty())
