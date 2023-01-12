@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/10 17:27:07 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/12 15:41:12 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ namespace ft
         typedef ft::reverse_iterator<iterator> reverse_iterator;
         typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 
-
         /*
             a getter for the tree root;
         */
@@ -80,7 +79,7 @@ namespace ft
             Default Constructor of The Tree which
             sets the size to 0 and sets the root to poin on NULL
         */
-        redBlackTree(): _comp()
+        redBlackTree() : _comp()
         {
             this->_size = 0;
             this->root = NULL;
@@ -105,16 +104,15 @@ namespace ft
             this->clear();
             _size = 0;
         }
-        
+
         void swap(redBlackTree &x)
         {
-            ft::ftSwap(x._size, this->size);
-            ft::ftSwap(x.root, this->root);
-            // redBlackTree temp(*this);
-            // *this = x;
-            // x = temp;
+            std::swap(x.root, this->root);
+            std::swap(x._alloc, this->_alloc);
+            std::swap(x._comp, this->_comp);
+            std::swap(x._size, this->_size);
         }
-        
+
         const redBlackTree &operator=(const redBlackTree &rhs)
         {
             this->clear();
@@ -194,28 +192,38 @@ namespace ft
 
         iterator lower_bound(const key_type &k) const
         {
-            iterator it = begin();
-            while (it != end())
+            node_type *current = this->root;
+            node_type *lower = NULL;
+            while (current)
             {
-                if (it->first >= k)
-                    return it;
-                ++it;
+                if (current->data->first >= k)
+                {
+                    lower = current;
+                    current = current->leftChild;
+                }
+                else
+                    current = current->rightChild;
             }
-            return end();
+            return iterator(lower, this->root);
         }
 
         iterator upper_bound(const key_type &k) const
         {
-            iterator it = begin();
-            while (it != end())
+            node_type *current = this->root;
+            node_type *lower = NULL;
+            while (current)
             {
-                if (it->first > k)
-                    return it;
-                ++it;
+                if (current->data->first > k)
+                {
+                    lower = current;
+                    current = current->leftChild;
+                }
+                else
+                    current = current->rightChild;
             }
-            return end();
+            return iterator(lower, this->root);
         }
-        
+
         ft::pair<iterator, iterator> equal_range(const key_type &k) const
         {
             iterator it = begin();
@@ -291,7 +299,7 @@ namespace ft
         {
             return iterator(NULL, this->root);
         }
-        
+
         reverse_iterator rbegin()
         {
             return reverse_iterator(end());
