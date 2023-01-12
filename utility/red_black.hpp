@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/12 19:34:31 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/12 19:46:37 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,7 @@ namespace ft
             node_type *lower = NULL;
             while (current)
             {
-                if (_comp(current->data->first, k))
+                if (!_comp(current->data->first, k) and k != current->data->first)
                 {
                     lower = current;
                     current = current->leftChild;
@@ -221,23 +221,6 @@ namespace ft
                     current = current->rightChild;
             }
             return iterator(lower, this->root);
-        }
-
-        ft::pair<iterator, iterator> equal_range(const key_type &k) const
-        {
-            iterator it = begin();
-            ft::pair<iterator, iterator> res(it, it);
-            while (it != end())
-            {
-                if (it->first == k)
-                {
-                    res.first = it;
-                }
-                else if (it->first > k)
-                    res.second = it;
-                ++it;
-            }
-            return res;
         }
 
         /*

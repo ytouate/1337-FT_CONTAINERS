@@ -252,6 +252,40 @@ namespace ft
             this->root = NULL;
         }
 
+        iterator lower_bound(const value_type &k) const
+        {
+            node_type *current = this->root;
+            node_type *lower = NULL;
+            while (current)
+            {
+                if (!_comp(*current->data, k))
+                {
+                    lower = current;
+                    current = current->leftChild;
+                }
+                else
+                    current = current->rightChild;
+            }
+            return iterator(lower, this->root);
+        }
+
+        iterator upper_bound(const value_type &k) const
+        {
+            node_type *current = this->root;
+            node_type *lower = NULL;
+            while (current)
+            {
+                if (!_comp(*current->data, k) and *current->data != k)
+                {
+                    lower = current;
+                    current = current->leftChild;
+                }
+                else
+                    current = current->rightChild;
+            }
+            return iterator(lower, this->root);
+        }
+
     private:
         /*
             loops throw the entire tree and calls delete on every node and set NULL to it;
