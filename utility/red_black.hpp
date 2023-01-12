@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/12 15:41:12 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/12 19:34:31 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,9 @@
 
     lower_bound : returns an iterator pointing to the first element that is not less than key
     upper_bound : returns an iterator pointing to the first element that is greater than key
-
     predecessor and successor are the neighbors of a certain node
-
 */
+
 namespace ft
 {
 
@@ -107,10 +106,10 @@ namespace ft
 
         void swap(redBlackTree &x)
         {
-            std::swap(x.root, this->root);
-            std::swap(x._alloc, this->_alloc);
-            std::swap(x._comp, this->_comp);
-            std::swap(x._size, this->_size);
+            ft::ftSwap(x.root, this->root);
+            ft::ftSwap(x._alloc, this->_alloc);
+            ft::ftSwap(x._comp, this->_comp);
+            ft::ftSwap(x._size, this->_size);
         }
 
         const redBlackTree &operator=(const redBlackTree &rhs)
@@ -196,7 +195,7 @@ namespace ft
             node_type *lower = NULL;
             while (current)
             {
-                if (current->data->first >= k)
+                if (!_comp(current->data->first, k))
                 {
                     lower = current;
                     current = current->leftChild;
@@ -213,7 +212,7 @@ namespace ft
             node_type *lower = NULL;
             while (current)
             {
-                if (current->data->first > k)
+                if (_comp(current->data->first, k))
                 {
                     lower = current;
                     current = current->leftChild;

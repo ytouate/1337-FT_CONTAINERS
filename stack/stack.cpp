@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:55:42 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/10 16:10:34 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/12 15:52:32 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,30 @@
 #define GREEN "\e[0;32m"
 #define YELLOW "\e[1;33m"
 #define RESET "\e[0m"
+
+namespace Color
+{
+	enum Code
+	{
+		FG_RED = 31,
+		FG_GREEN = 32,
+		FG_BLUE = 36,
+		FG_YELLOW = 33,
+		FG_DEFAULT = 39,
+	};
+	class Modifier
+	{
+		Code code;
+
+	public:
+		Modifier(Code pCode) : code(pCode) {}
+		friend std::ostream &
+		operator<<(std::ostream &os, const Modifier &mod)
+		{
+			return os << "\033[" << mod.code << "m";
+		}
+	};
+}
 
 #define EQUAL(x) ((x) ? (std::cout << "\033[1;32mOK\033[0m\n") : (std::cout << "\033[1;31mKO\033[0m\n"))
 #define TIME_FAC 3 // the ft::Map methods can be slower up to std::map methods * TIME_FAC (MAX 20)
@@ -314,9 +338,13 @@ void alarm_handler(int seg)
 
 int main()
 {
-	std::cout << _RED << "________________________________________________________________________________________________________" << std::endl;
-	std::cout << _RED << "**** The test is taking so much time to test the all cases and the time complexity of each method ****" << std::endl;
-	std::cout << _RED << "--------------------------------------------------------------------------------------------------------" << RESET << std::endl;
+	Color::Modifier green(Color::FG_GREEN);
+	Color::Modifier blue(Color::FG_BLUE);
+	Color::Modifier def(Color::FG_DEFAULT);
+
+	std::cout << blue << "-----------------------------------------------------------" << def << std::endl;
+	std::cout << blue << "---------------------- stack tests -----------------------" << def << std::endl;
+	std::cout << blue << "-----------------------------------------------------------" << def << std::endl;
 	signal(SIGALRM, alarm_handler);
 
 	TEST_CASE(testConstructors);
