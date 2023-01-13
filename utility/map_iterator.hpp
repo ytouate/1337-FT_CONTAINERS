@@ -79,38 +79,50 @@ namespace ft
         }
         inline map_iterator &operator++(void)
         {
-            if (this->current->rightChild != NULL)
+            if (current == NULL)
             {
-                this->current = this->current->rightChild;
-                this->current = leftMostDescendant(this->current);
+                current = this->root;
+                current = leftMostDescendant(current);
             }
             else
             {
-                treeNode *p = this->current->parent;
-                while (p != NULL and this->current == p->rightChild)
+                if (this->current->rightChild != NULL)
                 {
-                    this->current = p;
-                    p = p->parent;
+                    this->current = this->current->rightChild;
+                    this->current = leftMostDescendant(this->current);
                 }
-                this->current = p;
+                else
+                {
+                    treeNode *p = this->current->parent;
+                    while (p != NULL and this->current == p->rightChild)
+                    {
+                        this->current = p;
+                        p = p->parent;
+                    }
+                    this->current = p;
+                }
             }
             return *this;
         }
         inline map_iterator &operator--(void)
         {
-            if (this->current == NULL)
+            if (current == NULL)
             {
-                this->current = rightMostDescendant(this->root);
-            }
-            else if (this->current->leftChild)
-            {
-                this->current = rightMostDescendant(this->current->leftChild);
+                current = this->root;
+                current = rightMostDescendant(this->root);
             }
             else
             {
-                while (this->current && this->current->parent->leftChild == this->current)
+                if (this->current->leftChild)
+                {
+                    this->current = rightMostDescendant(this->current->leftChild);
+                }
+                else
+                {
+                    while (this->current && this->current->parent->leftChild == this->current)
+                        this->current = this->current->parent;
                     this->current = this->current->parent;
-                this->current = this->current->parent;
+                }
             }
             return *this;
         }

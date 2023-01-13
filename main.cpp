@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 12:47:26 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/12 19:33:33 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/13 13:23:06 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 int		main(void)
 {
 	ft::map<int, int, std::greater<int> > a;
-	
+	std::stack<int> stack;
 	a.insert(ft::make_pair(10, 20));
 	a.insert(ft::make_pair(20, 20));
 	a.insert(ft::make_pair(30, 20));
