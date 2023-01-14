@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 20:53:21 by ytouate           #+#    #+#             */
-/*   Updated: 2023/01/13 19:54:03 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/14 14:34:57 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -381,6 +381,10 @@ namespace ft
             return _begin;
         }
 
+        /*
+            finds the last node that will be printed if we used
+            In order traversal on the tree
+        */
         node_type *rightMostChild(node_type *node)
         {
             if (node == NULL)
@@ -391,6 +395,9 @@ namespace ft
             return _end;
         }
 
+        /*
+            
+        */
         node_type *makeNode(const value_type &key)
         {
             node_type *node = node_allocator.allocate(1);
@@ -511,7 +518,6 @@ namespace ft
                     }
                     else
                     {
-
                         if (z == z->parent->rightChild)
                         {
                             z = z->parent;
@@ -525,7 +531,7 @@ namespace ft
                 else
                 {
                     node_type *y = z->parent->parent->leftChild;
-                    isRed = y != NULL && y->color == RED;
+                    isRed = y != NULL && y->color == RED; 
                     if (isRed)
                     {
                         z->parent->color = BLACK;
@@ -551,40 +557,40 @@ namespace ft
 
         void leftRotate(node_type *x)
         {
-            node_type *y = (x)->rightChild;
-            (x)->rightChild = y->leftChild;
+            node_type *y = x->rightChild;
+            x->rightChild = y->leftChild;
             if (y->leftChild != NULL)
             {
                 y->leftChild->parent = (x);
             }
-            y->parent = (x)->parent;
-            if ((x)->parent == NULL)
+            y->parent = x->parent;
+            if (x->parent == NULL)
                 this->root = y;
-            else if ((x) == (x)->parent->leftChild)
-                (x)->parent->leftChild = y;
+            else if (x == x->parent->leftChild)
+                x->parent->leftChild = y;
             else
-                (x)->parent->rightChild = y;
-            y->leftChild = (x);
-            (x)->parent = y;
+                x->parent->rightChild = y;
+            y->leftChild = x;
+            x->parent = y;
         }
 
         void rightRotate(node_type *x)
         {
-            node_type *y = (x)->leftChild;
-            (x)->leftChild = y->rightChild;
+            node_type *y = x->leftChild;
+            x->leftChild = y->rightChild;
             if (y->rightChild)
             {
-                y->rightChild->parent = (x);
+                y->rightChild->parent = x;
             }
-            y->parent = (x)->parent;
-            if ((x)->parent == NULL)
+            y->parent = x->parent;
+            if (x->parent == NULL)
                 this->root = y;
-            else if ((x) == (x)->parent->leftChild)
-                (x)->parent->leftChild = y;
+            else if (x == x->parent->leftChild)
+                x->parent->leftChild = y;
             else
-                (x)->parent->rightChild = y;
-            y->rightChild = (x);
-            (x)->parent = y;
+                x->parent->rightChild = y;
+            y->rightChild = x;
+            x->parent = y;
         }
         allocator_type pair_allocator;
         typename allocator_type::template rebind<node_type>::other node_allocator;

@@ -74,7 +74,8 @@ namespace ft
         void swap(s_redBlackTree &x)
         {
             ft::ftSwap(x._size, this->_size);
-
+            ft::ftSwap(x._alloc, this->_alloc);
+            ft::ftSwap(x._comp, this->_comp);
             ft::ftSwap(this->root, x.root);
         }
 
