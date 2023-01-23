@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 01:20:20 by ytouate           #+#    #+#             */
-/*   Updated: 2022/12/16 23:35:50 by ytouate          ###   ########.fr       */
+/*   Updated: 2023/01/23 09:12:02 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 namespace ft
 {
-    template <class T, class Container = std::vector<T> >
+    template <class T, class Container = ft::vector<T> >
     class stack
     {
     public:
